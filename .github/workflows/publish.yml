@@ -1,0 +1,222 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  time:
+    runs-on: ubuntu-latest
+    outputs:
+      v: ${{ steps.date.outputs.time }}
+      y: ${{ steps.date.outputs.y }}
+      md: ${{ steps.date.outputs.md }}
+      hm: ${{ steps.date.outputs.hm }}
+      sv: ${{ steps.date.outputs.sv }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate Version
+        id: date
+        run: |
+          echo "time=$(TZ='Asia/Shanghai' date +'%Y.%m.%d.%H.%M')" >> $GITHUB_OUTPUT
+          echo "y=$(TZ='Asia/Shanghai' date +'%Y')" >> $GITHUB_OUTPUT
+          echo "md=$(TZ='Asia/Shanghai' date +'%m%d')" >> $GITHUB_OUTPUT
+          echo "hm=$(TZ='Asia/Shanghai' date +'%H%M')" >> $GITHUB_OUTPUT
+          echo "sv=$(TZ='Asia/Shanghai' date +'%Y.%m.%d.%H%M')" >> $GITHUB_OUTPUT
+
+      - name: Display Version
+        run: |
+          echo "Version: ${{ steps.date.outputs.time }}"
+
+  linux-appimage:
+    runs-on: ubuntu-22.04
+    needs: time
+    strategy:
+      matrix:
+        arch: [x64, arm, arm64]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Write Version
+        run: echo "${{ needs.time.outputs.v }}" > ./Mirel.Main/Mirel/Public/Version.txt
+      - name: Install Dependencies
+        run: |
+          dotnet tool install -g KuiperZone.PupNet --version 1.8.0
+          sudo apt-get update -qq
+          sudo apt-get install -y fuse
+      - name: Build AppImage (${{ matrix.arch }})
+        run: |
+          cd ./Mirel.Main/Mirel.Desktop
+          ~/.dotnet/tools/pupnet --runtime linux-${{ matrix.arch }} --kind appimage -o Mirel.Desktop.linux.${{ matrix.arch }}.AppImage -y --app-version ${{ needs.time.outputs.y }}.${{ needs.time.outputs.md }}.${{ needs.time.outputs.hm }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-appimage-${{ matrix.arch }}
+          path: Mirel.Main/Mirel.Desktop/Deploy/OUT/*
+          retention-days: 1
+
+  linux-macos:
+    runs-on: ubuntu-22.04
+    needs: time
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Write Version
+        run: echo "${{ needs.time.outputs.v }}" > ./Mirel.Main/Mirel/Public/Version.txt
+      - name: Build macOS App (x64)
+        run: |
+          cd ./Mirel.Main/Mirel.Desktop
+          dotnet restore -r osx-x64
+          dotnet msbuild -t:BundleApp -p:RuntimeIdentifier=osx-x64 -property:Configuration=Release -p:SelfContained=true -p:Version=${{ needs.time.outputs.sv }}
+          cp ./Icon-Border.icns "./bin/Release/net8.0/osx-x64/publish/Mirel.app/Contents/Resources/Icon-Border.icns"
+          cd ./bin/Release/net8.0/osx-x64/publish/
+          zip -9 -r ../../Mirel.Desktop.osx.mac.x64.app.zip "./Mirel.app"
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-macos-artifacts
+          path: Mirel.Main/Mirel.Desktop/bin/Release/net8.0/Mirel.Desktop.osx.mac.x64.app.zip
+          retention-days: 1
+
+  linux-windows:
+    runs-on: ubuntu-22.04
+    needs: time
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Write Version
+        run: echo "${{ needs.time.outputs.v }}" > ./Mirel.Main/Mirel/Public/Version.txt
+      - name: Build Windows Executables
+        run: |
+          cd ./Mirel.Main/Mirel.Desktop
+          for arch in win-x86 win-x64 win-arm64; do
+            dotnet publish -c Release -r $arch /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:SelfContained=false /p:Version=${{ needs.time.outputs.sv }}
+            mv ./bin/Release/net8.0/$arch/publish/Mirel.Desktop.exe ./bin/Release/net8.0/Mirel.win.${arch#win-}.portable.exe
+          done
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-windows-artifacts
+          path: Mirel.Main/Mirel.Desktop/bin/Release/net8.0/*.exe
+          retention-days: 1
+
+  win:
+    runs-on: windows-latest
+    needs: time
+    strategy:
+      matrix:
+        arch: [x64, x86, arm64]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Install Inno Setup
+        uses: ConorMacBride/install-package@v1
+        with:
+          choco: innosetup --version 6.7.0
+      - name: Apply Chinese Localization
+        run: Copy-Item "./Assets/Default.isl" "C:\Program Files (x86)\Inno Setup 6\Default.isl" -Force
+      - name: Install PupNet
+        run: dotnet tool install -g KuiperZone.PupNet --version 1.8.0
+      - name: Write Version
+        run: echo "${{ needs.time.outputs.v }}" > ./Mirel.Main/Mirel/Public/Version.txt
+        shell: bash
+      - name: Build Installer (${{ matrix.arch }})
+        run: |
+          cd ./Mirel.Main/Mirel.Desktop
+          pupnet -r win-${{ matrix.arch }} -k setup -y -o Mirel.Desktop.win.${{ matrix.arch }}.installer.exe --app-version ${{ needs.time.outputs.y }}.${{ needs.time.outputs.md }}.${{ needs.time.outputs.hm }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: win-artifacts-${{ matrix.arch }}
+          path: ./Mirel.Main/Mirel.Desktop/Deploy/OUT/*
+          retention-days: 1
+
+  mac:
+    needs: [linux-macos]
+    runs-on: macos-latest
+    steps:
+      - name: Download macOS App
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-macos-artifacts
+          path: ./Mirel.Release/
+      - name: Extract macOS App
+        run: unzip -n ./Mirel.Release/Mirel.Desktop.osx.mac.x64.app.zip -d ./app.x64
+      - name: Create DMG (x64)
+        uses: L-Super/create-dmg-actions@v1.0.3
+        with:
+          dmg_name: "Mirel.Desktop.osx.mac.x64"
+          src_dir: "./app.x64/Mirel.app"
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: osx-artifacts
+          path: ./Mirel.Desktop.osx.mac.x64.dmg
+          retention-days: 1
+
+  publish:
+    needs: [linux-appimage, linux-macos, linux-windows, win, mac, time]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Release Date
+        id: gdate
+        run: |
+          echo "date=$(date +'%Y-%m-%d.%H-%M-%S')" >> $GITHUB_OUTPUT
+          echo "title=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_OUTPUT
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./Mirel.Release/
+      - name: List Release Files
+        run: find ./Mirel.Release/ -type f -name "*.exe" -o -name "*.dmg" -o -name "*.AppImage" -o -name "*.zip"
+      - name: Rename Artifacts (Remove Desktop)
+        run: |
+          cd ./Mirel.Release/
+          find . -type f \( -name "*.exe" -o -name "*.dmg" -o -name "*.AppImage" -o -name "*.zip" \) | while read file; do
+            newname=$(echo "$file" | sed 's/Mirel\.Desktop\./Mirel./g')
+            if [ "$file" != "$newname" ]; then
+              mv "$file" "$newname"
+            fi
+          done
+      - name: Publish Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.TOKEN }}"
+          title: "v${{ needs.time.outputs.v }}"
+          automatic_release_tag: "AutoPublish"
+          prerelease: false
+          files: |
+            Mirel.Release/**/*.exe
+            Mirel.Release/**/*.dmg
+            Mirel.Release/**/*.AppImage
+            Mirel.Release/**/*.zip

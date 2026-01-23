@@ -3,6 +3,9 @@
   "WorkspaceRootPath": "F:\\Mirel\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\10.0.102\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.ImportWorkloads.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{ABC31E74-02FF-46EB-B3B2-4E6AE43B456C}|Mirel.Main\\Mirel.Desktop\\Mirel.Desktop.csproj|f:\\mirel\\mirel.main\\mirel.desktop\\mirel.desktop.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
       "RelativeMoniker": "D:0:0:{ABC31E74-02FF-46EB-B3B2-4E6AE43B456C}|Mirel.Main\\Mirel.Desktop\\Mirel.Desktop.csproj|solutionrelative:mirel.main\\mirel.desktop\\mirel.desktop.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
@@ -31,30 +34,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Microsoft.NET.Sdk.ImportWorkloads.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\10.0.102\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.ImportWorkloads.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\10.0.102\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.ImportWorkloads.targets",
+              "ViewState": "AgIAABcAAAAAAAAAAAD4vyUAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2026-01-23T14:39:58.573Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Mirel.Desktop",
               "DocumentMoniker": "F:\\Mirel\\Mirel.Main\\Mirel.Desktop\\Mirel.Desktop.csproj",
               "RelativeDocumentMoniker": "Mirel.Main\\Mirel.Desktop\\Mirel.Desktop.csproj",
               "ToolTip": "F:\\Mirel\\Mirel.Main\\Mirel.Desktop\\Mirel.Desktop.csproj",
               "RelativeToolTip": "Mirel.Main\\Mirel.Desktop\\Mirel.Desktop.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-01-23T14:21:06.739Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-23T14:21:06.739Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Mirel",
               "DocumentMoniker": "F:\\Mirel\\Mirel.Main\\Mirel\\Mirel.csproj",
               "RelativeDocumentMoniker": "Mirel.Main\\Mirel\\Mirel.csproj",
               "ToolTip": "F:\\Mirel\\Mirel.Main\\Mirel\\Mirel.csproj",
               "RelativeToolTip": "Mirel.Main\\Mirel\\Mirel.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-01-23T14:19:36.28Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-23T14:19:36.28Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Mirel.csproj",
               "DocumentMoniker": "F:\\Mirel\\Mirel.Main\\Mirel\\Mirel.csproj",
               "RelativeDocumentMoniker": "Mirel.Main\\Mirel\\Mirel.csproj",
