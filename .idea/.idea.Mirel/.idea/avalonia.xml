@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="Mirel.Main/Mirel/Views/MainWindow.axaml" value="Mirel.Main/Mirel.Desktop/Mirel.Desktop.csproj" />
         <entry key="Mirel/Views/MainView.axaml" value="Mirel.Desktop/Mirel.Desktop.csproj" />
       </map>
     </option>
