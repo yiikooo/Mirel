@@ -88,7 +88,7 @@ jobs:
           cd ./Mirel.Main/Mirel.Desktop
           dotnet restore -r osx-x64
           dotnet msbuild -t:BundleApp -p:RuntimeIdentifier=osx-x64 -property:Configuration=Release -p:SelfContained=true -p:Version=${{ needs.time.outputs.sv }}
-          cp ./Icon.Border.icns "./bin/Release/net8.0/osx-x64/publish/Mirel.app/Contents/Resources/Icon.Border.icns"
+          cp ./Icon.icns "./bin/Release/net8.0/osx-x64/publish/Mirel.app/Contents/Resources/Icon.icns"
           cd ./bin/Release/net8.0/osx-x64/publish/
           zip -9 -r ../../Mirel.Desktop.osx.mac.x64.app.zip "./Mirel.app"
       - name: Upload Artifacts
