@@ -169,7 +169,7 @@
                                                                     Foreground="{DynamicResource TextColor}"
                                                                     Height="12"
                                                                     IsVisible="{Binding IconIsVisible}"
-                                                                    Margin="0,0,4,0"
+                                                                    Margin="0,3,4,0"
                                                                     Width="12" />
                                                                 <ContentControl Content="{Binding HeaderContent}" Foreground="{DynamicResource TextColor}" />
                                                                 <Grid
