@@ -1,8 +1,90 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Avalonia;
+using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Mirel.Classes.Entries;
+using Mirel.Const;
+using Mirel.Module.Events;
+using Mirel.Views.Main.Pages;
 
 namespace Mirel.ViewModels;
 
-public partial class MainViewModel : ViewModelBase
+public class MainViewModel : ViewModelBase
 {
-    [ObservableProperty] private string _greeting = "Welcome to Avalonia!";
+    private bool _isTabMaskVisible;
+
+    private TabEntry? _selectedTab;
+    private Vector _tabScrollOffset;
+
+    public MainViewModel()
+    {
+        InitEvents.AfterUiLoaded += (_, _) =>
+        {
+            UiProperty.LaunchPages.Add(new LaunchPageEntry
+            {
+                Id = "NewTab",
+                Header = "新标签页",
+                Page = new NewTabPage()
+            });
+            UiProperty.LaunchPages.Add(new LaunchPageEntry
+            {
+                Id = "Setting",
+                Header = "设置",
+                Tag = "setting",
+                Page = new NewTabPage()
+            });
+            var page = UiProperty.LaunchPages.FirstOrDefault(x =>
+                x.Id == Data.SettingEntry.LaunchPage.Id) ?? UiProperty.LaunchPages[0];
+            Tabs.Add(new TabEntry(page.Page) { Tag = page.Tag });
+            SelectedTab = Tabs[0];
+        };
+        PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName != nameof(SelectedTab) || SelectedTab == null) return;
+            if (SelectedTab.Content == null) return;
+            if (SelectedTab.Content.RootElement == null) return;
+            SelectedTab.Content.RootElement.IsVisible = false;
+            SelectedTab.Content.InAnimator.Animate();
+        };
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(0.5) };
+        timer.Tick += (_, _) => Time = DateTime.Now;
+        timer.Start();
+    }
+
+    public ObservableCollection<TabEntry> Tabs { get; set; } = [];
+
+
+    public Vector TabScrollOffset
+    {
+        get => _tabScrollOffset;
+        set => SetField(ref _tabScrollOffset, value);
+    }
+
+    public bool IsTabMaskVisible
+    {
+        get => _isTabMaskVisible;
+        set => SetField(ref _isTabMaskVisible, value);
+    }
+
+    public TabEntry? SelectedTab
+    {
+        get => _selectedTab;
+        set => SetField(ref _selectedTab, value);
+    }
+
+    private DateTime _time = DateTime.Now;
+
+    public DateTime Time
+    {
+        get => _time;
+        set => SetField(ref _time, value);
+    }
+
+    public void CreateTab(TabEntry tab)
+    {
+        Tabs.Add(tab);
+        SelectedTab = tab;
+    }
 }

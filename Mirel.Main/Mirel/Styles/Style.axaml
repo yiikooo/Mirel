@@ -1,0 +1,42 @@
+<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border
+            Background="Aquamarine"
+            Height="300"
+            Padding="20"
+            Width="400">
+            <Expander
+                Background="{DynamicResource 2xCardBackgroundColor}"
+                Classes="card"
+                Header="现存">
+                <Rectangle
+                    Fill="Red"
+                    Height="100"
+                    Width="100" />
+            </Expander>
+        </Border>
+    </Design.PreviewWith>
+    <!--  Add Styles Here  -->
+    <Style Selector="Button.no-background-button">
+        <Setter Property="Background" Value="#00000000" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="#00000000">
+                    <ContentControl Content="{TemplateBinding Content}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="TextBox.transparent:pointerover /template/ Border#PART_ContentPresenterBorder">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="ToggleButton:checked">
+        <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="ToggleButton:checked:pointerover  /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
+    </Style>
+</Styles>

@@ -1,0 +1,81 @@
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Aurelio.Public.Classes.Enum;
+using Avalonia.Media;
+using Avalonia.Threading;
+using Irihi.Avalonia.Shared.Contracts;
+using Mirel.Classes.Entries;
+using Mirel.Module.Value;
+using ReactiveUI;
+using ReactiveUI.SourceGenerators;
+
+namespace Mirel.Const;
+
+public class Tasking : ReactiveObject , IDialogContext
+{
+    private static Tasking? _instance;
+
+    public Tasking()
+    {
+        Tasks.CollectionChanged += (_, _) => TasksChanged();
+        UpdateDisplay();
+    }
+
+    [Reactive] public bool HasTask { get; set; }
+    [Reactive] public string FocusInfoText { get; set; }
+    [Reactive] public SolidColorBrush FocusInfoColor { get; set; }
+
+    public static Tasking Instance
+    {
+        get { return _instance ??= new Tasking(); }
+    }
+
+    public static ObservableCollection<TaskEntry> Tasks { get; } = [];
+
+    public static TaskEntry CreateTask(string name)
+    {
+        var task = new TaskEntry
+        {
+            Name = name,
+            TaskState = TaskState.Waiting
+        };
+        Tasks.Add(task);
+        return task;
+    }
+
+    public void UpdateDisplay()
+    {
+        Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            if (Tasks.Count == 0)
+            {
+                FocusInfoText = "无任务";
+                FocusInfoColor = SolidColorBrush.Parse("#FFA500");
+            }
+            else if (Tasks.Count == 1)
+            {
+                FocusInfoText = Tasks[0].Name;
+                FocusInfoColor = new SolidColorBrush(Converter.TaskStateToColor(Tasks[0].TaskState));
+            }
+            else
+            {
+                FocusInfoText = $"{Tasks.Count} 个任务";
+                FocusInfoColor = new SolidColorBrush(Converter.TaskStateToColor(Tasks.Last().TaskState));
+            }
+        });
+    }
+
+    private void TasksChanged()
+    {
+        UpdateDisplay();
+        HasTask = Tasks.Count > 0;
+    }
+
+    public void Close()
+    {
+        RequestClose?.Invoke(this, null);
+    }
+
+    public event EventHandler<object?>? RequestClose;
+}

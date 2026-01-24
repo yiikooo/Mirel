@@ -1,0 +1,55 @@
+<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Mirel.Views.Main.Pages.NewTabPage"
+    x:DataType="pages1:NewTabPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:entries="clr-namespace:Mirel.Classes.Entries"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Mirel.Views.Main.Pages"
+    xmlns:pages1="clr-namespace:Mirel.Views.Main.Pages"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Name="Root">
+        <DockPanel
+            HorizontalAlignment="Center"
+            Margin="0,-15,0,0"
+            VerticalAlignment="Center">
+            <!--  Text="{Binding CurrentTime, StringFormat='HH:mm:ss'}"  -->
+            <TextBlock
+                DockPanel.Dock="Top"
+                FontSize="22"
+                Margin="0,0,0,30"
+                Text="新标签页"
+                TextAlignment="Center" />
+            <StackPanel Spacing="10">
+                <HyperlinkButton Command="{Binding OpenNewPageCommand}" HorizontalAlignment="Center">
+                    <TextBlock TextDecorations="{x:Null}">
+                        <Run Text="打开新页面" />
+                        <Run Text="( Ctrl + Shift + O )" />
+                    </TextBlock>
+                </HyperlinkButton>
+                <HyperlinkButton Command="{Binding OpenFileCommand}" HorizontalAlignment="Center">
+                    <TextBlock TextDecorations="{x:Null}">
+                        <Run Text="打开文件" />
+                        <Run Text="( Ctrl + O )" />
+                    </TextBlock>
+                </HyperlinkButton>
+                <HyperlinkButton Command="{Binding OpenInNewWindowCommand}" HorizontalAlignment="Center">
+                    <TextBlock TextDecorations="{x:Null}">
+                        <Run Text="在新窗口打开" />
+                        <Run Text="( Alt + W )" />
+                    </TextBlock>
+                </HyperlinkButton>
+                <HyperlinkButton Command="{Binding AggSearchCommand}" HorizontalAlignment="Center">
+                    <TextBlock TextDecorations="{x:Null}">
+                        <Run Text="聚合搜索" />
+                        <Run Text="( Shift + Shift )" />
+                    </TextBlock>
+                </HyperlinkButton>
+            </StackPanel>
+        </DockPanel>
+    </Border>
+</UserControl>

@@ -25,7 +25,10 @@
     <None Remove="Icon.NoMargin.ico" />
     <AvaloniaResource Include="Icon.NoMargin.ico" />
     <None Remove="Public\Version.txt" />
-    <AvaloniaResource Include="Public\Version.txt" />
+    <EmbeddedResource Include="Public\Version.txt" />
+    <None Remove="Views\Main\MainWinodow.axaml.cs~" />
+    <None Remove="Public\MiSans-Regular.ttf" />
+    <AvaloniaResource Include="Public\MiSans-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +56,9 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="Downloader" Version="4.0.3" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.4.1" />
+    <PackageReference Include="Flurl.Http" Version="4.0.2" />
     <PackageReference Include="Irihi.Ursa" Version="1.14.1" />
     <PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.14.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />

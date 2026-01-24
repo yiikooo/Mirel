@@ -41,7 +41,7 @@ public class Setting
     public enum WindowTitleBarStyle
     {
         System,
-        Aurelio,
+        Mirel,
         Unset
     }
 }
