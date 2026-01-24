@@ -55,6 +55,7 @@
         <Setter Property="ContextFlyout" Value="{DynamicResource DefaultTextBoxContextFlyout}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
     </Style>
     <Style Selector="TextBox.card">
         <Setter Property="Background" Value="Transparent" />
@@ -251,7 +252,7 @@
         <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
     </Style>
     <Style Selector="TextBlock.tab">
-        <Setter Property="Foreground" Value="{DynamicResource TabTextColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
     </Style>
     <Style Selector="MenuItem:pointerover">
         <Setter Property="Background" Value="{DynamicResource MenuItemHoverColor}" />

@@ -1,6 +1,7 @@
 ﻿using Avalonia.Media;
 using ReactiveUI;
-using ReactiveUI.SourceGenerators;
+using ReactiveUI.Fody.Helpers;
+
 
 namespace Mirel.Classes.Entries;
 

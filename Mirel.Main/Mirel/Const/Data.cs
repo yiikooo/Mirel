@@ -1,7 +1,8 @@
 ﻿using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using ReactiveUI;
-using ReactiveUI.SourceGenerators;
+using ReactiveUI.Fody.Helpers;
+
 
 namespace Mirel.Const;
 

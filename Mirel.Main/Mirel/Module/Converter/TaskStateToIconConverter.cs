@@ -1,11 +1,11 @@
 using System;
 using System.Globalization;
-using Aurelio.Public.Classes.Enum;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using FluentAvalonia.UI.Controls;
+using Mirel.Classes.Enums;
 
 namespace Mirel.Module.Converter;
 

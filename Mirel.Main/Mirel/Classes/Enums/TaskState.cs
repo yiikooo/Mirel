@@ -1,4 +1,4 @@
-﻿namespace Aurelio.Public.Classes.Enum;
+﻿namespace Mirel.Classes.Enums;
 
 public enum TaskState
 {

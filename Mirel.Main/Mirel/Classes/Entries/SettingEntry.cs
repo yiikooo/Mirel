@@ -5,7 +5,8 @@ using Mirel.Module.Ui;
 using Mirel.Views.Main.Pages;
 using Newtonsoft.Json;
 using ReactiveUI;
-using ReactiveUI.SourceGenerators;
+using ReactiveUI.Fody.Helpers;
+
 
 namespace Mirel.Classes.Entries;
 

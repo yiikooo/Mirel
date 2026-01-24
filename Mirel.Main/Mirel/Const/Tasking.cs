@@ -1,14 +1,15 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Aurelio.Public.Classes.Enum;
 using Avalonia.Media;
 using Avalonia.Threading;
 using Irihi.Avalonia.Shared.Contracts;
 using Mirel.Classes.Entries;
+using Mirel.Classes.Enums;
 using Mirel.Module.Value;
 using ReactiveUI;
-using ReactiveUI.SourceGenerators;
+using ReactiveUI.Fody.Helpers;
+
 
 namespace Mirel.Const;
 

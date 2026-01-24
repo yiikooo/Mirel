@@ -80,7 +80,7 @@ public partial class TabEntry : ViewModelBase
     {
         var textBlock = new TextBlock
         {
-            DataContext = this
+            DataContext = this,FontSize = 13
         };
         textBlock.Classes.Add("tab");
         textBlock.Bind(TextBlock.TextProperty, new Binding(nameof(Title)));

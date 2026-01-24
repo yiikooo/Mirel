@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
-using Aurelio.Public.Classes.Enum;
 using Avalonia.Data.Converters;
+using Mirel.Classes.Enums;
 
 namespace Mirel.Module.Converter;
 

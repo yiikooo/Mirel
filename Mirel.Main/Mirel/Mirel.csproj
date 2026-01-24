@@ -63,10 +63,7 @@
     <PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.14.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
     <PackageReference Include="ReactiveUI" Version="23.1.0-beta.1" />
-    <PackageReference Include="ReactiveUI.SourceGenerators" Version="2.6.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
     <PackageReference Include="Semi.Avalonia" Version="11.3.7.2" />
   </ItemGroup>
 </Project>

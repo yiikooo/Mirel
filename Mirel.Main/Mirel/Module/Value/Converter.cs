@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Aurelio.Public.Classes.Enum;
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Mirel.Classes.Enums;
 
 namespace Mirel.Module.Value;
 

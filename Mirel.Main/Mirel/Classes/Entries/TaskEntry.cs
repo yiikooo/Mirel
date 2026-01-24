@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Timers;
-using Aurelio.Public.Classes.Enum;
+using Mirel.Classes.Enums;
 using Mirel.Const;
 using Mirel.ViewModels;
 

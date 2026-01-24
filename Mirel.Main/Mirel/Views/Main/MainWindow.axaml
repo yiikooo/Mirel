@@ -48,7 +48,7 @@
                         ClipToBounds="True"
                         DockPanel.Dock="Top"
                         VerticalAlignment="Top">
-                        <Grid>
+                        <Grid Margin="-3,-3,-5,0">
                             <controls:TitleBar
                                 DockPanel.Dock="Top"
                                 IsCloseBtnExitApp="True"
@@ -69,8 +69,8 @@
                                             Name="MoreButton"
                                             VerticalAlignment="Center" />
                                         <Separator
-                                            Background="{DynamicResource TabTextColor}"
-                                            Foreground="{DynamicResource TabTextColor}"
+                                            Background="{DynamicResource TextColor}"
+                                            Foreground="{DynamicResource TextColor}"
                                             Height="16"
                                             Margin="5,0,5,0"
                                             Name="Separator"
@@ -91,7 +91,7 @@
                                 <Grid>
                                     <ScrollViewer
                                         AllowAutoHide="True"
-                                        HorizontalScrollBarVisibility="Auto"
+                                        HorizontalScrollBarVisibility="Hidden"
                                         Name="NavScrollViewer"
                                         Offset="{Binding TabScrollOffset}"
                                         OpacityMask="{Binding IsTabMaskVisible, Converter={StaticResource NavScrollOpacityMaskConverter}}"
@@ -156,28 +156,22 @@
                                                     <DataTemplate DataType="entries:TabEntry">
                                                         <Border
                                                             BorderThickness="1"
-                                                            CornerRadius="{DynamicResource CardCornerRadius}"
-                                                            Height="30"
+                                                            CornerRadius="8"
+                                                            Height="25"
                                                             MinWidth="140"
                                                             Name="ItemRoot"
                                                             PointerPressed="TabItem_OnPointerPressed"
                                                             Tag="{Binding}"
                                                             behavior:TabDragBehavior.IsEnabled="True">
-                                                            <Border.Transitions>
-                                                                <Transitions>
-                                                                    <BrushTransition Duration="0:0:0.2" Property="BorderBrush" />
-                                                                    <!-- <BrushTransition Duration="0:0:0.2" Property="Background" /> -->
-                                                                </Transitions>
-                                                            </Border.Transitions>
                                                             <DockPanel Margin="8,-1,10,0" VerticalAlignment="Center">
                                                                 <PathIcon
                                                                     Data="{Binding Icon}"
-                                                                    Foreground="{DynamicResource TabTextColor}"
-                                                                    Height="15"
+                                                                    Foreground="{DynamicResource TextColor}"
+                                                                    Height="12"
                                                                     IsVisible="{Binding IconIsVisible}"
                                                                     Margin="0,0,4,0"
-                                                                    Width="15" />
-                                                                <ContentControl Content="{Binding HeaderContent}" Foreground="{DynamicResource TabTextColor}" />
+                                                                    Width="12" />
+                                                                <ContentControl Content="{Binding HeaderContent}" Foreground="{DynamicResource TextColor}" />
                                                                 <Grid
                                                                     HorizontalAlignment="Right"
                                                                     IsVisible="{Binding CanClose}"
@@ -186,7 +180,7 @@
                                                                         Classes="icon-button tab"
                                                                         Command="{Binding Close}"
                                                                         Content="{DynamicResource Close}"
-                                                                        Foreground="{DynamicResource TabTextColor}"
+                                                                        Foreground="{DynamicResource TextColor}"
                                                                         HorizontalAlignment="Right"
                                                                         Margin="3,1,0,0"
                                                                         MaxHeight="14"
@@ -209,7 +203,7 @@
                                             <Button
                                                 Classes="custom-hover-button tab"
                                                 Content="{DynamicResource Plus}"
-                                                Margin="4,0,0,0"
+                                                Margin="4,2,0,0"
                                                 Name="NewTabButton" />
                                         </StackPanel>
                                     </ScrollViewer>
@@ -246,7 +240,7 @@
                                 <TextBlock
                                     FontFamily="{DynamicResource MiSans}"
                                     FontSize="14"
-                                    Foreground="{DynamicResource TabTextColor}"
+                                    Foreground="{DynamicResource TextColor}"
                                     Margin="-1,0,0,0"
                                     Text="irel"
                                     VerticalAlignment="Center"
