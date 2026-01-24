@@ -1,8 +1,7 @@
-﻿using System;
-using System.ComponentModel;
-using Avalonia.Controls.Notifications;
+﻿using System.ComponentModel;
 using Avalonia.Media;
-using HarfBuzzSharp;
+using Mirel.Module.App;
+using Mirel.Module.Ui;
 using Mirel.Views.Main.Pages;
 using Newtonsoft.Json;
 using ReactiveUI;
@@ -45,5 +44,15 @@ public class SettingEntry : ReactiveObject
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
+        if (e.PropertyName == nameof(Theme))
+        {
+            Setter.ToggleTheme(Theme);
+        }
+        else if (e.PropertyName == nameof(ThemeColor))
+        {
+            Setter.SetAccentColor(ThemeColor);
+        }
+
+        AppMethod.SaveSetting();
     }
 }

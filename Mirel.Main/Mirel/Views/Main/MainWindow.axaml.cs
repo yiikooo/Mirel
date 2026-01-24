@@ -91,7 +91,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
             ExtendClientAreaToDecorationsHint = true;
         }
     }
-    
+
     private void InitTitleBar()
     {
         var c = new MoreButtonMenu();
@@ -109,7 +109,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         if (existingTab == null)
         {
             var settingTabPage = new SettingTabPage();
-           
+
 
             var newTab = new TabEntry(settingTabPage)
             {
@@ -154,7 +154,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
                 }
             };
         }
-        
+
         NavScrollViewer.ScrollChanged += (_, _) => { ViewModel.IsTabMaskVisible = NavScrollViewer.Offset.X > 0; };
         Loaded += (_, _) =>
         {
@@ -164,7 +164,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         };
         TitleBarContainer.SizeChanged += (_, _) =>
         {
-            NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 125 : 80), 0,
+            NavRoot.Margin = new Thickness(Data.DesktopType == DesktopType.MacOs ? 125 : 70, 0,
                 TitleBarContainer.Bounds.Width + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
         };
         KeyDown += (_, e) =>
@@ -224,7 +224,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
             if (files == null) return;
             foreach (var file in files)
             {
-             //TODO
+                //TODO
             }
         }
         else if (e.Data.Contains(DataFormats.Text))

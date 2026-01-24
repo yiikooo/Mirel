@@ -48,7 +48,7 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
 
 #if RELEASE
-            Logger.Info(MainLang.RegisterGlobalExceptionHandlerTip);
+            Logger.Info("注册全局异常处理");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Dispatcher.UIThread.UnhandledException += UIThread_UnhandledException;
 #else
