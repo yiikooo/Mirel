@@ -251,9 +251,9 @@
     <Style Selector="ToggleButton">
         <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
     </Style>
-    <Style Selector="TextBlock.tab">
-        <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
-    </Style>
+    <!-- <Style Selector="TextBlock.tab"> -->
+    <!--     <Setter Property="Foreground" Value="{DynamicResource TextColor}" /> -->
+    <!-- </Style> -->
     <Style Selector="MenuItem:pointerover">
         <Setter Property="Background" Value="{DynamicResource MenuItemHoverColor}" />
     </Style>

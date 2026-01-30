@@ -83,7 +83,7 @@ public partial class TabWindow : UrsaWindow, IMirelWindow
             TitleBar.IsCloseBtnShow = false;
             TitleBar.IsMinBtnShow = false;
             TitleBar.IsMaxBtnShow = false;
-            NavRoot.Margin = new Thickness(125, 0, 15, 0);
+            NavRoot.Margin = new Thickness(60, 0, 15, 0);
         }
         else
         {

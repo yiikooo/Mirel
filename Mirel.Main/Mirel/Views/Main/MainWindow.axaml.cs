@@ -164,7 +164,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         };
         TitleBarContainer.SizeChanged += (_, _) =>
         {
-            NavRoot.Margin = new Thickness(Data.DesktopType == DesktopType.MacOs ? 125 : 70, 0,
+            NavRoot.Margin = new Thickness(Data.DesktopType == DesktopType.MacOs ? 60 : 5, 0,
                 TitleBarContainer.Bounds.Width + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
         };
         KeyDown += (_, e) =>

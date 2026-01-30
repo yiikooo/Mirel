@@ -42,13 +42,13 @@
         CornerRadius="8"
         x:Name="Root">
         <DockPanel>
-            <Grid Margin="-3,-3,-5,0">
+            <Grid>
                 <DockPanel>
                     <Border
                         ClipToBounds="True"
                         DockPanel.Dock="Top"
                         VerticalAlignment="Top">
-                        <Grid>
+                        <Grid Margin="3">
                             <controls:TitleBar
                                 DockPanel.Dock="Top"
                                 IsCloseBtnExitApp="False"
@@ -62,134 +62,141 @@
                                 DockPanel.Dock="Top"
                                 Height="40"
                                 HorizontalAlignment="Left"
-                                Margin="70,0,90,0"
+                                Margin="5,0,90,0"
                                 Name="NavRoot"
                                 VerticalAlignment="Top">
                                 <Grid>
-                                    <ScrollViewer
-                                        AllowAutoHide="True"
-                                        HorizontalScrollBarVisibility="Auto"
-                                        Name="NavScrollViewer"
-                                        Offset="{Binding TabScrollOffset}"
-                                        OpacityMask="{Binding IsTabMaskVisible, Converter={StaticResource NavScrollOpacityMaskConverter}}"
-                                        PointerWheelChanged="NavScrollViewer_PointerWheelChanged"
-                                        VerticalScrollBarVisibility="Disabled">
-                                        <StackPanel Margin="0,0,20,0" Orientation="Horizontal">
-                                            <u:SelectionList
-                                                AutoScrollToSelectedItem="True"
-                                                ItemsSource="{Binding Tabs}"
-                                                Name="NavMenu"
-                                                SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
-                                                VerticalAlignment="Center">
-                                                <u:SelectionList.Styles>
-                                                    <Style Selector="u|SelectionListItem:not(:selected)">
-                                                        <Style Selector="^ TextBlock">
-                                                            <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+                                    <Grid>
+                                        <ScrollViewer
+                                            AllowAutoHide="True"
+                                            HorizontalScrollBarVisibility="Hidden"
+                                            Name="NavScrollViewer"
+                                            Offset="{Binding TabScrollOffset}"
+                                            OpacityMask="{Binding IsTabMaskVisible, Converter={StaticResource NavScrollOpacityMaskConverter}}"
+                                            PointerWheelChanged="NavScrollViewer_PointerWheelChanged"
+                                            VerticalScrollBarVisibility="Disabled">
+                                            <StackPanel Margin="0,0,20,0" Orientation="Horizontal">
+                                                <u:SelectionList
+                                                    AutoScrollToSelectedItem="True"
+                                                    ItemsSource="{Binding Tabs}"
+                                                    Name="NavMenu"
+                                                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
+                                                    VerticalAlignment="Center">
+                                                    <u:SelectionList.Styles>
+                                                        <Style Selector="u|SelectionListItem:not(:selected)">
+                                                            <Style Selector="^ TextBlock.tab">
+                                                                <Setter Property="Foreground" Value="{DynamicResource TabTextColor}" />
+                                                            </Style>
+                                                            <Style Selector="^ PathIcon">
+                                                                <Setter Property="Foreground" Value="{DynamicResource TabTextColor}" />
+                                                            </Style>
+                                                            <Style Selector="^ Button">
+                                                                <Setter Property="Opacity" Value="0" />
+                                                            </Style>
+                                                            <Style Selector="^ Border#ItemRoot">
+                                                                <Setter Property="Background" Value="{DynamicResource TabBackgroundColor}" />
+                                                            </Style>
                                                         </Style>
-                                                        <Style Selector="^ Button">
-                                                            <Setter Property="Opacity" Value="0" />
+                                                        <Style Selector="u|SelectionListItem:pointerover">
+                                                            <Style Selector="^ Button">
+                                                                <Setter Property="Opacity" Value="1" />
+                                                            </Style>
+                                                            <Style Selector="^ Border#ItemRoot">
+                                                                <Setter Property="Background" Value="{DynamicResource HoverTabBackgroundColor}" />
+                                                            </Style>
                                                         </Style>
-                                                        <Style Selector="^ Border#ItemRoot">
-                                                            <Setter Property="Background" Value="{DynamicResource TabBackgroundColor}" />
-                                                            <Setter Property="BorderBrush" Value="{DynamicResource LinearGradientTransparentColor}" />
+                                                        <Style Selector="u|SelectionListItem:selected">
+                                                            <Style Selector="^ TextBlock.tab">
+                                                                <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
+                                                            </Style>
+                                                            <Style Selector="^ PathIcon">
+                                                                <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
+                                                            </Style>
+                                                            <Style Selector="^ Button">
+                                                                <Setter Property="Opacity" Value="1" />
+                                                            </Style>
+                                                            <Style Selector="^ Border#ItemRoot">
+                                                                <Setter Property="Background" Value="{DynamicResource SelectedTabBackgroundColor}" />
+                                                            </Style>
                                                         </Style>
-                                                    </Style>
-                                                    <Style Selector="u|SelectionListItem:pointerover">
-                                                        <Style Selector="^ Button">
-                                                            <Setter Property="Opacity" Value="1" />
-                                                        </Style>
-                                                        <Style Selector="^ Border#ItemRoot">
-                                                            <Setter Property="Background" Value="{DynamicResource HoverTabBackgroundColor}" />
-                                                            <Setter Property="BorderBrush" Value="{DynamicResource LinearGradientTransparentColor}" />
-                                                        </Style>
-                                                    </Style>
-                                                    <Style Selector="u|SelectionListItem:selected">
-                                                        <Style Selector="^ Button">
-                                                            <Setter Property="Opacity" Value="1" />
-                                                        </Style>
-                                                        <Style Selector="^ Border#ItemRoot">
-                                                            <Setter Property="Background" Value="{DynamicResource SelectedTabBackgroundColor}" />
-                                                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-                                                        </Style>
-                                                    </Style>
-                                                </u:SelectionList.Styles>
-                                                <u:SelectionList.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" Spacing="5" />
-                                                    </ItemsPanelTemplate>
-                                                </u:SelectionList.ItemsPanel>
-                                                <u:SelectionList.Indicator>
-                                                    <Border
-                                                        Background="{DynamicResource PageBackgroundColor}"
-                                                        BorderBrush="{DynamicResource BorderBrush}"
-                                                        BorderThickness="1"
-                                                        CornerRadius="5"
-                                                        HorizontalAlignment="Stretch"
-                                                        IsVisible="False"
-                                                        Margin="3"
-                                                        VerticalAlignment="Stretch" />
-                                                </u:SelectionList.Indicator>
-                                                <u:SelectionList.ItemTemplate>
-                                                    <DataTemplate DataType="entries:TabEntry">
+                                                    </u:SelectionList.Styles>
+                                                    <u:SelectionList.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" Spacing="5" />
+                                                        </ItemsPanelTemplate>
+                                                    </u:SelectionList.ItemsPanel>
+                                                    <u:SelectionList.Indicator>
                                                         <Border
+                                                            Background="{DynamicResource PageBackgroundColor}"
+                                                            BorderBrush="{DynamicResource BorderBrush}"
                                                             BorderThickness="1"
-                                                            CornerRadius="8"
-                                                            Height="25"
-                                                            MinWidth="140"
-                                                            Name="ItemRoot"
-                                                            PointerPressed="TabItem_OnPointerPressed"
-                                                            Tag="{Binding}"
-                                                            behavior:TabDragBehavior.IsEnabled="True">
-                                                            <DockPanel Margin="8,-1,10,0" VerticalAlignment="Center">
-                                                                <PathIcon
-                                                                    Data="{Binding Icon}"
-                                                                    Foreground="{DynamicResource TextColor}"
-                                                                    Height="12"
-                                                                    IsVisible="{Binding IconIsVisible}"
-                                                                    Margin="0,3,4,0"
-                                                                    Width="12" />
-                                                                <ContentControl Content="{Binding HeaderContent}" Foreground="{DynamicResource TextColor}" />
-                                                                <Grid
-                                                                    HorizontalAlignment="Right"
-                                                                    IsVisible="{Binding CanClose}"
-                                                                    Margin="0,0,-4,0">
-                                                                    <Button
-                                                                        Classes="icon-button tab"
-                                                                        Command="{Binding Close}"
-                                                                        Content="{DynamicResource Close}"
-                                                                        Foreground="{DynamicResource TextColor}"
+                                                            CornerRadius="5"
+                                                            HorizontalAlignment="Stretch"
+                                                            IsVisible="False"
+                                                            Margin="3"
+                                                            VerticalAlignment="Stretch" />
+                                                    </u:SelectionList.Indicator>
+                                                    <u:SelectionList.ItemTemplate>
+                                                        <DataTemplate DataType="entries:TabEntry">
+                                                            <Border
+                                                                BorderThickness="1"
+                                                                CornerRadius="{DynamicResource CardCornerRadius}"
+                                                                Height="30"
+                                                                MinWidth="140"
+                                                                Name="ItemRoot"
+                                                                PointerPressed="TabItem_OnPointerPressed"
+                                                                Tag="{Binding}"
+                                                                behavior:TabDragBehavior.IsEnabled="True">
+                                                                <DockPanel Margin="8,-1,10,0" VerticalAlignment="Center">
+                                                                    <PathIcon
+                                                                        Data="{Binding Icon}"
+                                                                        Height="15"
+                                                                        IsVisible="{Binding IconIsVisible}"
+                                                                        Margin="0,0,4,0"
+                                                                        Width="15" />
+                                                                    <ContentControl Content="{Binding HeaderContent}" Foreground="{DynamicResource TextColor}" />
+                                                                    <Grid
                                                                         HorizontalAlignment="Right"
-                                                                        Margin="3,1,0,0"
-                                                                        MaxHeight="14"
-                                                                        MaxWidth="16"
-                                                                        MinHeight="14"
-                                                                        Name="CloseButton"
-                                                                        VerticalAlignment="Center">
-                                                                        <Button.Transitions>
-                                                                            <Transitions>
-                                                                                <DoubleTransition Duration="0:0:0.07" Property="Opacity" />
-                                                                            </Transitions>
-                                                                        </Button.Transitions>
-                                                                    </Button>
-                                                                </Grid>
-                                                            </DockPanel>
-                                                        </Border>
-                                                    </DataTemplate>
-                                                </u:SelectionList.ItemTemplate>
-                                            </u:SelectionList>
-                                            <Button
-                                                Classes="custom-hover-button tab"
-                                                Content="{DynamicResource Plus}"
-                                                Margin="4,2,0,0"
-                                                Name="NewTabButton" />
-                                        </StackPanel>
-                                    </ScrollViewer>
+                                                                        IsVisible="{Binding CanClose}"
+                                                                        Margin="0,0,-4,0">
+                                                                        <Button
+                                                                            Classes="icon-button tab"
+                                                                            Command="{Binding Close}"
+                                                                            Content="{DynamicResource Close}"
+                                                                            HorizontalAlignment="Right"
+                                                                            Margin="3,1,0,0"
+                                                                            MaxHeight="14"
+                                                                            MaxWidth="16"
+                                                                            MinHeight="14"
+                                                                            Name="CloseButton"
+                                                                            VerticalAlignment="Center">
+                                                                            <Button.Transitions>
+                                                                                <Transitions>
+                                                                                    <DoubleTransition Duration="0:0:0.07" Property="Opacity" />
+                                                                                </Transitions>
+                                                                            </Button.Transitions>
+                                                                        </Button>
+                                                                    </Grid>
+                                                                </DockPanel>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </u:SelectionList.ItemTemplate>
+                                                </u:SelectionList>
+                                                <Button
+                                                    Classes="custom-hover-button tab"
+                                                    Content="{DynamicResource Plus}"
+                                                    Margin="4,0,0,0"
+                                                    Name="NewTabButton" />
+                                            </StackPanel>
+                                        </ScrollViewer>
+                                    </Grid>
                                 </Grid>
                             </Border>
                             <DockPanel
                                 Height="40"
                                 HorizontalAlignment="Left"
                                 IsHitTestVisible="False"
+                                IsVisible="False"
                                 Margin="14,0,0,0"
                                 Name="TitleRoot"
                                 VerticalAlignment="Top">

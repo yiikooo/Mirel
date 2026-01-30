@@ -56,10 +56,10 @@
             <SolidColorBrush Color="#2C3E50" x:Key="TextColor" />
             <SolidColorBrush Color="#21606E7E" x:Key="ExpanderSeparatorColor" />
             <Color x:Key="WindowBackgroundColor">
-                #F5F7FA
+                #fafafa
             </Color>
             <SolidColorBrush
-                Color="#FFFFFF"
+                Color="#fafafa"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PageBackgroundColor" />
             <SolidColorBrush
@@ -89,17 +89,25 @@
             <Color x:Key="LinearGradientTransparentColor">#00FFFFFF</Color>
             <SolidColorBrush Color="#96F1F1F1" x:Key="MenuItemHoverColor" />
             <SolidColorBrush
-                Color="#FFFFFF"
+                Color="#dadddf"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="SelectedTabBackgroundColor" />
             <SolidColorBrush
-                Color="#D4DDEA"
+                Color="#e8e8e8"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="HoverTabBackgroundColor" />
             <SolidColorBrush
-                Color="#E2E8F0"
+                Color="#f1f1f1"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="TabBackgroundColor" />
+            <SolidColorBrush
+                Color="#a1a1a1"
+                Opacity="{DynamicResource BackGroundOpacity}"
+                x:Key="TabTextColor" />
+            <SolidColorBrush
+                Color="#5c6773"
+                Opacity="{DynamicResource BackGroundOpacity}"
+                x:Key="SelectedTabTextColor" />
             <CornerRadius x:Key="CardCornerRadius">10</CornerRadius>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
