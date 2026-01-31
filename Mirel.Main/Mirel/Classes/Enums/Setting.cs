@@ -35,7 +35,8 @@ public class Setting
     {
         System,
         Light,
-        Dark
+        Dark,
+        Mirage
     }
 
     public enum WindowTitleBarStyle

@@ -120,8 +120,8 @@
                             MaxHeight="{TemplateBinding MaxDropDownHeight}"
                             PlacementTarget="PART_RootGrid">
                             <Border
-                                Background="{DynamicResource CardBackgroundColor}"
-                                BorderBrush="{DynamicResource BorderBrush}"
+                                Background="{DynamicResource PanelBackgroundColor}"
+                                BorderBrush="{DynamicResource PanelBorderBrush}"
                                 BorderThickness="1"
                                 BoxShadow="none"
                                 CornerRadius="{DynamicResource CardCornerRadius}"

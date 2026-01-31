@@ -107,7 +107,7 @@
     </ControlTheme>
 
     <ControlTheme TargetType="MenuItem" x:Key="{x:Type MenuItem}">
-        <Setter Property="Background" Value="{DynamicResource CardBackgroundColor}" />
+        <Setter Property="Background" Value="{DynamicResource PanelBackgroundColor}" />
         <Setter Property="Foreground" Value="{DynamicResource MenuItemForeground}" />
         <Setter Property="Cursor" Value="Hand" />
         <!--  Narrow padding should be used for mouse input, when non-narrow one should be used for touch input in future.  -->
@@ -194,7 +194,7 @@
                         VerticalOffset="-4"
                         WindowManagerAddShadowHint="False">
                         <Border
-                            Background="{DynamicResource CardBackgroundColor}"
+                            Background="{DynamicResource PanelBackgroundColor}"
                             BorderBrush="{DynamicResource MenuFlyoutBorderBrush}"
                             BorderThickness="{DynamicResource MenuFlyoutBorderThickness}"
                             BoxShadow="{DynamicResource MenuFlyoutBorderBoxShadow}"
@@ -297,7 +297,7 @@
     </ControlTheme>
 
     <ControlTheme TargetType="MenuItem" x:Key="TopLevelMenuItem">
-        <Setter Property="Background" Value="{DynamicResource CardBackgroundColor}" />
+        <Setter Property="Background" Value="{DynamicResource PanelBackgroundColor}" />
         <Setter Property="Foreground" Value="{DynamicResource MenuItemForeground}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="CornerRadius" Value="{DynamicResource MenuItemCornerRadius}" />
@@ -333,7 +333,7 @@
                             VerticalOffset="-4"
                             WindowManagerAddShadowHint="False">
                             <Border
-                                Background="{DynamicResource CardBackgroundColor}"
+                                Background="{DynamicResource PanelBackgroundColor}"
                                 BorderBrush="{DynamicResource MenuFlyoutBorderBrush}"
                                 BorderThickness="{DynamicResource MenuFlyoutBorderThickness}"
                                 BoxShadow="{DynamicResource MenuFlyoutBorderBoxShadow}"
@@ -380,7 +380,7 @@
     </ControlTheme>
 
     <ControlTheme TargetType="Menu" x:Key="{x:Type Menu}">
-        <Setter Property="Background" Value="{DynamicResource CardBackgroundColor}" />
+        <Setter Property="Background" Value="{DynamicResource PanelBackgroundColor}" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource TopLevelMenuItem}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="Menu">

@@ -94,7 +94,7 @@
                             </Panel>
                             <Rectangle
                                 DockPanel.Dock="Left"
-                                Fill="{DynamicResource CardBackgroundColor}"
+                                Fill="{DynamicResource PanelBackgroundColor}"
                                 Margin="5,-2"
                                 Width="0" />
 
@@ -155,7 +155,7 @@
                                         Margin="16,8,8,8" />
 
                                     <Border
-                                        Background="{DynamicResource CardBackgroundColor}"
+                                        Background="{DynamicResource PanelBackgroundColor}"
                                         BorderThickness="1"
                                         BoxShadow="none"
                                         ClipToBounds="True"
@@ -177,7 +177,7 @@
         </Setter>
 
         <Style Selector="^:pointerover">
-            <Setter Property="Background" Value="{DynamicResource MenuItemHoverColor}" />
+            <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
         </Style>
 
         <Style Selector="^:open /template/ LayoutTransformControl#PART_LayoutTransform">
@@ -209,7 +209,7 @@
         </Style>
 
         <Style Selector="^:selected /template/ Border#root">
-            <Setter Property="Background" Value="{DynamicResource MenuItemHoverColor}" />
+            <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
         </Style>
 
         <Style Selector="^:disabled">

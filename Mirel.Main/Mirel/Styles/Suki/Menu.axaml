@@ -57,7 +57,7 @@
                                         CornerRadius="6"
                                         Margin="16,8,8,8" />
                                     <Border
-                                        Background="{DynamicResource CardBackgroundColor}"
+                                        Background="{DynamicResource PanelBackgroundColor}"
                                         BorderBrush="{DynamicResource SukiMenuBorderBrush}"
                                         BorderThickness="1"
                                         BoxShadow="none"

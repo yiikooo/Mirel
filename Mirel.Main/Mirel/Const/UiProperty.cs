@@ -2,6 +2,7 @@
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Styling;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using ReactiveUI;
@@ -21,8 +22,9 @@ public class UiProperty : ReactiveObject
     {
         get { return _instance ??= new UiProperty(); }
     }
-    public static ObservableCollection<LaunchPageEntry> LaunchPages { get; } = [];
 
+    public static ObservableCollection<LaunchPageEntry> LaunchPages { get; } = [];
+    public static ThemeVariant Mirage { get; } = new("Mirage", ThemeVariant.Dark);
     public static ObservableCollection<NotificationEntry> Notifications { get; } = [];
     public static ObservableCollection<string> BuiltInTags { get; } = [];
     public static WindowNotificationManager Notification => ActiveWindow.Notification;
@@ -31,6 +33,6 @@ public class UiProperty : ReactiveObject
     public static IMirelWindow ActiveWindow => (Application.Current!.ApplicationLifetime as
         IClassicDesktopStyleApplicationLifetime).Windows.FirstOrDefault
         (x => x.IsActive) as IMirelWindow ?? App.UiRoot;
-    
+
     public static ObservableCollection<NavPageEntry> NavPages { get; } = [];
 }

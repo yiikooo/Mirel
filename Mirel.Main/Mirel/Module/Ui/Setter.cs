@@ -43,7 +43,7 @@ public class Setter
             Logger.Error(e);
         }
     }
-    
+
     public static void UpdateWindowStyle(UrsaWindow? window, Action? action = null)
     {
         if (window == null) return;
@@ -71,6 +71,9 @@ public class Setter
             Application.Current.RequestedThemeVariant = ThemeVariant.Light;
         else if (theme == Setting.Theme.Dark)
             Application.Current.RequestedThemeVariant = ThemeVariant.Dark;
-        else if (theme == Setting.Theme.System) Application.Current.RequestedThemeVariant = ThemeVariant.Default;
+        else if (theme == Setting.Theme.Mirage)
+            Application.Current.RequestedThemeVariant = UiProperty.Mirage;
+        else if (theme == Setting.Theme.System)
+            Application.Current.RequestedThemeVariant = ThemeVariant.Default;
     }
 }

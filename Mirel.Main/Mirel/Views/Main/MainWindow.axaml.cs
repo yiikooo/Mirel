@@ -83,7 +83,6 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
             TitleBar.IsCloseBtnShow = false;
             TitleBar.IsMinBtnShow = false;
             TitleBar.IsMaxBtnShow = false;
-            Separator.IsVisible = false;
         }
         else
         {
@@ -96,9 +95,8 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
     {
         var c = new MoreButtonMenu();
         var menu = (MenuFlyout)c.MainControl!.Flyout;
-        MoreButton.Flyout = menu;
-        MoreButton.DataContext = new MoreButtonMenuCommands();
-        SettingButton.Click += (_, _) => { OpenSettingPage(); };
+        TitleRoot.ContextFlyout = menu;
+        TitleRoot.DataContext = new MoreButtonMenuCommands();
         NewTabButton.Click += (_, _) => { CreateTab(new TabEntry(new NewTabPage())); };
     }
 
@@ -162,10 +160,10 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
             RenderOptions.SetBitmapInterpolationMode(this, BitmapInterpolationMode.MediumQuality); // 图片渲染模式
             RenderOptions.SetEdgeMode(this, EdgeMode.Antialias); // 形状渲染模式
         };
-        TitleBarContainer.SizeChanged += (_, _) =>
+        TitleBar.SizeChanged += (_, _) =>
         {
-            NavRoot.Margin = new Thickness(Data.DesktopType == DesktopType.MacOs ? 60 : 5, 0,
-                TitleBarContainer.Bounds.Width + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
+            NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 125 : 80), 0,
+                70 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
         };
         KeyDown += (_, e) =>
         {

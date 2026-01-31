@@ -23,7 +23,7 @@
                     Width="24">
                     <Path
                         Data="{TemplateBinding Content}"
-                        Fill="{DynamicResource TextColor}"
+                        Fill="{DynamicResource ForegroundColor}"
                         Height="10"
                         HorizontalAlignment="Center"
                         Margin="{TemplateBinding Padding}"
@@ -36,7 +36,7 @@
         </Setter>
         <Style Selector="^:pointerover">
             <Style Selector="^ /template/ Border">
-                <Setter Property="Background" Value="{DynamicResource TitleBarHoverColor}" />
+                <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
             </Style>
             <Style Selector="^.close-button /template/ Border">
                 <Setter Property="Background" Value="Red" />
@@ -65,7 +65,7 @@
                     Width="24">
                     <Path
                         Data="{TemplateBinding Content}"
-                        Fill="{DynamicResource TextColor}"
+                        Fill="{DynamicResource ForegroundColor}"
                         Height="20"
                         Name="ico"
                         Stretch="Uniform"
@@ -75,7 +75,7 @@
         </Setter>
         <Style Selector="^:pointerover">
             <Style Selector="^ /template/ Border">
-                <Setter Property="Background" Value="{DynamicResource TitleBarHoverColor}" />
+                <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
             </Style>
         </Style>
     </Style>
@@ -94,7 +94,7 @@
                     Name="bd">
                     <Path
                         Data="{TemplateBinding Content}"
-                        Fill="{DynamicResource TextColor}"
+                        Fill="{DynamicResource ForegroundColor}"
                         Height="9"
                         Name="ico"
                         Stretch="Uniform"
@@ -131,7 +131,7 @@
                     Width="24">
                     <Path
                         Data="{TemplateBinding Content}"
-                        Fill="{DynamicResource TextColor}"
+                        Fill="{DynamicResource ForegroundColor}"
                         Height="14"
                         HorizontalAlignment="Center"
                         Margin="{TemplateBinding Padding}"
@@ -144,7 +144,7 @@
         </Setter>
         <Style Selector="^:pointerover">
             <Style Selector="^ /template/ Border">
-                <Setter Property="Background" Value="{DynamicResource TitleBarHoverColor}" />
+                <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
             </Style>
         </Style>
     </Style>
@@ -164,7 +164,7 @@
                     Name="bd">
                     <Path
                         Data="{TemplateBinding Content}"
-                        Fill="{DynamicResource TextColor}"
+                        Fill="{DynamicResource ForegroundColor}"
                         Height="{TemplateBinding Height}"
                         Name="ico"
                         Stretch="Uniform"
@@ -188,7 +188,7 @@
                     Name="bd">
                     <Path
                         Data="{TemplateBinding Content}"
-                        Fill="{DynamicResource TextColor}"
+                        Fill="{DynamicResource ForegroundColor}"
                         Height="{TemplateBinding Height}"
                         Name="ico"
                         Stretch="Uniform"
@@ -198,6 +198,6 @@
         </Setter>
     </Style>
     <Style Selector="Button.tab /template/ Path">
-        <Setter Property="Fill" Value="{DynamicResource TextColor}" />
+        <Setter Property="Fill" Value="{DynamicResource ForegroundColor}" />
     </Style>
 </Styles>

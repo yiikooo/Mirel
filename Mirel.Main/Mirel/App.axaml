@@ -14,7 +14,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="/Styles/Override/Template/IconPath.axaml" />
                 <ResourceInclude Source="/Styles/Suki/SukiTheme.axaml" />
-                <ResourceInclude Source="/Styles/Theme.axaml" />
+                <ResourceInclude Source="/Styles/Themes/Light.axaml" />
+                <ResourceInclude Source="/Styles/Themes/Dark.axaml" />
+                <ResourceInclude Source="/Styles/Themes/Mirage.axaml" />
                 <ResourceInclude Source="avares://FluentAvalonia/Styling/ControlThemes/BasicControls/ListBoxStyles.axaml" />
                 <ResourceInclude Source="avares://FluentAvalonia/Styling/ControlThemes/BasicControls/HyperlinkButtonStyles.axaml" />
                 <ResourceInclude Source="avares://FluentAvalonia/Styling/ControlThemes/BasicControls/ExpanderStyles.axaml" />
@@ -45,15 +47,13 @@
             <system:Double x:Key="BackGroundOpacity">0.5</system:Double>
             <FontFamily x:Key="MiSans">avares://Mirel/Public#MiSans</FontFamily>
             <FontWeight x:Key="FontWeight">350</FontWeight>
+            <CornerRadius x:Key="CardCornerRadius">10</CornerRadius>
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>
-        <!-- <SukiTheme Locale="zh-CN" ThemeColor="Blue" /> -->
         <styling:FluentAvaloniaTheme />
         <semi:SemiTheme Locale="zh-CN" />
         <u-semi:SemiTheme Locale="zh-CN" />
-        <!-- <semi:SemiPopupAnimations /> -->
-        <!-- <StyleInclude Source="/Styles/SukiUi.axaml" /> -->
         <StyleInclude Source="/Styles/TitleBar.axaml" />
         <StyleInclude Source="/Styles/Style.axaml" />
         <StyleInclude Source="/Styles/Override/Card.axaml" />

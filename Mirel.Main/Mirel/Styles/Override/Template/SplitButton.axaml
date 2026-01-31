@@ -137,7 +137,7 @@
             <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultSecondaryForeground}" />
         </Style>
         <Style Selector="^.Tertiary /template/ Button">
-            <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
         </Style>
         <Style Selector="^.Success /template/ Button">
             <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultSuccessForeground}" />
@@ -285,7 +285,7 @@
             </Style>
         </Style>
         <Style Selector="^.Tertiary /template/ Button">
-            <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
             <Setter Property="Background" Value="{DynamicResource ButtonSolidTertiaryBackground}" />
             <Style Selector="^:pointerover">
                 <Setter Property="Background" Value="{DynamicResource ButtonSolidTertiaryPointeroverBackground}" />

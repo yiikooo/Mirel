@@ -36,14 +36,14 @@
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource CardBackgroundColor}" />
+        <Setter Property="Background" Value="{DynamicResource PanelBackgroundColor}" />
         <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="u:ToastCard">
                 <LayoutTransformControl UseRenderTransform="True" x:Name="PART_LayoutTransformControl">
                     <Border
-                        Background="{DynamicResource CardBackgroundColor}"
-                        BorderBrush="{DynamicResource BorderBrush}"
+                        Background="{DynamicResource PanelBackgroundColor}"
+                        BorderBrush="{DynamicResource PanelBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="{DynamicResource CardCornerRadius}"
                         Margin="6">

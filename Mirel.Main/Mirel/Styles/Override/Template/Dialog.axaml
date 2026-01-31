@@ -24,7 +24,7 @@
             <ControlTemplate TargetType="u:CustomDialogControl">
                 <Panel>
                     <Border
-                        Background="{DynamicResource WindowBackgroundColor}"
+                        Background="{DynamicResource BackgroundColor}"
                         Classes="Shadow"
                         ClipToBounds="False"
                         CornerRadius="{TemplateBinding CornerRadius}"
@@ -71,7 +71,7 @@
                 <Setter Property="VerticalAlignment" Value="Stretch" />
                 <Setter Property="Theme" Value="{x:Null}" />
                 <Setter Property="Margin" Value="0" />
-                <Setter Property="Background" Value="{DynamicResource WindowBackgroundColor}" />
+                <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
             </Style>
         </Style>
         <Style Selector="^ /template/ Panel#PART_TitleArea">
@@ -145,7 +145,7 @@
             <ControlTemplate TargetType="u:DefaultDialogControl">
                 <Panel>
                     <Border
-                        Background="{DynamicResource WindowBackgroundColor}"
+                        Background="{DynamicResource BackgroundColor}"
                         BoxShadow="0 0 8 0 #1A000000"
                         Classes="Shadow"
                         ClipToBounds="False"
@@ -226,7 +226,7 @@
             <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="Theme" Value="{x:Null}" />
             <Setter Property="Margin" Value="0" />
-            <Setter Property="Background" Value="{DynamicResource WindowBackgroundColor}" />
+            <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
         </Style>
         <Style Selector="^ /template/ Button#PART_CancelButton">
             <Setter Property="Grid.Column" Value="0" />
@@ -430,8 +430,8 @@
 
     <ControlTheme TargetType="u:DialogWindow" x:Key="{x:Type u:DialogWindow}">
         <Setter Property="Title" Value="{x:Null}" />
-        <Setter Property="Background" Value="{DynamicResource WindowBackgroundColor}" />
-        <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource WindowBackgroundColor}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
+        <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource BackgroundColor}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowDefaultForeground}" />
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
         <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}" />
@@ -459,7 +459,7 @@
                 <Panel>
                     <Border IsHitTestVisible="False" Name="PART_TransparencyFallback" />
                     <Border
-                        Background="{DynamicResource WindowBackgroundColor}"
+                        Background="{DynamicResource BackgroundColor}"
                         BackgroundSizing="InnerBorderEdge"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -502,8 +502,8 @@
 
     <ControlTheme TargetType="u:DefaultDialogWindow" x:Key="{x:Type u:DefaultDialogWindow}">
         <Setter Property="Title" Value="{x:Null}" />
-        <Setter Property="Background" Value="{DynamicResource WindowBackgroundColor}" />
-        <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource WindowBackgroundColor}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
+        <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource BackgroundColor}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowDefaultForeground}" />
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
         <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}" />
@@ -531,7 +531,7 @@
                 <Panel>
                     <Border IsHitTestVisible="False" Name="PART_TransparencyFallback" />
                     <Border
-                        Background="{DynamicResource WindowBackgroundColor}"
+                        Background="{DynamicResource BackgroundColor}"
                         BackgroundSizing="InnerBorderEdge"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"

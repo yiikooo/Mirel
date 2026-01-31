@@ -18,13 +18,10 @@
     </Design.PreviewWith>
 
     <ControlTheme TargetType="MenuFlyoutPresenter" x:Key="{x:Type MenuFlyoutPresenter}">
-        <Setter Property="Background" Value="{DynamicResource CardBackgroundColor}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MenuFlyoutBorderBrush}" />
-        <Setter Property="BorderThickness" Value="{DynamicResource MenuFlyoutBorderThickness}" />
+        <Setter Property="Background" Value="{DynamicResource PopupBackgroundColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PopupBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="FontSize" Value="{DynamicResource TextBlockFontSize}" />
-        <Setter Property="FontWeight" Value="{DynamicResource TextBlockFontWeight}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBlockDefaultForeground}" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="CornerRadius" Value="{DynamicResource MenuFlyoutCornerRadius}" />
@@ -34,7 +31,6 @@
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    BoxShadow="{DynamicResource MenuFlyoutBorderBoxShadow}"
                     ClipToBounds="True"
                     CornerRadius="{TemplateBinding CornerRadius}"
                     Margin="4"
