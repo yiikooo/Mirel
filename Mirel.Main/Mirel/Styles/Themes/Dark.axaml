@@ -40,7 +40,7 @@
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="TabBackgroundColor" />
             <SolidColorBrush
-                Color="#50504c"
+                Color="#FF85857E"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="TabTextColor" />
             <SolidColorBrush

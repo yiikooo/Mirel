@@ -55,6 +55,7 @@
             <Setter Property="Margin" Value="0,32,0,0" />
         </Style>
     </Style>
+
     <Style Selector="controls|ContentExpandControl.task-content#PART_ContentExpand">
         <Setter Property="Margin" Value="0,60,0,0" />
     </Style>
@@ -74,5 +75,20 @@
     <Style Selector="u|MultiComboBox">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+    </Style>
+
+    <Style Selector="TextBox.card">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+    </Style>
+    <Style Selector="TextBox.card /template/ DataValidationErrors">
+        <Setter Property="Background" Value="{DynamicResource PanelBackgroundColor}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+    </Style>
+    <Style Selector="Expander.card:down:expanded /template/ Border#PART_BottomBorder">
+        <Setter Property="Background" Value="{DynamicResource LineColor}" />
+    </Style>
+    <Style Selector="Expander.card:down:expanded /template/ Border#PART_TopBorder">
+        <Setter Property="Background" Value="{DynamicResource LineColor}" />
     </Style>
 </Styles>

@@ -1,0 +1,128 @@
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:u="https://irihi.tech/ursa"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith />
+
+    <Style Selector="ToggleButton:checked">
+        <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="ToggleButton:checked:pointerover  /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
+    </Style>
+    <Style Selector="Button">
+        <Setter Property="FontFamily" Value="{DynamicResource MiSans}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition
+                    Duration="0:0:0.3"
+                    Easing="CircularEaseOut"
+                    Property="Foreground" />
+                <BrushTransition
+                    Duration="0:0:0.3"
+                    Easing="CircularEaseOut"
+                    Property="Background" />
+            </Transitions>
+        </Setter>
+        <Style Selector="^ AccessText">
+            <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+        </Style>
+    </Style>
+    <Style Selector="u|IconButton">
+        <Setter Property="FontFamily" Value="{DynamicResource MiSans}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition
+                    Duration="0:0:0.3"
+                    Easing="CircularEaseOut"
+                    Property="Foreground" />
+                <BrushTransition
+                    Duration="0:0:0.3"
+                    Easing="CircularEaseOut"
+                    Property="Background" />
+            </Transitions>
+        </Setter>
+        <Style Selector="^ TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+        </Style>
+        <Style Selector="^ PathIcon">
+            <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+        </Style>
+    </Style>
+
+    <Style Selector="ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+    </Style>
+    <Style Selector="u|NotificationCard">
+        <Style Selector="^ SelectableTextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+    </Style>
+    <Style Selector="ToggleSwitch">
+        <Setter Property="OffContent" Value="开启" />
+        <Setter Property="OnContent" Value="关闭" />
+    </Style>
+
+    <Style Selector="u|SelectionListItem">
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="ListBoxItem">
+        <Setter Property="Margin" Value="5,3" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+    </Style>
+    <Style Selector="u|IconButton">
+        <Style Selector="^ PathIcon">
+            <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+        </Style>
+        <Style Selector="^ /template/ ReversibleStackPanel#PART_RootPanel">
+            <Setter Property="Spacing" Value="0" />
+        </Style>
+        <Style Selector="^:not(.fixed) /template/ Panel#PART_IconRoot">
+            <Setter Property="Margin" Value="-21,0,8,0" />
+            <Setter Property="Opacity" Value="0" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition
+                        Duration="0:0:0.2"
+                        Easing="CircularEaseOut"
+                        Property="Opacity" />
+                    <ThicknessTransition
+                        Duration="0:0:0.2"
+                        Easing="CircularEaseOut"
+                        Property="Margin" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="^:not(.fixed):pointerover /template/ Panel#PART_IconRoot">
+            <Setter Property="Margin" Value="0,0,8,0" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </Style>
+    <Style Selector="u|IconButton:disabled">
+        <Setter Property="Background" Value="{DynamicResource SystemAccentColorLight2}" />
+    </Style>
+    <Style Selector="ComboBox:dropdownopen /template/ Border#PopupBorder">
+        <Setter Property="Background" Value="{DynamicResource PanelBackgroundColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PanelBorderBrush}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+        <Setter Property="BoxShadow" Value="none" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="4,7,4,4" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+    <Style Selector="ComboBoxItem">
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+    </Style>
+    <Style Selector="u|MultiComboBoxItem">
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+    </Style>
+    <Style Selector="ToggleButton">
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+    </Style>
+    <Style Selector="MenuItem:pointerover">
+        <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
+    </Style>
+</Styles>

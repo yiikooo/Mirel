@@ -1,0 +1,78 @@
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:u="https://irihi.tech/ursa"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!--  Add Controls for Previewer Here  -->
+        </Border>
+    </Design.PreviewWith>
+
+
+    <Style Selector="CheckBox">
+        <Setter Property="FontFamily" Value="{DynamicResource MiSans}" />
+        <Setter Property="FontWeight" Value="{DynamicResource FontWeight}" />
+    </Style>
+    <Style Selector="TextBox">
+        <Setter Property="FontFamily" Value="{DynamicResource MiSans}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+        <Setter Property="Padding" Value="10,0,8,0" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition
+                    Duration="0:0:0.3"
+                    Easing="CircularEaseOut"
+                    Property="Foreground" />
+            </Transitions>
+        </Setter>
+        <Setter Property="ContextFlyout" Value="{DynamicResource DefaultTextBoxContextFlyout}" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
+    </Style>
+    <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MiSans}" />
+        <Setter Property="FontWeight" Value="{DynamicResource FontWeight}" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition
+                    Duration="0:0:0.3"
+                    Easing="CircularEaseOut"
+                    Property="Foreground" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="SelectableTextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MiSans}" />
+        <Setter Property="FontWeight" Value="{DynamicResource FontWeight}" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition
+                    Duration="0:0:0.3"
+                    Easing="CircularEaseOut"
+                    Property="Foreground" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="PathIcon">
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition
+                    Duration="0:0:0.3"
+                    Easing="CircularEaseOut"
+                    Property="Foreground" />
+            </Transitions>
+        </Setter>
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
+    </Style>
+    <Style Selector="AccessText">
+        <Setter Property="FontFamily" Value="{DynamicResource MiSans}" />
+    </Style>
+    <Style Selector="u|NotificationCard">
+        <Style Selector="^ SelectableTextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+    </Style>
+</Styles>

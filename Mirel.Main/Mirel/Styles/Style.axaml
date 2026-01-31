@@ -1,42 +1,47 @@
-<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Design.PreviewWith>
-        <Border
-            Background="Aquamarine"
-            Height="300"
-            Padding="20"
-            Width="400">
-            <Expander
-                Background="{DynamicResource 2xCardBackgroundColor}"
-                Classes="card"
-                Header="现存">
-                <Rectangle
-                    Fill="Red"
-                    Height="100"
-                    Width="100" />
-            </Expander>
-        </Border>
-    </Design.PreviewWith>
-    <!--  Add Styles Here  -->
-    <Style Selector="Button.no-background-button">
-        <Setter Property="Background" Value="#00000000" />
-        <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Border Background="#00000000">
-                    <ContentControl Content="{TemplateBinding Content}" />
-                </Border>
-            </ControlTemplate>
-        </Setter>
-    </Style>
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:u="https://irihi.tech/ursa"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith />
+
     <Style Selector="TextBox.transparent:pointerover /template/ Border#PART_ContentPresenterBorder">
         <Setter Property="Background" Value="Transparent" />
     </Style>
-    <Style Selector="ToggleButton:checked">
-        <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
-        <Setter Property="BorderThickness" Value="0" />
+    <Style Selector="TextBlock.eq-width">
+        <Setter Property="FontFamily" Value="JetBrains Mono, Cascadia Mono, Cascadia Code, SF Mono, Monaco, Menlo, Consolas, DejaVu Sans Mono, Liberation Mono, Courier New, avares://Mirel/Public/Assets#MiSans" />
+        <Setter Property="FontWeight" Value="220" />
     </Style>
-    <Style Selector="ToggleButton:checked:pointerover  /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
+    <Style Selector="u|IconButton.fixed">
+        <Style Selector="^ /template/ Panel#PART_IconRoot">
+            <Setter Property="Margin" Value="0,0,8,0" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </Style>
+    <Style Selector=".popup">
+        <Style Selector="^ PopupRoot /template/ LayoutTransformControl#PART_LayoutTransform">
+            <Style.Animations>
+                <Animation
+                    Duration="0:0:0.20"
+                    Easing="{StaticResource MenuEasing}"
+                    FillMode="Forward">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="ScaleTransform.ScaleY" Value="0.92" />
+                        <Setter Property="ScaleTransform.ScaleX" Value="0.92" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
+                        <Setter Property="ScaleTransform.ScaleX" Value="1" />
+                    </KeyFrame>
+                </Animation>
+                <Animation Duration="0:0:0.15" FillMode="Forward">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
     </Style>
 </Styles>
