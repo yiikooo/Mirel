@@ -84,6 +84,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
             TitleBar.IsCloseBtnShow = false;
             TitleBar.IsMinBtnShow = false;
             TitleBar.IsMaxBtnShow = false;
+            Separator.IsVisible = false;
         }
         else
         {
@@ -100,10 +101,12 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         TitleRoot.DataContext = new MoreButtonMenuCommands();
         NewTabButton.Click += (_, _) => { CreateTab(new TabEntry(new NewTabPage())); };
         NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 100 : 40), 0,
-            40 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
-        TitleRoot.PointerPressed += (_, e) =>
+            TitleBarContainer.Bounds.Width + 40 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
+        TitleRoot.PointerPressed += (_, e) => { TitleRoot.ContextFlyout.ShowAt(TitleRoot); };
+        TitleBarContainer.SizeChanged += (_, _) =>
         {
-            TitleRoot.ContextFlyout.ShowAt(TitleRoot);
+            NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 100 : 40), 0,
+                TitleBarContainer.Bounds.Width + 40 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
         };
     }
 
@@ -131,6 +134,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
                 }
             };
         }
+
         NavScrollViewer.ScrollChanged += (_, _) => { ViewModel.IsTabMaskVisible = NavScrollViewer.Offset.X > 0; };
         Loaded += (_, _) =>
         {

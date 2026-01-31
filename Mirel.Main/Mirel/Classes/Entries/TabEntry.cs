@@ -29,8 +29,8 @@ public partial class TabEntry : ViewModelBase
         Title = title ?? content.PageInfo.Title;
         MinWidth = minWidth > 0 ? minWidth : 140;
         Icon = content.PageInfo.Icon;
+        HeaderContent = headerContent;
         Content = content;
-        HeaderContent = headerContent ?? CreateHeaderTextBlock();
         content.HostTab = this;
         content.PageInfo.PropertyChanged += (_, _) =>
         {
@@ -64,6 +64,8 @@ public partial class TabEntry : ViewModelBase
         get => _minWidth;
         set => SetField(ref _minWidth, value);
     }
+    
+    public bool IsUseHeaderContent => HeaderContent != null;
 
     public string Tag
     {
@@ -83,16 +85,6 @@ public partial class TabEntry : ViewModelBase
         set => SetField(ref _headerContent, value);
     }
 
-    private TextBlock CreateHeaderTextBlock()
-    {
-        var textBlock = new TextBlock
-        {
-            DataContext = this, FontSize = 13
-        };
-        textBlock.Classes.Add("tab");
-        textBlock.Bind(TextBlock.TextProperty, new Binding(nameof(Title)));
-        return textBlock;
-    }
 
     public void RefreshContent()
     {

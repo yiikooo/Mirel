@@ -130,6 +130,7 @@ public class MainViewModel : ViewModelBase
                 new TextBlock
                 {
                     Name = "TitleText",
+                    Foreground = new SolidColorBrush(Color.Parse("#9dd7f6")),
                     Text = "irel",
                     FontSize = 14,
                     HorizontalAlignment = HorizontalAlignment.Left,
