@@ -26,9 +26,9 @@ public static class MacOsWindowHandler {
         var minimizeButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, (IntPtr)1);
         var zoomButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, (IntPtr)2);
 
-        // 调整按钮位置，使其位于标题栏的左上角，这是macOS的标准位置
+        // 调整按钮位置
         var macButtonX = 20;
-        var macButtonY = -1;
+        var macButtonY = -4;
         var buttonSpacing = 20;
         
         var newCloseButtonPosition = new CGPoint(macButtonX, macButtonY);

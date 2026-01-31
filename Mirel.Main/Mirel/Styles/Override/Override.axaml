@@ -273,4 +273,8 @@
     <Style Selector="MenuItem /template/ PathIcon#PART_RightArrow.Flippable">
         <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
     </Style>
+
+    <Style Selector="u|TitleBar">
+        <Setter Property="IsVisible" Value="False" />
+    </Style>
 </Styles>

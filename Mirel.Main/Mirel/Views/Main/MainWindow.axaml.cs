@@ -99,8 +99,8 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         TitleRoot.ContextFlyout = menu;
         TitleRoot.DataContext = new MoreButtonMenuCommands();
         NewTabButton.Click += (_, _) => { CreateTab(new TabEntry(new NewTabPage())); };
-        NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 85 : 40), 0,
-            70 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
+        NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 100 : 40), 0,
+            40 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
         TitleRoot.PointerPressed += (_, e) =>
         {
             TitleRoot.ContextFlyout.ShowAt(TitleRoot);
@@ -131,7 +131,6 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
                 }
             };
         }
-
         NavScrollViewer.ScrollChanged += (_, _) => { ViewModel.IsTabMaskVisible = NavScrollViewer.Offset.X > 0; };
         Loaded += (_, _) =>
         {
@@ -217,7 +216,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         if (sender is ScrollViewer scrollViewer)
         {
             scrollViewer.Offset = new Vector(
-                scrollViewer.Offset.X + e.Delta.Y * 20, // 调整乘数以控制滚动速度
+                scrollViewer.Offset.X + e.Delta.Y * -20, // 调整乘数以控制滚动速度
                 scrollViewer.Offset.Y
             );
             e.Handled = true;

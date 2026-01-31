@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System.Linq;
+using Avalonia;
 using Avalonia.Styling;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
@@ -6,6 +7,7 @@ using Mirel.Const;
 using Mirel.Module.Service;
 using Mirel.Views.Main;
 using Mirel.Views.Main.Pages;
+using Ursa.Controls;
 
 namespace Mirel.ViewModels;
 
@@ -18,6 +20,7 @@ public class MoreButtonMenuCommands
             tabWindow.CreateTab(new TabEntry(new NewTabPage()));
             return;
         }
+
         App.UiRoot.CreateTab(new TabEntry(new NewTabPage()));
     }
 
@@ -28,21 +31,28 @@ public class MoreButtonMenuCommands
             tabWindow.ViewModel.SelectedTab?.Close();
             return;
         }
+
         App.UiRoot.ViewModel.SelectedTab?.Close();
     }
 
-    public void ToggleTheme()
+    public void ToggleTheme(string theme = "auto")
     {
-        Data.SettingEntry.Theme = Application.Current.ActualThemeVariant == ThemeVariant.Dark
-            ? Setting.Theme.Light
-            : Setting.Theme.Dark;
+        Data.SettingEntry.Theme = theme switch
+        {
+            "mirage" => Setting.Theme.Mirage,
+            "light" => Setting.Theme.Light,
+            "dark" => Setting.Theme.Dark,
+            _ => Application.Current.ActualThemeVariant == ThemeVariant.Dark
+                ? Setting.Theme.Light
+                : Setting.Theme.Dark
+        };
     }
 
     public void DebugTab()
     {
         // App.UiRoot.TogglePage("debug", App.UiRoot.ViewModel.DebugTabPage); //TODO
     }
-    
+
     public void MoveToNewWindow()
     {
         if (UiProperty.ActiveWindow is TabWindow tabWindow)
@@ -50,6 +60,7 @@ public class MoreButtonMenuCommands
             tabWindow.ViewModel.SelectedTab?.MoveTabToNewWindow();
             return;
         }
+
         App.UiRoot.ViewModel.SelectedTab?.MoveTabToNewWindow();
     }
 
@@ -57,12 +68,9 @@ public class MoreButtonMenuCommands
     {
         switch (page)
         {
-            // case "setting":
-            //     App.UiRoot.TogglePage("setting", new SettingTabPage());
-            //     break;
-            // case "pageNav":
-            //     App.UiRoot.TogglePage(null, new PageSelector());
-            //     break;
+            case "setting":
+                App.UiRoot.TogglePage("setting", new SettingTabPage());
+                break;
         }
     }
 }

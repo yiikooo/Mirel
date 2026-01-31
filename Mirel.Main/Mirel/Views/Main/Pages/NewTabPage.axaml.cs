@@ -42,6 +42,26 @@ public partial class NewTabPage : PageMixModelBase, IMirelTabPage
             if (!_fl) return;
             _fl = false;
         };
+        SizeChanged += (_, _) =>
+        {
+            int t;
+            var h = Bounds.Height;
+            if (h > 480)
+            {
+                t = 140;
+            }
+            else if (h > 300)
+            {
+                t = 60;
+            }
+            else
+            {
+                TitleRoot.IsVisible = false;
+                return;
+            }
+            TitleRoot.IsVisible = true;
+            TitleRoot.Margin = new Thickness(0, t, 0, 0);
+        };
     }
 
     public string SearchFilter

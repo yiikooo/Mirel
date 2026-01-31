@@ -23,7 +23,7 @@ public class BindingKeys
         window.KeyBindings.Add(new KeyBinding
         {
             Gesture = KeyGesture.Parse("Ctrl+Shift+Q"),
-            Command = new RelayCommand(c.ToggleTheme)
+            Command = new RelayCommand(() => c.ToggleTheme())
         });
         window.KeyBindings.Add(new KeyBinding
         {

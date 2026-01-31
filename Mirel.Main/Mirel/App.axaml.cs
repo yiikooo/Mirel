@@ -30,10 +30,10 @@ public partial class App : Application
     public override void Initialize()
     {
         FAUISettings.SetAnimationsEnabledAtAppLevel(false);
-        Logger.Info("开始初始化日志系统");
+        Logger.Info("开始初始化");
         BeforeLoadXaml.Main();
         AvaloniaXamlLoader.Load(this);
-        Logger.Info("完成初始化日志系统");
+        Logger.Info("完成初始化");
     }
 
     public override void OnFrameworkInitializationCompleted()

@@ -84,7 +84,7 @@ public partial class TabWindow : UrsaWindow, IMirelWindow
             TitleBar.IsCloseBtnShow = false;
             TitleBar.IsMinBtnShow = false;
             TitleBar.IsMaxBtnShow = false;
-            NavRoot.Margin = new Thickness(60, 0, 15, 0);
+            NavRoot.Margin = new Thickness(60, 0, 55, 0);
         }
         else
         {
@@ -108,32 +108,6 @@ public partial class TabWindow : UrsaWindow, IMirelWindow
         }
         else
         {
-            if (SelectedTab == existingTab)
-            {
-                existingTab.Content.InAnimator.Animate();
-                return;
-            }
-
-            ViewModel.SelectedTab = existingTab;
-        }
-    }
-
-    public void OpenSettingPage()
-    {
-        var existingTab = Tabs.FirstOrDefault(x => x.Tag == "setting");
-
-        if (existingTab == null)
-        {
-            var newTab = new TabEntry(new SettingTabPage())
-            {
-                Tag = "setting"
-            };
-            Tabs.Add(newTab);
-            ViewModel.SelectedTab = newTab;
-        }
-        else
-        {
-            // Use existing tab in this window
             if (SelectedTab == existingTab)
             {
                 existingTab.Content.InAnimator.Animate();
@@ -262,7 +236,7 @@ public partial class TabWindow : UrsaWindow, IMirelWindow
         if (sender is ScrollViewer scrollViewer)
         {
             scrollViewer.Offset = new Vector(
-                scrollViewer.Offset.X + e.Delta.Y * 20, // 调整乘数以控制滚动速度
+                scrollViewer.Offset.X + e.Delta.Y * -20, // 调整乘数以控制滚动速度
                 scrollViewer.Offset.Y
             );
             e.Handled = true;
