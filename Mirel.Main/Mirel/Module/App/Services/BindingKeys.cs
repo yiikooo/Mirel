@@ -2,6 +2,7 @@
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.Input;
 using Mirel.ViewModels;
+using Mirel.Views.Main;
 
 namespace Mirel.Module.App.Services;
 
@@ -34,6 +35,12 @@ public class BindingKeys
         {
             Gesture = KeyGesture.Parse("Alt+W"),
             Command = new RelayCommand(c.MoveToNewWindow)
+        });
+        if (window is not MainWindow) return;
+        window.KeyBindings.Add(new KeyBinding
+        {
+            Gesture = KeyGesture.Parse("Ctrl+I"),
+            Command = new RelayCommand(() => c.OpenInstancePage("setting"))
         });
     }
 }

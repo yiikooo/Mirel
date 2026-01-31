@@ -125,4 +125,7 @@
     <Style Selector="MenuItem:pointerover">
         <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
     </Style>
+    <Style Selector="MenuItem /template/ Border#PART_Border">
+        <Setter Property="Background" Value="{DynamicResource PopupBackgroundColor}" />
+    </Style>
 </Styles>

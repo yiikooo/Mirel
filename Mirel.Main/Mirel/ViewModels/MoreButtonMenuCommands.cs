@@ -11,8 +11,14 @@ using Ursa.Controls;
 
 namespace Mirel.ViewModels;
 
+
+file readonly record struct ThemeResult(Setting.Theme Value);
+
 public class MoreButtonMenuCommands
 {
+    
+    
+    
     public void NewTab()
     {
         if (UiProperty.ActiveWindow is TabWindow tabWindow)
@@ -35,16 +41,20 @@ public class MoreButtonMenuCommands
         App.UiRoot.ViewModel.SelectedTab?.Close();
     }
 
-    public void ToggleTheme(string theme = "auto")
+    
+    public void ToggleTheme(string theme = null)
     {
         Data.SettingEntry.Theme = theme switch
         {
             "mirage" => Setting.Theme.Mirage,
             "light" => Setting.Theme.Light,
             "dark" => Setting.Theme.Dark,
-            _ => Application.Current.ActualThemeVariant == ThemeVariant.Dark
-                ? Setting.Theme.Light
-                : Setting.Theme.Dark
+            _ => Data.SettingEntry.Theme switch
+            {
+                Setting.Theme.Light => Setting.Theme.Dark,
+                Setting.Theme.Dark => Setting.Theme.Mirage,
+                _ => Setting.Theme.Light
+            }
         };
     }
 

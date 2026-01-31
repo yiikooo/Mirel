@@ -58,6 +58,8 @@
         <StyleInclude Source="/Styles/TitleBar.axaml" />
         <StyleInclude Source="/Styles/Style.axaml" />
         <StyleInclude Source="/Styles/Override/Card.axaml" />
+        <StyleInclude Source="/Styles/Override/Basic.axaml" />
+        <StyleInclude Source="/Styles/Override/Button.axaml" />
         <StyleInclude Source="/Styles/Override/Override.axaml" />
     </Application.Styles>
 </Application>

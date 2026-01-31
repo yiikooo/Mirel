@@ -14,7 +14,7 @@
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="SelectionNormal" />
             <SolidColorBrush
-                Color="#282e3b"
+                Color="#1c212c"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PanelBackgroundColor" />
             <SolidColorBrush
