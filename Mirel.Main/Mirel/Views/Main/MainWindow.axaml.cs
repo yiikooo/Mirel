@@ -14,6 +14,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
+using HotAvalonia;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
@@ -49,8 +50,10 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         DataContext = ViewModel;
         Window = this;
         TabDragDropService.RegisterWindow(this);
+#if RELEASE
         BindEvents();
         InitTitleBar();
+#endif
     }
 
     public MainViewModel ViewModel { get; set; } = new();
@@ -93,6 +96,9 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         }
     }
 
+#if DEBUG
+    [AvaloniaHotReload]
+#endif
     private void InitTitleBar()
     {
         var c = new MoreButtonMenu();
@@ -110,6 +116,9 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         };
     }
 
+#if DEBUG
+    [AvaloniaHotReload]
+#endif
     private void BindEvents()
     {
         Closing += OnMainWindowClosing;

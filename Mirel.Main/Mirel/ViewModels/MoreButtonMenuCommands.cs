@@ -58,11 +58,6 @@ public class MoreButtonMenuCommands
         };
     }
 
-    public void DebugTab()
-    {
-        // App.UiRoot.TogglePage("debug", App.UiRoot.ViewModel.DebugTabPage); //TODO
-    }
-
     public void MoveToNewWindow()
     {
         if (UiProperty.ActiveWindow is TabWindow tabWindow)
@@ -80,6 +75,9 @@ public class MoreButtonMenuCommands
         {
             case "setting":
                 App.UiRoot.TogglePage("setting", new SettingTabPage());
+                break;
+            case "debug":
+                App.UiRoot.TogglePage("debug", new DebugPage());
                 break;
         }
     }

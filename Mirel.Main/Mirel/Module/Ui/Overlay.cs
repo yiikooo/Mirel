@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,9 +14,7 @@ using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
 using Mirel.Views.Main;
-using Ursa.Common;
 using Ursa.Controls;
-using Ursa.Controls.Options;
 using Notification = Ursa.Controls.Notification;
 
 namespace Mirel.Module.Ui;
@@ -64,49 +63,53 @@ public abstract class Overlay
     public static void Notice(string msg, NotificationType type = NotificationType.Information, TimeSpan? time = null,
         Action? onClick = null, bool showTime = true, string title = "Mirel", IMirelWindow? host = null)
     {
+        var t = DateTime.Now;
         Logger.Info($"[Notice] [{type}] {msg}");
         var showTitle = "Mirel";
         if (!string.IsNullOrWhiteSpace(title)) showTitle = title;
-        if (showTime) showTitle += $" - {DateTime.Now:HH:mm:ss}";
+        if (showTime) showTitle += $" - {t:HH:mm:ss}";
 
         var notification = new Notification(showTitle, msg, type);
-        UiProperty.Notifications.Insert(0, new NotificationEntry(notification, notification.Type));
+        var entry = new NotificationEntry(notification, notification.Type, t, title);
+        UiProperty.Notifications.Insert(0, entry);
+
+        var closeAction = () => { UiProperty.Notifications.Remove(entry); };
 
         switch (Data.SettingEntry.NoticeWay)
         {
             case Setting.NoticeWay.Bubble:
-                NotificationBubble(msg, type, time, onClick, host);
+                NotificationBubble(msg, type, closeAction, time, onClick, host);
                 break;
             case Setting.NoticeWay.Card:
-                NotificationCard(msg, type, showTitle, time, onClick, host);
+                NotificationCard(msg, type, showTitle, closeAction, time, onClick, host);
                 break;
         }
     }
 
-    public static void NotificationBubble(string msg, NotificationType type, TimeSpan? time = null,
+    public static void NotificationBubble(string msg, NotificationType type, Action closeAction, TimeSpan? time = null,
         Action? onClick = null, IMirelWindow? host = null)
     {
         var toast = new Toast(msg, type);
-        (host != null ? host.Toast : UiProperty.Toast).Show(toast, toast.Type, classes: ["Light"], onClick: onClick,
+        (host != null ? host.Toast : UiProperty.Toast).Show(toast, toast.Type, classes: ["Light"], onClick: () =>
+            {
+                closeAction.Invoke();
+                onClick?.Invoke();
+            },
             expiration: time ?? TimeSpan.FromSeconds(3.0));
     }
 
-    public static void NotificationCard(string msg, NotificationType type, string title, TimeSpan? time = null,
+    public static void NotificationCard(string msg, NotificationType type, string title, Action closeAction,
+        TimeSpan? time = null,
         Action? onClick = null, IMirelWindow? host = null)
     {
         var notification = new Notification(title, msg, type);
-        (host != null ? host.Notification : UiProperty.Notification).Show(notification, notification.Type,
-            classes: ["Light"], onClick: onClick,
+        (host != null ? host.Notification : UiProperty.Notification).Show(notification, notification.Type,showClose: false,
+            classes: ["Light"], onClick: () =>
+            {
+                closeAction.Invoke();
+                onClick?.Invoke();
+            },
             expiration: time ?? TimeSpan.FromSeconds(3.0));
-    }
-
-    public static void ShowShortException(string msg, Exception ex)
-    {
-        Notice($"{msg}\n{ex.Message}", NotificationType.Error);
-        // if (Data.SettingEntry.EnableIndependencyWindowNotification)
-        // {
-        //     NoticeWindow(msg, ex.Message);
-        // }
     }
 
     public static async Task OpenFolder(string path)
@@ -126,7 +129,7 @@ public abstract class Overlay
             await launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(path));
         }
     }
-    
+
 
     public static string GetHostId(Control sender)
     {
@@ -135,4 +138,11 @@ public abstract class Overlay
             ? w.DialogHost.HostId
             : "MainWindow";
     }
+    
+    
+    
+    
+    
+    
+    
 }

@@ -2,4 +2,12 @@
   <PropertyGroup>
     <AvaloniaVersion>11.3.11</AvaloniaVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HotAvalonia" PrivateAssets="All" Publish="True" Version="3.0.2" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <HotAvaloniaAutoEnable>false</HotAvaloniaAutoEnable>
+  </PropertyGroup>
 </Project>

@@ -29,7 +29,7 @@ public class BindingKeys
         window.KeyBindings.Add(new KeyBinding
         {
             Gesture = KeyGesture.Parse("Shift+F12"),
-            Command = new RelayCommand(c.DebugTab)
+            Command = new RelayCommand(() => c.OpenInstancePage("debug"))
         });
         window.KeyBindings.Add(new KeyBinding
         {

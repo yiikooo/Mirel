@@ -6,6 +6,7 @@ using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Threading;
 using Mirel.Classes.Entries;
+using Mirel.Const;
 using Mirel.Module.Events;
 using Mirel.Views.Main.Pages;
 
@@ -35,7 +36,7 @@ public class MainViewModel : ViewModelBase
     }
 
     public ObservableCollection<TabEntry> Tabs { get; set; } = [];
-
+    public static ObservableCollection<NotificationEntry> Notifications => UiProperty.Notifications;
 
     public Vector TabScrollOffset
     {

@@ -1,15 +1,25 @@
-﻿using Avalonia.Controls.Notifications;
+﻿using System;
+using Avalonia.Controls.Notifications;
+using Mirel.Const;
+using Notification = Ursa.Controls.Notification;
 
 namespace Mirel.Classes.Entries;
 
-public record NotificationEntry(object Content, NotificationType Type)
+public record NotificationEntry(Notification Entry, NotificationType Type, DateTime Time, string Title = "Mirel")
 {
-    public object Content { get; set; } = Content;
-    public NotificationType Type { get; set; } = Type;
+    public Notification Entry { get; set; } = Entry;
+    public NotificationType Type { get; } = Type;
+    public DateTime Time { get; } = Time;
+    public string Title { get; } = Title;
+
+    public void Remove()
+    {
+        UiProperty.Notifications.Remove(this);
+    }
 
 
     public virtual bool Equals(NotificationEntry? other)
     {
-        return Content == other?.Content;
+        return Entry == other?.Entry && Type == other.Type && Time == other.Time && Title == other.Title;
     }
 }

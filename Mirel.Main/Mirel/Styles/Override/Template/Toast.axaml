@@ -35,20 +35,20 @@
     <ControlTheme TargetType="u:ToastCard" x:Key="{x:Type u:ToastCard}">
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource PanelBackgroundColor}" />
-        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ToastCardBorderThickness}" />
+        <Setter Property="Background" Value="{DynamicResource ToastCardBackground}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ToastCardCornerRadius}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="u:ToastCard">
                 <LayoutTransformControl UseRenderTransform="True" x:Name="PART_LayoutTransformControl">
                     <Border
-                        Background="{DynamicResource PanelBackgroundColor}"
-                        BorderBrush="{DynamicResource PanelBorderBrush}"
-                        BorderThickness="1"
-                        CornerRadius="{DynamicResource CardCornerRadius}"
-                        Margin="6">
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Margin="{DynamicResource ToastCardMargin}">
                         <Border
                             BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BoxShadow="{DynamicResource NotificationCardBoxShadows}"
                             CornerRadius="{TemplateBinding CornerRadius}"
                             MinHeight="{DynamicResource ToastCardMinHeight}"
                             Padding="{DynamicResource ToastCardPadding}"
@@ -71,14 +71,14 @@
                                     x:Name="PART_Content">
                                     <ContentControl.DataTemplates>
                                         <DataTemplate DataType="u:IToast">
-                                            <SelectableTextBlock
+                                            <TextBlock
                                                 FontWeight="{DynamicResource ToastCardContentFontWeight}"
                                                 Foreground="{DynamicResource ToastCardContentForeground}"
                                                 Text="{Binding Content}"
                                                 TextWrapping="Wrap" />
                                         </DataTemplate>
                                         <DataTemplate DataType="x:String">
-                                            <SelectableTextBlock
+                                            <TextBlock
                                                 FontWeight="{DynamicResource ToastCardContentFontWeight}"
                                                 Foreground="{DynamicResource ToastCardContentForeground}"
                                                 Text="{Binding}"

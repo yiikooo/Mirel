@@ -15,7 +15,6 @@ public class Data : ReactiveObject
         get { return _instance ??= new Data(); }
     }
 
-    public static RunnerType RunnerType { get; set; } = RunnerType.Unknown;
     public static DesktopType DesktopType { get; set; } = DesktopType.Unknown;
     public static SettingEntry SettingEntry { get; set; }
     public static UiProperty UiProperty { get; set; } = UiProperty.Instance;

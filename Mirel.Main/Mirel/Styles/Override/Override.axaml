@@ -49,4 +49,6 @@
     <Style Selector="u|TitleBar">
         <Setter Property="IsVisible" Value="False" />
     </Style>
+
+
 </Styles>

@@ -25,7 +25,6 @@ public class UiProperty : ReactiveObject
 
     public static ThemeVariant Mirage { get; } = new("Mirage", ThemeVariant.Dark);
     public static ObservableCollection<NotificationEntry> Notifications { get; } = [];
-    public static ObservableCollection<string> BuiltInTags { get; } = [];
     public static WindowNotificationManager Notification => ActiveWindow.Notification;
     public static WindowToastManager Toast => ActiveWindow.Toast;
 

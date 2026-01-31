@@ -69,21 +69,13 @@
                                     <Grid>
                                         <ScrollViewer
                                             AllowAutoHide="True"
+                                            Classes="flat-scroll"
                                             HorizontalScrollBarVisibility="Hidden"
                                             Name="NavScrollViewer"
                                             Offset="{Binding TabScrollOffset}"
                                             OpacityMask="{Binding IsTabMaskVisible, Converter={StaticResource NavScrollOpacityMaskConverter}}"
                                             PointerWheelChanged="NavScrollViewer_PointerWheelChanged"
                                             VerticalScrollBarVisibility="Disabled">
-                                            <ScrollViewer.Styles>
-                                                <Style Selector="ScrollViewer#NavScrollViewer /template/ ScrollBar#PART_HorizontalScrollBar:horizontal /template/ RepeatButton">
-                                                    <Setter Property="IsVisible" Value="False" />
-                                                </Style>
-                                                <Style Selector="ScrollViewer#NavScrollViewer /template/ ScrollBar#PART_HorizontalScrollBar:horizontal /template/ Thumb#thumb /template/ Border">
-                                                    <Setter Property="Height" Value="2" />
-                                                    <Setter Property="VerticalAlignment" Value="Bottom" />
-                                                </Style>
-                                            </ScrollViewer.Styles>
                                             <StackPanel Margin="0,0,20,0" Orientation="Horizontal">
                                                 <u:SelectionList
                                                     AutoScrollToSelectedItem="True"

@@ -32,6 +32,7 @@
                 <ResourceInclude Source="/Styles/Override/Template/SplitButton.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/Toast.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/MultiComboBox.axaml" />
+                <ResourceInclude Source="/Styles/Override/Template/Toast.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/TagInput.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/FlyoutPresenter.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/ContextMenu.axaml" />
