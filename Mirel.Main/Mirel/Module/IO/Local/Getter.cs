@@ -37,7 +37,7 @@ public class Getter
         // 检查路径是否存在
         if (!Directory.Exists(folderPath))
         {
-            Console.WriteLine("指定的文件夹路径不存在！");
+            Logger.Warning("指定的文件夹路径不存在！");
             return files;
         }
 

@@ -10,6 +10,7 @@ public static class ConfigPath
     public static string UserDataRootPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "yiiko.Mirel");
     public static string TempFolderPath => Path.Combine(UserDataRootPath, "Mirel.Temp");
+    public static string LogFolderPath => Path.Combine(UserDataRootPath, "Mirel.Log");
 
     public static string SettingDataPath => Path.Combine(UserDataRootPath, "Mirel.Setting.yiiko");
     public static string AppPathDataPath => Path.Combine(UserDataRootPath, "Mirel.AppPath.yiiko");

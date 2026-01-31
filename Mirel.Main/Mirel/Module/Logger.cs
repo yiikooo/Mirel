@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using Mirel.Const;
 
 namespace Mirel.Module;
 
@@ -30,8 +31,7 @@ public static class Logger
 
         try
         {
-            var logDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "Yeppioo.Mirel", "Logs");
+            var logDirectory = ConfigPath.LogFolderPath;
 
             if (!Directory.Exists(logDirectory)) Directory.CreateDirectory(logDirectory);
 
@@ -55,7 +55,7 @@ public static class Logger
             // 清理旧日志文件，保持备份数量不超过上限
             CleanupOldLogFiles(logDirectory);
             
-            const string resourceName = "Mirel.Version.txt";
+            const string resourceName = "Mirel.Public.Version.txt";
             var _assembly = Assembly.GetExecutingAssembly();
             var stream = _assembly.GetManifestResourceStream(resourceName);
             using var reader = new StreamReader(stream!);

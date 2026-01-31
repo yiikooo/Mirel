@@ -16,6 +16,7 @@ using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
+using Mirel.Module;
 using Mirel.Module.App.Services;
 using Mirel.Module.Events;
 using Mirel.Module.Service;
@@ -192,7 +193,7 @@ public partial class TabWindow : UrsaWindow, IMirelWindow
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine(exception);
+                    Logger.Error(exception);
                 }
             };
         }

@@ -18,6 +18,7 @@ using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
+using Mirel.Module;
 using Mirel.Module.Events;
 using Mirel.Module.Service;
 using Mirel.Module.Ui.Helper;
@@ -126,7 +127,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine(exception);
+                    Logger.Error(exception);
                 }
             };
         }
