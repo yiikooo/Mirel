@@ -134,7 +134,7 @@
                                                                 BorderThickness="1"
                                                                 CornerRadius="{DynamicResource CardCornerRadius}"
                                                                 Height="30"
-                                                                MinWidth="140"
+                                                                MinWidth="{Binding MinWidth}"
                                                                 Name="ItemRoot"
                                                                 PointerPressed="TabItem_OnPointerPressed"
                                                                 Tag="{Binding}"

@@ -98,34 +98,12 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         TitleRoot.ContextFlyout = menu;
         TitleRoot.DataContext = new MoreButtonMenuCommands();
         NewTabButton.Click += (_, _) => { CreateTab(new TabEntry(new NewTabPage())); };
-    }
-
-    private void OpenSettingPage(int pageIndex = -1)
-    {
-        var existingTab = Tabs.FirstOrDefault(x => x.Tag == "setting");
-
-        if (existingTab == null)
+        NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 85 : 40), 0,
+            70 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
+        TitleRoot.PointerPressed += (_, e) =>
         {
-            var settingTabPage = new SettingTabPage();
-
-
-            var newTab = new TabEntry(settingTabPage)
-            {
-                Tag = "setting"
-            };
-            Tabs.Add(newTab);
-            ViewModel.SelectedTab = newTab;
-        }
-        else
-        {
-            if (SelectedTab == existingTab)
-            {
-                existingTab.Content.InAnimator.Animate();
-                return;
-            }
-
-            ViewModel.SelectedTab = existingTab;
-        }
+            TitleRoot.ContextFlyout.ShowAt(TitleRoot);
+        };
     }
 
     private void BindEvents()
@@ -159,11 +137,6 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
             RenderOptions.SetTextRenderingMode(this, TextRenderingMode.SubpixelAntialias); // 字体渲染模式
             RenderOptions.SetBitmapInterpolationMode(this, BitmapInterpolationMode.MediumQuality); // 图片渲染模式
             RenderOptions.SetEdgeMode(this, EdgeMode.Antialias); // 形状渲染模式
-        };
-        TitleBar.SizeChanged += (_, _) =>
-        {
-            NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 125 : 80), 0,
-                70 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
         };
         KeyDown += (_, e) =>
         {

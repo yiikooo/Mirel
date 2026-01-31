@@ -270,4 +270,7 @@
         <Setter Property="Background" Value="{DynamicResource PopupBackgroundColor}" />
         <Setter Property="BorderBrush" Value="{DynamicResource PopupBorderBrush}" />
     </Style>
+    <Style Selector="MenuItem /template/ PathIcon#PART_RightArrow.Flippable">
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
+    </Style>
 </Styles>

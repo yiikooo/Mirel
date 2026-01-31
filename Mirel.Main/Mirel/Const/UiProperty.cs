@@ -23,7 +23,6 @@ public class UiProperty : ReactiveObject
         get { return _instance ??= new UiProperty(); }
     }
 
-    public static ObservableCollection<LaunchPageEntry> LaunchPages { get; } = [];
     public static ThemeVariant Mirage { get; } = new("Mirage", ThemeVariant.Dark);
     public static ObservableCollection<NotificationEntry> Notifications { get; } = [];
     public static ObservableCollection<string> BuiltInTags { get; } = [];

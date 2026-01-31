@@ -17,70 +17,13 @@ using Ursa.Controls;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class NewTabPage : PageMixModelBase, IMirelTabPage, IMirelNavPage
+public partial class NewTabPage : PageMixModelBase, IMirelTabPage
 {
-    // public DateTime _currentTime = DateTime.Now;
-
-    // public string _currentLunarMonthDay = string.Empty;
-    // public string _currentLunarYear = string.Empty;
-    // public string _currentWeekDay = string.Empty;
-    // public string _poem = "loading";
-    private string _shortInfo = string.Empty;
-
-    public string ShortInfo
-    {
-        get => _shortInfo;
-        set => SetField(ref _shortInfo, value);
-    }
-
+    public string ShortInfo { get; set; }
     public Control BottomElement { get; set; }
-    // public DateTime CurrentTime
-    // {
-    //     get => _currentTime;
-    //     set
-    //     {
-    //         SetField(ref _currentTime, value);
-    //         // UpdateLunarDate(CurrentTime);
-    //         // UpdateWeekDay(CurrentTime);
-    //     }
-    // }
 
-    //
-    // public string CurrentLunarMonthDay
-    // {
-    //     get => _currentLunarMonthDay;
-    //     set => SetField(ref _currentLunarMonthDay, value);
-    // }
-    //
-    // public string Poem
-    // {
-    //     get => _poem;
-    //     set => SetField(ref _poem, value);
-    // }
-    //
-    // public string CurrentLunarYear
-    // {
-    //     get => _currentLunarYear;
-    //     set => SetField(ref _currentLunarYear, value);
-    // }
-    //
-    // public string CurrentWeekDay
-    // {
-    //     get => _currentWeekDay;
-    //     set => SetField(ref _currentWeekDay, value);
-    // }
-    //
     private bool _fl = true;
-    // private bool _suppressNextFilter = false;
-    //
-    // // File system search properties
-    // [Reactive]
-    // public StreamGeometry SearchIconData { get; set; } = StreamGeometry.Parse(
-    //     "M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z");
-    //
-    // [Reactive] public bool IsFileSystemMode { get; set; }
-    // [Reactive] public string CurrentFileSystemPath { get; set; } = string.Empty;
-
+  
     public NewTabPage()
     {
         InitializeComponent();
@@ -107,10 +50,14 @@ public partial class NewTabPage : PageMixModelBase, IMirelTabPage, IMirelNavPage
         set
         {
             SetField(ref field, value);
-            // Filter();
+            Filter();
         }
     } = "";
-    
+
+    private void Filter()
+    {
+    }
+
 
     public Control RootElement { get; set; }
     public PageLoadingAnimator InAnimator { get; set; }

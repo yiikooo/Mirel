@@ -13,8 +13,6 @@ namespace Mirel.Views.Main.Pages;
 
 public partial class SettingTabPage: PageMixModelBase, IMirelTabPage, IMirelNavPage
 {
-    private bool _fl = true;
-    private bool _isAnimating;
     private SelectionListItem _selectedItem;
     public int DefaultNav = 0;
 

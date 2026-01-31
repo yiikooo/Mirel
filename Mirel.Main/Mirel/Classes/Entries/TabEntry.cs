@@ -15,18 +15,19 @@ namespace Mirel.Classes.Entries;
 
 public partial class TabEntry : ViewModelBase
 {
-    private bool _canClose;
     private IMirelTabPage _content;
     private object _headerContent;
     private StreamGeometry? _icon;
 
+    private int _minWidth = -1;
     private string _tag;
     private string _title;
 
-    public TabEntry(IMirelTabPage content, string? title = null, object? headerContent = null)
+    public TabEntry(IMirelTabPage content, string? title = null, object? headerContent = null, int minWidth = -1)
     {
         CanClose = content.PageInfo.CanClose;
         Title = title ?? content.PageInfo.Title;
+        MinWidth = minWidth > 0 ? minWidth : 140;
         Icon = content.PageInfo.Icon;
         Content = content;
         HeaderContent = headerContent ?? CreateHeaderTextBlock();
@@ -58,6 +59,12 @@ public partial class TabEntry : ViewModelBase
         set => SetField(ref _title, value);
     }
 
+    public int MinWidth
+    {
+        get => _minWidth;
+        set => SetField(ref _minWidth, value);
+    }
+
     public string Tag
     {
         get => _tag;
@@ -66,8 +73,8 @@ public partial class TabEntry : ViewModelBase
 
     public bool CanClose
     {
-        get => _canClose;
-        set => SetField(ref _canClose, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public object HeaderContent
@@ -80,7 +87,7 @@ public partial class TabEntry : ViewModelBase
     {
         var textBlock = new TextBlock
         {
-            DataContext = this,FontSize = 13
+            DataContext = this, FontSize = 13
         };
         textBlock.Classes.Add("tab");
         textBlock.Bind(TextBlock.TextProperty, new Binding(nameof(Title)));
