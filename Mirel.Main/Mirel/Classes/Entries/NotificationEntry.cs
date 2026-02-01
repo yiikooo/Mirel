@@ -19,9 +19,6 @@ public sealed class NotificationEntry(Notification Entry, NotificationType Type,
 
     public async void Remove()
     {
-        if (IsClosing) return;
-        IsClosing = true;
-        await Task.Delay(300);
         UiProperty.Notifications.Remove(this);
     }
 
