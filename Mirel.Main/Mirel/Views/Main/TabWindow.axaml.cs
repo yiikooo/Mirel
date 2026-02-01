@@ -43,7 +43,7 @@ public partial class TabWindow : UrsaWindow, IMirelWindow
         InitializeComponent();
 #endif
         Notification = new WindowNotificationManager(GetTopLevel(this));
-        Toast = new WindowToastManager(GetTopLevel(this));
+        Toast = new MirelWindowToastManager(GetTopLevel(this));
         Notification.Position = NotificationPosition.BottomRight;
         RootElement = Root;
         Window = this;
@@ -271,7 +271,7 @@ public partial class TabWindow : UrsaWindow, IMirelWindow
     }
 
     public WindowNotificationManager Notification { get; set; }
-    public WindowToastManager Toast { get; set; }
+    public MirelWindowToastManager Toast { get; set; }
     public Control RootElement { get; set; }
     public UrsaWindow Window { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿<Styles
     xmlns="https://github.com/avaloniaui"
+    xmlns:helper="clr-namespace:Mirel.Module.Ui.Helper"
     xmlns:u="https://irihi.tech/ursa"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style Selector="u|IconButton.accent">
@@ -50,5 +51,11 @@
         <Setter Property="IsVisible" Value="False" />
     </Style>
 
+    <Style Selector="u|ToastCard.Light">
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
 
+    <Style Selector=":is(u|UrsaWindow)[ExtendClientAreaToDecorationsHint=True] helper|MirelWindowToastManager">
+        <Setter Property="Margin" Value="0 36 0 0" />
+    </Style>
 </Styles>

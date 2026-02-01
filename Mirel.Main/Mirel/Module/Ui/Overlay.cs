@@ -94,7 +94,7 @@ public abstract class Overlay
             {
                 closeAction.Invoke();
                 onClick?.Invoke();
-            },
+            }, showClose: false, touchClose: true,
             expiration: time ?? TimeSpan.FromSeconds(3.0));
     }
 
@@ -103,7 +103,8 @@ public abstract class Overlay
         Action? onClick = null, IMirelWindow? host = null)
     {
         var notification = new Notification(title, msg, type);
-        (host != null ? host.Notification : UiProperty.Notification).Show(notification, notification.Type,showClose: false,
+        (host != null ? host.Notification : UiProperty.Notification).Show(notification, notification.Type,
+            showClose: false,
             classes: ["Light"], onClick: () =>
             {
                 closeAction.Invoke();
@@ -138,11 +139,4 @@ public abstract class Overlay
             ? w.DialogHost.HostId
             : "MainWindow";
     }
-    
-    
-    
-    
-    
-    
-    
 }

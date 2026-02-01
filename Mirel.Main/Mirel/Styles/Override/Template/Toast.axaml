@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
+    xmlns:helper="clr-namespace:Mirel.Module.Ui.Helper"
     xmlns:u="https://irihi.tech/ursa"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
@@ -19,7 +20,7 @@
         </ThemeVariantScope>
     </Design.PreviewWith>
 
-    <ControlTheme TargetType="u:WindowToastManager" x:Key="{x:Type u:WindowToastManager}">
+    <ControlTheme TargetType="helper:MirelWindowToastManager" x:Key="{x:Type helper:MirelWindowToastManager}">
         <Setter Property="Margin" Value="0" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -37,7 +38,7 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="{DynamicResource ToastCardBorderThickness}" />
         <Setter Property="Background" Value="{DynamicResource ToastCardBackground}" />
-        <Setter Property="CornerRadius" Value="{DynamicResource ToastCardCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="u:ToastCard">
                 <LayoutTransformControl UseRenderTransform="True" x:Name="PART_LayoutTransformControl">
