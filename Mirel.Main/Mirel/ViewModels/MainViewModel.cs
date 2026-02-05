@@ -22,10 +22,9 @@ public class MainViewModel : ViewModelBase
             Tabs.Add(new TabEntry(new NewTabPage()));
             SelectedTab = Tabs[1];
         };
-        PropertyChanged += (s, e) =>
+        PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(SelectedTab) || SelectedTab == null) return;
-            if (SelectedTab.Content == null) return;
             if (SelectedTab.Content.RootElement == null) return;
             SelectedTab.Content.RootElement.IsVisible = false;
             SelectedTab.Content.InAnimator.Animate();
@@ -37,6 +36,7 @@ public class MainViewModel : ViewModelBase
 
     public ObservableCollection<TabEntry> Tabs { get; set; } = [];
     public static ObservableCollection<NotificationEntry> Notifications => UiProperty.Notifications;
+    public Aside Aside { get; } = new();
 
     public Vector TabScrollOffset
     {
@@ -50,7 +50,7 @@ public class MainViewModel : ViewModelBase
         set => SetField(ref field, value);
     }
 
-    public TabEntry SelectedTab
+    public TabEntry? SelectedTab
     {
         get;
         set => SetField(ref field, value);

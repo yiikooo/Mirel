@@ -40,7 +40,6 @@
         BorderBrush="{DynamicResource PanelBorderBrush}"
         BorderThickness="1"
         ClipToBounds="True"
-        CornerRadius="8"
         x:Name="Root">
         <DockPanel>
             <Grid>

@@ -59,8 +59,6 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
     private DateTime _shiftKeyDownTime;
     private bool _isShiftKeyDown;
     public TabEntry SelectedTab => ViewModel.SelectedTab;
-    public Aside Aside { get; } = new();
-
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
