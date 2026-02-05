@@ -11,13 +11,14 @@ using FluentAvalonia.Core;
 using Mirel.Module;
 using Mirel.Module.App.Init;
 using Mirel.ViewModels;
+using Mirel.Views;
 using Mirel.Views.Main;
 
 namespace Mirel;
 
 public partial class App : Application
 {
-  public delegate void UiLoadedEventHandler(MainWindow ui);
+    public delegate void UiLoadedEventHandler(MainWindow ui);
 
     private bool _fl = true;
 
@@ -47,7 +48,8 @@ public partial class App : Application
 #endif
             DisableAvaloniaDataAnnotationValidation();
 
-#if RELEASE
+// #if RELEASE
+#if TRUE
             Logger.Info("注册全局异常处理");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Dispatcher.UIThread.UnhandledException += UIThread_UnhandledException;
@@ -79,8 +81,8 @@ public partial class App : Application
         Logger.Fatal($"UI线程异常: {e.Exception}");
         try
         {
-            // var win = new CrashWindow(e.Exception.ToString());
-            // win.Show();
+            var win = new CrashWindow(e.Exception);
+            win.Show();
         }
         catch (Exception ex)
         {
@@ -95,16 +97,15 @@ public partial class App : Application
     private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
         Logger.Fatal($"AppDomain 异常: {e}");
-        // try
-        // {
-        //     var win = new CrashWindow(e.ToString() ?? "Unhandled Exception");
-        //     win.Show();
-        // }
-        // catch (Exception ex)
-        // {
-        //     Logger.Fatal($"{MainLang.ShowCrashWindowFailTip}: {ex}");
-        // }
-        //TODO 显示崩溃窗口
+        try
+        {
+            var win = new CrashWindow(e.ToString() ?? "Unhandled Exception");
+            win.Show();
+        }
+        catch (Exception ex)
+        {
+            Logger.Fatal($"显示崩溃窗口失败: {ex}");
+        }
     }
 
 
