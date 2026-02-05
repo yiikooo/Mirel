@@ -20,7 +20,6 @@ namespace Mirel.Views.Main.Pages;
 public partial class NewTabPage : PageMixModelBase, IMirelTabPage
 {
     public string ShortInfo { get; set; }
-    public Control BottomElement { get; set; }
 
     private bool _fl = true;
   

@@ -27,7 +27,6 @@ public partial class HomePage : PageMixModelBase, IMirelTabPage
     }
 
     public string ShortInfo { get; set; }
-    public Control BottomElement { get; set; }
     public Control RootElement { get; set; }
     public PageLoadingAnimator InAnimator { get; set; }
 
