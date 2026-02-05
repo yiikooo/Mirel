@@ -26,15 +26,12 @@ using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
 using Mirel.Views.Main.Pages;
 using Ursa.Controls;
-using TitleBar = Mirel.Controls.TitleBar;
 using WindowNotificationManager = Ursa.Controls.WindowNotificationManager;
 
 namespace Mirel.Views.Main;
 
 public partial class MainWindow : UrsaWindow, IMirelWindow
 {
-    public TitleBar WindowTitleBar => this.TitleBar;
-
     public MainWindow()
     {
 #if DEBUG
@@ -56,12 +53,13 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
 #endif
     }
 
-    public MainViewModel ViewModel { get; set; } = new();
+    public MainViewModel ViewModel { get; } = new();
     public ObservableCollection<TabEntry> Tabs => ViewModel.Tabs;
     private DateTime _lastShiftPressTime;
     private DateTime _shiftKeyDownTime;
     private bool _isShiftKeyDown;
-    public TabEntry? SelectedTab => ViewModel.SelectedTab;
+    public TabEntry SelectedTab => ViewModel.SelectedTab;
+    public Aside Aside { get; } = new();
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
@@ -143,10 +141,8 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
                 }
             };
         }
-        ASideButton.Click += (_, _) =>
-        {
-            Data.SettingEntry.EnableAside = !Data.SettingEntry.EnableAside;
-        };
+
+        ASideButton.Click += (_, _) => { Data.SettingEntry.EnableAside = !Data.SettingEntry.EnableAside; };
         NavScrollViewer.ScrollChanged += (_, _) => { ViewModel.IsTabMaskVisible = NavScrollViewer.Offset.X > 0; };
         Loaded += (_, _) =>
         {
@@ -201,23 +197,9 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         AddHandler(DragDrop.DropEvent, DropHandler);
     }
 
-    private async void DropHandler(object? sender, DragEventArgs e)
+    private void DropHandler(object? sender, DragEventArgs e)
     {
-        if (e is null) return;
-        AppEvents.OnAppDragDrop(sender, e);
-        if (e.Data.Contains(DataFormats.Files))
-        {
-            var files = e.Data.GetFiles();
-            if (files == null) return;
-            foreach (var file in files)
-            {
-                //TODO
-            }
-        }
-        else if (e.Data.Contains(DataFormats.Text))
-        {
-            var text = e.Data.GetText();
-        }
+        DataDragDropService.HandleData(this, e);
     }
 
     private void TabItem_OnPointerPressed(object? sender, PointerPressedEventArgs e)

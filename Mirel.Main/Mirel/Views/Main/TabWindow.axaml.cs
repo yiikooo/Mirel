@@ -217,11 +217,9 @@ public partial class TabWindow : UrsaWindow, IMirelWindow
         AddHandler(DragDrop.DropEvent, DropHandler);
     }
 
-    private async void DropHandler(object? sender, DragEventArgs e)
+    private void DropHandler(object? sender, DragEventArgs e)
     {
-        if (e is null) return;
-        AppEvents.OnAppDragDrop(sender, e);
-//TODO
+        DataDragDropService.HandleData(this, e);
     }
     
     private void TabItem_OnPointerPressed(object? sender, PointerPressedEventArgs e)
