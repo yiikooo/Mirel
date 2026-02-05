@@ -30,7 +30,7 @@ using WindowNotificationManager = Ursa.Controls.WindowNotificationManager;
 
 namespace Mirel.Views.Main;
 
-public partial class MainWindow : UrsaWindow, IMirelWindow
+public partial class MainWindow : UrsaWindow, IMirelTabWindow
 {
     public MainWindow()
     {

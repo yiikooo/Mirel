@@ -28,7 +28,7 @@ using WindowNotificationManager = Ursa.Controls.WindowNotificationManager;
 
 namespace Mirel.Views.Main;
 
-public partial class TabWindow : UrsaWindow, IMirelWindow
+public partial class TabWindow : UrsaWindow, IMirelTabWindow
 {
     private DateTime _lastShiftPressTime;
     private DateTime _shiftKeyDownTime;
