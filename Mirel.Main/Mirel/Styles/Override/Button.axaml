@@ -128,4 +128,7 @@
     <Style Selector="MenuItem /template/ Border#PART_Border">
         <Setter Property="Background" Value="{DynamicResource PopupBackgroundColor}" />
     </Style>
+    <Style Selector="MenuItem /template/ Border#root">
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
+    </Style>
 </Styles>

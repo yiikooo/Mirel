@@ -62,6 +62,10 @@ public partial class NewTabPage : PageMixModelBase, IMirelTabPage
             TitleRoot.IsVisible = true;
             TitleRoot.Margin = new Thickness(0, t, 0, 0);
         };
+        SizeChanged += (_, _) =>
+        {
+            TitleRoot.IsVisible = Bounds.Width >= 340;
+        };
     }
 
     public string SearchFilter

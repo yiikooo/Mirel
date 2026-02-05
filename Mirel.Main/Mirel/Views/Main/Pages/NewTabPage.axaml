@@ -20,6 +20,7 @@
             <TextBox
                 CornerRadius="15"
                 DockPanel.Dock="Top"
+                Margin="20,0"
                 MaxWidth="600"
                 Name="SearchBox"
                 Text="{Binding SearchFilter}"

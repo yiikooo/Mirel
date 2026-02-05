@@ -24,14 +24,14 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-        <Setter Property="CornerRadius" Value="{DynamicResource MenuFlyoutCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="MenuFlyoutPresenter">
                 <Border
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    ClipToBounds="True"
+                    BoxShadow="{DynamicResource PopupBoxShadow}"
                     CornerRadius="{TemplateBinding CornerRadius}"
                     Margin="4"
                     Name="LayoutRoot"

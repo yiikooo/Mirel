@@ -59,5 +59,8 @@
             <Setter Property="Width" Value="2" />
             <Setter Property="HorizontalAlignment" Value="Right" />
         </Style>
+        <Style Selector="PathIcon:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource TextBlockDisabledForeground}" />
+        </Style>
     </Style>
 </Styles>

@@ -53,14 +53,14 @@
                             <LayoutTransformControl Name="PART_LayoutTransform" RenderTransformOrigin="50%, 0%">
                                 <Grid Margin="-12,0,0,0">
                                     <Border
-                                        BoxShadow="none"
+                                        BoxShadow="{DynamicResource PopupBoxShadow}"
                                         CornerRadius="6"
                                         Margin="16,8,8,8" />
                                     <Border
                                         Background="{DynamicResource PanelBackgroundColor}"
                                         BorderBrush="{DynamicResource SukiMenuBorderBrush}"
                                         BorderThickness="1"
-                                        BoxShadow="none"
+                                        BoxShadow="{DynamicResource PopupBoxShadow}"
                                         ClipToBounds="True"
                                         CornerRadius="6"
                                         Margin="16,8,8,8"
@@ -122,7 +122,7 @@
                     <Border
                         BorderBrush="{DynamicResource SukiBorderBrush}"
                         BorderThickness="0"
-                        CornerRadius="{TemplateBinding CornerRadius}"
+                        CornerRadius="{DynamicResource CardCornerRadius}"
                         Height="45"
                         Padding="{TemplateBinding Padding}">
                         <ItemsPresenter

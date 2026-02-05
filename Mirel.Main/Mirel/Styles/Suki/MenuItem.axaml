@@ -94,7 +94,7 @@
                             </Panel>
                             <Rectangle
                                 DockPanel.Dock="Left"
-                                Fill="{DynamicResource PanelBackgroundColor}"
+                                Fill="{DynamicResource LineColor}"
                                 Margin="5,-2"
                                 Width="0" />
 
@@ -150,16 +150,16 @@
                             <LayoutTransformControl Name="PART_LayoutTransform" RenderTransformOrigin="0%, 0%">
                                 <Panel Margin="0,-8,0,0">
                                     <Border
-                                        BoxShadow="none"
-                                        CornerRadius="6"
+                                        BoxShadow="{DynamicResource PopupBoxShadow}"
+                                        CornerRadius="{DynamicResource CardCornerRadius}"
                                         Margin="16,8,8,8" />
 
                                     <Border
-                                        Background="{DynamicResource PanelBackgroundColor}"
+                                        Background="{DynamicResource PopupBackgroundColor}"
                                         BorderThickness="1"
-                                        BoxShadow="none"
+                                        BoxShadow="{DynamicResource PopupBoxShadow}"
                                         ClipToBounds="True"
-                                        CornerRadius="5"
+                                        CornerRadius="{DynamicResource CardCornerRadius}"
                                         Margin="16,8,8,8"
                                         Name="PART_Border">
                                         <Panel Background="{DynamicResource PopupGradientBrush}">

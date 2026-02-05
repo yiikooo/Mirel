@@ -119,6 +119,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
+                        BoxShadow="{DynamicResource PopupBoxShadow}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Name="PART_LayoutRoot"
                         Padding="{TemplateBinding Padding}">
@@ -197,8 +198,8 @@
                             Background="{DynamicResource PanelBackgroundColor}"
                             BorderBrush="{DynamicResource MenuFlyoutBorderBrush}"
                             BorderThickness="{DynamicResource MenuFlyoutBorderThickness}"
-                            BoxShadow="{DynamicResource MenuFlyoutBorderBoxShadow}"
-                            CornerRadius="{DynamicResource MenuFlyoutCornerRadius}"
+                            BoxShadow="{DynamicResource PopupBoxShadow}"
+                            CornerRadius="{DynamicResource CardCornerRadius}"
                             HorizontalAlignment="Stretch"
                             Margin="8"
                             MaxHeight="{DynamicResource MenuFlyoutMaxHeight}"
@@ -206,7 +207,7 @@
                             MinHeight="{DynamicResource MenuFlyoutMinHeight}"
                             MinWidth="{DynamicResource MenuFlyoutMinWidth}"
                             Padding="{DynamicResource MenuFlyoutPadding}">
-                            <ScrollViewer CornerRadius="{DynamicResource MenuFlyoutCornerRadius}" Theme="{StaticResource MenuScrollViewer}">
+                            <ScrollViewer CornerRadius="{DynamicResource CardCornerRadius}" Theme="{StaticResource MenuScrollViewer}">
                                 <ItemsPresenter
                                     Grid.IsSharedSizeScope="True"
                                     ItemsPanel="{TemplateBinding ItemsPanel}"
@@ -300,7 +301,7 @@
         <Setter Property="Background" Value="{DynamicResource PanelBackgroundColor}" />
         <Setter Property="Foreground" Value="{DynamicResource MenuItemForeground}" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="CornerRadius" Value="{DynamicResource MenuItemCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
         <!--  Narrow padding should be used for mouse input, when non-narrow one should be used for touch input in future.  -->
         <Setter Property="Padding" Value="{DynamicResource TopLevelMenuItemPadding}" />
         <Setter Property="MinHeight" Value="{DynamicResource TopLevelMenuItemMinHeight}" />
@@ -336,8 +337,8 @@
                                 Background="{DynamicResource PanelBackgroundColor}"
                                 BorderBrush="{DynamicResource MenuFlyoutBorderBrush}"
                                 BorderThickness="{DynamicResource MenuFlyoutBorderThickness}"
-                                BoxShadow="{DynamicResource MenuFlyoutBorderBoxShadow}"
-                                CornerRadius="{DynamicResource MenuFlyoutCornerRadius}"
+                                BoxShadow="{DynamicResource PopupBoxShadow}"
+                                CornerRadius="{DynamicResource CardCornerRadius}"
                                 HorizontalAlignment="Stretch"
                                 Margin="8"
                                 MaxHeight="{DynamicResource MenuFlyoutMaxHeight}"
@@ -345,7 +346,7 @@
                                 MinHeight="{DynamicResource MenuFlyoutMinHeight}"
                                 MinWidth="{DynamicResource MenuFlyoutMinWidth}"
                                 Padding="{DynamicResource MenuFlyoutPadding}">
-                                <ScrollViewer CornerRadius="{DynamicResource MenuFlyoutCornerRadius}" Theme="{StaticResource MenuScrollViewer}">
+                                <ScrollViewer CornerRadius="{DynamicResource CardCornerRadius}" Theme="{StaticResource MenuScrollViewer}">
                                     <ItemsPresenter
                                         Grid.IsSharedSizeScope="True"
                                         ItemsPanel="{TemplateBinding ItemsPanel}"

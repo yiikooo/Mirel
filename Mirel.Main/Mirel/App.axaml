@@ -27,7 +27,6 @@
                 <ResourceInclude Source="/Styles/Override/Template/ContentDialog.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/ManagedFileChooser.axaml" />
                 <ResourceInclude Source="/Styles/Suki/Menu.axaml" />
-                <ResourceInclude Source="/Styles/Suki/MenuFlyoutPresenter.axaml" />
                 <ResourceInclude Source="/Styles/Suki/MenuItem.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/SplitButton.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/Toast.axaml" />
