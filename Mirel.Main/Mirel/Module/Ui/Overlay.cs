@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -61,7 +61,8 @@ public abstract class Overlay
     }
 
     public static void Notice(string msg, NotificationType type = NotificationType.Information, TimeSpan? time = null,
-        Action? onClick = null, bool showTime = true, string title = "Mirel", IMirelWindow? host = null)
+        Action? onClick = null, bool showTime = true, string title = "Mirel", IMirelWindow? host = null,
+        IList<OperateButtonEntry>? operateButtons = null)
     {
         var t = DateTime.Now;
         Logger.Info($"[Notice] [{type}] {msg}");
@@ -78,16 +79,16 @@ public abstract class Overlay
         switch (Data.SettingEntry.NoticeWay)
         {
             case Setting.NoticeWay.Bubble:
-                NotificationBubble(msg, type, closeAction, time, onClick, host);
+                NotificationBubble(msg, type, closeAction, time, onClick, host, operateButtons);
                 break;
             case Setting.NoticeWay.Card:
-                NotificationCard(msg, type, showTitle, closeAction, time, onClick, host);
+                NotificationCard(msg, type, showTitle, closeAction, time, onClick, host, operateButtons);
                 break;
         }
     }
 
     public static void NotificationBubble(string msg, NotificationType type, Action closeAction, TimeSpan? time = null,
-        Action? onClick = null, IMirelWindow? host = null)
+        Action? onClick = null, IMirelWindow? host = null, IList<OperateButtonEntry>? operateButtons = null)
     {
         var toast = new Toast(msg, type);
         (host != null ? host.Toast : UiProperty.Toast).Show(toast, toast.Type, classes: ["Light"], onClick: () =>
@@ -95,12 +96,12 @@ public abstract class Overlay
                 closeAction.Invoke();
                 onClick?.Invoke();
             }, showClose: false, touchClose: true,
-            expiration: time ?? TimeSpan.FromSeconds(3.0));
+            expiration: time ?? TimeSpan.FromSeconds(3.0), operateButtons: operateButtons);
     }
 
     public static void NotificationCard(string msg, NotificationType type, string title, Action closeAction,
         TimeSpan? time = null,
-        Action? onClick = null, IMirelWindow? host = null)
+        Action? onClick = null, IMirelWindow? host = null, IList<OperateButtonEntry>? operateButtons = null)
     {
         var notification = new Notification(title, msg, type);
         (host != null ? host.Notification : UiProperty.Notification).Show(notification, notification.Type,

@@ -1,5 +1,6 @@
-﻿<ResourceDictionary
+<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
+    xmlns:classes="clr-namespace:Mirel.Classes.Entries"
     xmlns:controls="clr-namespace:Mirel.Controls"
     xmlns:helper="clr-namespace:Mirel.Module.Ui.Helper"
     xmlns:u="https://irihi.tech/ursa"
@@ -88,6 +89,26 @@
                                         </DataTemplate>
                                     </ContentControl.DataTemplates>
                                 </ContentControl>
+                                <ItemsControl
+                                    DockPanel.Dock="Bottom"
+                                    IsVisible="{TemplateBinding OperateButtons}"
+                                    ItemsSource="{TemplateBinding OperateButtons}"
+                                    Margin="{DynamicResource ToastCardButtonMargin}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="classes:OperateButtonEntry">
+                                            <HyperlinkButton
+                                                Command="{Binding Command}"
+                                                CommandParameter="{Binding}"
+                                                Content="{Binding Content}"
+                                                Margin="0,0,8,0" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                                 <Button
                                     IsVisible="{TemplateBinding ShowClose}"
                                     Theme="{StaticResource OverlayCloseButton}"

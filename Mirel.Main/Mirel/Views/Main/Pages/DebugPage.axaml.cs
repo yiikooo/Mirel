@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Threading;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Module;
@@ -59,13 +61,29 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
                 Module.Ui.Overlay.Notice("Error", NotificationType.Error);
                 break;
             case "Long":
-                Module.Ui.Overlay.Notice("Avalonia 是一个基于 .NET 的跨平台 UI 框架，灵感来源于 WPF，可在 Windows、macOS、Linux、移动设备和 WebAssembly 上使用同一套 XAML 代码开发应用程序，适合桌面和移动端开发者探索跨平台解决方案。", NotificationType.Information, i);
+                Module.Ui.Overlay.Notice(
+                    "Avalonia 是一个基于 .NET 的跨平台 UI 框架，灵感来源于 WPF，可在 Windows、macOS、Linux、移动设备和 WebAssembly 上使用同一套 XAML 代码开发应用程序，适合桌面和移动端开发者探索跨平台解决方案。",
+                    NotificationType.Information, i);
                 break;
             case "Click":
                 Module.Ui.Overlay.Notice("Avalonia",
                     onClick: () => { Logger.Debug("OnClick!"); });
                 break;
         }
+    }
+
+    private void NoticeWithButtons(object? sender, RoutedEventArgs e)
+    {
+        var buttons = new List<OperateButtonEntry>
+        {
+            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击");  }),
+            new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }),
+        };
+
+        Module.Ui.Overlay.Notice(
+            "这是一条带有操作按钮的通知",
+            operateButtons: buttons
+        );
     }
 
     private void Crush(object? sender, RoutedEventArgs e)

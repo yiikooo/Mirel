@@ -1,17 +1,33 @@
 using System;
+using System.Windows.Input;
+using Avalonia.Threading;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 
 namespace Mirel.Classes.Entries;
 
-public class OperateButtonEntry(string content, Action<object> action) : ReactiveObject
+public class OperateButtonEntry : ReactiveObject
 {
-    [Reactive] public object? Content { get; set; } = content;
-    [Reactive] public Action<object>? Action { get; set; } = action;
+    [Reactive] public object? Content { get; set; }
+    [Reactive] public Action<object>? Action { get; set; }
+    public bool OnUIThread { get; init; } = true;
 
-    public void Command(object sender)
+    public ICommand Command { get; }
+
+
+    public OperateButtonEntry(string content, Action<object> action)
     {
-        Action?.Invoke(sender);
+        Content = content;
+        Action = action;
+        Command = ReactiveCommand.Create<object>(ExecuteCommand);
+    }
+
+    public void ExecuteCommand(object parameter)
+    {
+        if (OnUIThread)
+            Dispatcher.UIThread.Post(() => { Action?.Invoke(parameter); });
+        else
+            Action?.Invoke(parameter);
     }
 }

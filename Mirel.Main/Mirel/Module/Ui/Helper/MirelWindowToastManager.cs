@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -7,6 +8,7 @@ using Avalonia.Controls.Notifications;
 using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using Mirel.Classes.Entries;
 using Mirel.Controls;
 using Ursa.Controls;
 
@@ -66,7 +68,8 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
         bool touchClose = false,
         Action? onClick = null,
         Action? onClose = null,
-        string[]? classes = null)
+        string[]? classes = null,
+        IList<OperateButtonEntry>? operateButtons = null)
     {
         Dispatcher.UIThread.VerifyAccess();
 
@@ -75,7 +78,8 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
             Content = content,
             NotificationType = type,
             ShowIcon = showIcon,
-            ShowClose = showClose
+            ShowClose = showClose,
+            OperateButtons = operateButtons
         };
 
         if (classes is not null)

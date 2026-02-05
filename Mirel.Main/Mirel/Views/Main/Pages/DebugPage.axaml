@@ -34,6 +34,7 @@
             Click="Notice"
             Content="Notice Long Time"
             Tag="Long" />
+        <Button Click="NoticeWithButtons" Content="Notice With Buttons" />
         <Button Click="Crush" Content="Crush" />
     </WrapPanel>
 </UserControl>

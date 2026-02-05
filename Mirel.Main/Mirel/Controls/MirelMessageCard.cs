@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -6,6 +7,7 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Notifications;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
+using Mirel.Classes.Entries;
 using Ursa.Controls;
 
 namespace Mirel.Controls;
@@ -74,6 +76,15 @@ public abstract class MirelMessageCard : ContentControl
 
     public static readonly StyledProperty<bool> ShowCloseProperty =
         AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(ShowClose), true);
+
+    public IList<OperateButtonEntry>? OperateButtons
+    {
+        get => GetValue(OperateButtonsProperty);
+        set => SetValue(OperateButtonsProperty, value);
+    }
+
+    public static readonly StyledProperty<IList<OperateButtonEntry>?> OperateButtonsProperty =
+        AvaloniaProperty.Register<MirelMessageCard, IList<OperateButtonEntry>?>(nameof(OperateButtons));
 
     public static readonly RoutedEvent<RoutedEventArgs> MessageClosedEvent =
         RoutedEvent.Register<MirelMessageCard, RoutedEventArgs>(nameof(MessageClosed), RoutingStrategies.Bubble);
