@@ -29,25 +29,20 @@ public partial class SettingTabPage: PageMixModelBase, IMirelTabPage, IMirelNavP
         };
     }
     
-    private string _shortInfo = string.Empty;
 
     public string ShortInfo
     {
-        get => _shortInfo;
-        set => SetField(ref _shortInfo, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = "";
 
-    public Control RootElement { get; set; }
+    public Control RootElement { get; init; }
     public PageLoadingAnimator InAnimator { get; set; }
 
     public SelectionListItem? SelectedItem
     {
         get => _selectedItem;
-        set
-        {
-            SetField(ref _selectedItem, value);
-            ShortInfo = value == null ? "设置" : (value.Tag as IMirelPage).ShortInfo;
-        }
+        set => SetField(ref _selectedItem, value);
     }
 
     public TabEntry HostTab { get; set; }

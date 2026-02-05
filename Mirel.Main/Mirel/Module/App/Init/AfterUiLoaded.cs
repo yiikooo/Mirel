@@ -19,7 +19,6 @@ public abstract class AfterUiLoaded
         BindingKeys.Main(Mirel.App.UiRoot!);
         Setter.SetAccentColor(Data.SettingEntry.ThemeColor);
         Application.Current.Resources["BackGroundOpacity"] = Data.SettingEntry.BackGround == Setting.BackGround.Default ? 1.0 : 0.5;
-        _ = TranslateToken.RefreshToken();
         Setter.ToggleTheme(Data.SettingEntry.Theme);
         LoopGC.BeginLoop();
         // if (Data.SettingEntry.AutoCheckUpdate && Data.Instance.Version != "vDebug")

@@ -1,5 +1,6 @@
 ﻿using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
+using Mirel.Module.Service;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -17,7 +18,7 @@ public class Data : ReactiveObject
 
     public static DesktopType DesktopType { get; set; } = DesktopType.Unknown;
     public static SettingEntry SettingEntry { get; set; }
-    public static UiProperty UiProperty { get; set; } = UiProperty.Instance;
-    public static string TranslateToken { get; set; }
+    public static UiProperty UiProperty { get; } = UiProperty.Instance;
+    public static TabService TabService { get; } = TabService.Instance;
     [Reactive] public string Version { get; set; }
 }

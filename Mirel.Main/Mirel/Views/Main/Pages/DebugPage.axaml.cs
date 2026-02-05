@@ -30,7 +30,7 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
     }
 
     public string ShortInfo { get; set; }
-    public Control RootElement { get; set; }
+    public Control RootElement { get; init; }
     public PageLoadingAnimator InAnimator { get; set; }
 
     public TabEntry HostTab { get; set; }

@@ -59,6 +59,15 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
     private DateTime _shiftKeyDownTime;
     private bool _isShiftKeyDown;
     public TabEntry SelectedTab => ViewModel.SelectedTab;
+    public string WindowId { get; init; } = "主窗口";
+
+    public void SelectTab(TabEntry tab)
+    {
+        if (tab == null) return;
+        if (!Tabs.Contains(tab)) return;
+        ViewModel.SelectedTab = tab;
+    }
+
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
@@ -117,6 +126,29 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
 #endif
     private void BindEvents()
     {
+        ViewModel.Tabs.CollectionChanged += (_, _) =>
+        {
+            TabService.UpdateTabs();
+        };
+        ViewModel.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(ViewModel.SelectedTab))
+            {
+                AppEvents.OnTabSelectionChanged(new TabSEntry()
+                {
+                    Entry = SelectedTab,
+                    Window = this
+                });
+            }
+        };
+        Activated += (_, _) =>
+        {
+            AppEvents.OnTabSelectionChanged(new TabSEntry()
+            {
+                Entry = SelectedTab,
+                Window = this
+            });
+        };
         Closing += OnMainWindowClosing;
         if (Data.DesktopType == DesktopType.MacOs)
         {

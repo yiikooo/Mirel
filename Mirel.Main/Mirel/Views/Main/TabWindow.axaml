@@ -55,14 +55,31 @@
                                 IsCloseBtnShow="True"
                                 IsMaxBtnShow="True"
                                 IsVisible="True"
-                                Name="TitleBar" />
+                                Name="TitleBar">
+                                <controls:TitleBar.LeftContent>
+                                    <StackPanel Name="TitleBarContainer" Orientation="Horizontal">
+                                        <TextBlock
+                                            IsHitTestVisible="False"
+                                            Name="Code"
+                                            VerticalAlignment="Center" />
+                                        <Separator
+                                            Background="{DynamicResource TabTextColor}"
+                                            Foreground="{DynamicResource TabTextColor}"
+                                            Height="16"
+                                            Margin="10,0,5,0"
+                                            Name="Separator"
+                                            VerticalAlignment="Center"
+                                            Width="1" />
+                                    </StackPanel>
+                                </controls:TitleBar.LeftContent>
+                            </controls:TitleBar>
                             <Border
                                 Background="Transparent"
                                 ClipToBounds="True"
                                 DockPanel.Dock="Top"
                                 Height="40"
                                 HorizontalAlignment="Left"
-                                Margin="5,0,130,0"
+                                Margin="5,0,205,0"
                                 Name="NavRoot"
                                 VerticalAlignment="Top">
                                 <Grid>

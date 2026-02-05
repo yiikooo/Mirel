@@ -22,6 +22,6 @@ public partial class NotificationPage : PageMixModelBase, IMirelPage
     }
 
     public string ShortInfo { get; set; }
-    public Control RootElement { get; set; }
+    public Control RootElement { get; init; }
     public PageLoadingAnimator InAnimator { get; set; }
 }

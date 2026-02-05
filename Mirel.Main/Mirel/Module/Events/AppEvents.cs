@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Avalonia.Input;
+using Mirel.Classes.Entries;
 
 namespace Mirel.Module.Events;
 
@@ -36,5 +37,12 @@ public class AppEvents
     internal static void OnAppDragDrop(object? sender, DragEventArgs e)
     {
         AppDragDrop?.Invoke(sender, e);
+    }
+    
+    public static event AppEventsHandler.TabSelectionChangedHandler? TabSelectionChanged;
+
+    internal static void OnTabSelectionChanged(TabSEntry e)
+    {
+        TabSelectionChanged?.Invoke(e);
     }
 }

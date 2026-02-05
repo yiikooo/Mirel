@@ -1,7 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -11,7 +9,6 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform;
 using Avalonia.Threading;
-using Avalonia.VisualTree;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
@@ -34,7 +31,7 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
     private DateTime _shiftKeyDownTime;
     private bool _isShiftKeyDown;
     public string HostId => DialogHost.HostId;
-    
+
     public TabWindow()
     {
 #if DEBUG
@@ -53,11 +50,20 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
         NewTabButton.DataContext = ViewModel;
         BindEvents();
         TabDragDropService.RegisterWindow(this);
+        Code.Text = $"{WindowId}";
     }
 
     public TabWindowViewModel ViewModel { get; set; } = new();
     public ObservableCollection<TabEntry> Tabs => ViewModel.Tabs;
-    public TabEntry? SelectedTab => ViewModel.SelectedTab;
+    public TabEntry SelectedTab => ViewModel.SelectedTab;
+    public string WindowId { get; init; } = "#" + Guid.NewGuid().ToString()[..6];
+
+    public void SelectTab(TabEntry tab)
+    {
+        if (tab == null) return;
+        if (!Tabs.Contains(tab)) return;
+        ViewModel.SelectedTab = tab;
+    }
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
@@ -84,14 +90,13 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
             TitleBar.IsCloseBtnShow = false;
             TitleBar.IsMinBtnShow = false;
             TitleBar.IsMaxBtnShow = false;
-            NavRoot.Margin = new Thickness(60, 0, 55, 0);
+            NavRoot.Margin = new Thickness(60, 0, 130, 0);
         }
         else
         {
             ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
             ExtendClientAreaToDecorationsHint = true;
         }
-
     }
 
     public void TogglePage(string tag, IMirelTabPage page)
@@ -146,6 +151,35 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
 
     private void BindEvents()
     {
+        ViewModel.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(ViewModel.SelectedTab))
+            {
+                AppEvents.OnTabSelectionChanged(new TabSEntry()
+                {
+                    Entry = SelectedTab,
+                    Window = this
+                });
+            }
+        };
+        Activated += (_, _) =>
+        {
+            AppEvents.OnTabSelectionChanged(new TabSEntry()
+            {
+                Entry = SelectedTab,
+                Window = this
+            });
+        };
+        ViewModel.Tabs.CollectionChanged += (_, _) =>
+        {
+            if (ViewModel.Tabs.Count == 0)
+            {
+                Close();
+                return;
+            }
+
+            TabService.UpdateTabs();
+        };
         NewTabButton.Click += NewTabButton_Click;
         Closing += OnClosing;
         ViewModel.TabsEmptied += OnTabsEmptied;
@@ -171,6 +205,7 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
                 }
             };
         }
+
         KeyDown += (_, e) =>
         {
             if (e.Key is not (Key.LeftShift or Key.RightShift)) return;
@@ -221,7 +256,7 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
     {
         DataDragDropService.HandleData(this, e);
     }
-    
+
     private void TabItem_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (!e.GetCurrentPoint(this).Properties.IsMiddleButtonPressed) return;
@@ -244,7 +279,6 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
     public void CreateTab(TabEntry tab)
     {
         ViewModel.CreateTab(tab);
-
     }
 
     public void AddTab(TabEntry tab)

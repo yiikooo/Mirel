@@ -5,7 +5,5 @@ namespace Mirel.Classes.Interfaces;
 
 public interface IMirelPage
 {
-    public string ShortInfo { get; set; }
-    public Control RootElement { get; set; }
-    public PageLoadingAnimator InAnimator { get; set; }
+    public Control RootElement { get; init; }
 }

@@ -39,7 +39,7 @@ public partial class TabEntry : ViewModelBase
         };
     }
 
-    public bool IconIsVisible => Icon != null;
+    public bool IconIsVisible => Icon != null && Content.PageInfo.ShowIcon;
 
     public IMirelTabPage Content
     {

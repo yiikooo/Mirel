@@ -12,62 +12,65 @@
     xmlns:u="https://irihi.tech/ursa"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <DockPanel>
-        <u:SelectionList
-            DockPanel.Dock="Top"
-            Height="32"
-            ItemsSource="{Binding Navs}"
-            Margin="10"
-            SelectedIndex="0"
-            SelectedItem="{Binding SelectedNav}">
-            <u:SelectionList.Styles>
-                <Style Selector="u|SelectionListItem Border#Nav">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Style Selector="^ PathIcon">
-                        <Setter Property="Foreground" Value="{DynamicResource TabTextColor}" />
+        <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top">
+            <u:SelectionList
+                DockPanel.Dock="Left"
+                Height="32"
+                HorizontalAlignment="Left"
+                ItemsSource="{Binding Navs}"
+                Margin="10"
+                SelectedIndex="0"
+                SelectedItem="{Binding SelectedNav}">
+                <u:SelectionList.Styles>
+                    <Style Selector="u|SelectionListItem Border#Nav">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Style Selector="^ PathIcon">
+                            <Setter Property="Foreground" Value="{DynamicResource TabTextColor}" />
+                        </Style>
                     </Style>
-                </Style>
-                <Style Selector="u|SelectionListItem:pointerover Border#Nav">
-                    <Style Selector="^ PathIcon">
-                        <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
+                    <Style Selector="u|SelectionListItem:pointerover Border#Nav">
+                        <Style Selector="^ PathIcon">
+                            <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
+                        </Style>
                     </Style>
-                </Style>
-                <Style Selector="u|SelectionListItem:selected Border#Nav">
-                    <Style Selector="^ PathIcon">
-                        <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
+                    <Style Selector="u|SelectionListItem:selected Border#Nav">
+                        <Style Selector="^ PathIcon">
+                            <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
+                        </Style>
                     </Style>
-                </Style>
-            </u:SelectionList.Styles>
-            <u:SelectionList.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </u:SelectionList.ItemsPanel>
-            <u:SelectionList.Indicator>
-                <Border Background="{DynamicResource LineColor}" CornerRadius="{DynamicResource CardCornerRadius}" />
-            </u:SelectionList.Indicator>
-            <u:SelectionList.ItemTemplate>
-                <DataTemplate DataType="entries:NavEntry">
-                    <u:Badge Background="#ff6666" Dot="{Binding Dot}">
-                        <u:Badge.Styles>
-                            <Style Selector="u|Badge /template/ Border#PART_BadgeContainer">
-                                <Setter Property="Margin" Value="0,9,8,0" />
-                            </Style>
-                        </u:Badge.Styles>
-                        <Border
-                            Cursor="Hand"
-                            Height="32"
-                            Name="Nav"
-                            Width="32">
-                            <PathIcon
-                                Data="{Binding Icon}"
-                                Height="{Binding IconHeight}"
-                                Margin="{Binding IconMargin}"
-                                Width="{Binding IconWidth}" />
-                        </Border>
-                    </u:Badge>
-                </DataTemplate>
-            </u:SelectionList.ItemTemplate>
-        </u:SelectionList>
+                </u:SelectionList.Styles>
+                <u:SelectionList.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </u:SelectionList.ItemsPanel>
+                <u:SelectionList.Indicator>
+                    <Border Background="{DynamicResource LineColor}" CornerRadius="{DynamicResource CardCornerRadius}" />
+                </u:SelectionList.Indicator>
+                <u:SelectionList.ItemTemplate>
+                    <DataTemplate DataType="entries:NavEntry">
+                        <u:Badge Background="#ff6666" Dot="{Binding Dot}">
+                            <u:Badge.Styles>
+                                <Style Selector="u|Badge /template/ Border#PART_BadgeContainer">
+                                    <Setter Property="Margin" Value="0,9,8,0" />
+                                </Style>
+                            </u:Badge.Styles>
+                            <Border
+                                Cursor="Hand"
+                                Height="32"
+                                Name="Nav"
+                                Width="32">
+                                <PathIcon
+                                    Data="{Binding Icon}"
+                                    Height="{Binding IconHeight}"
+                                    Margin="{Binding IconMargin}"
+                                    Width="{Binding IconWidth}" />
+                            </Border>
+                        </u:Badge>
+                    </DataTemplate>
+                </u:SelectionList.ItemTemplate>
+            </u:SelectionList>
+        </DockPanel>
         <Rectangle
             DockPanel.Dock="Top"
             Fill="{DynamicResource LineColor}"
@@ -75,6 +78,12 @@
             HorizontalAlignment="Stretch"
             Margin="10,0"
             VerticalAlignment="Top" />
+        <TextBlock
+            DockPanel.Dock="Top"
+            HorizontalAlignment="Left"
+            Margin="15,10,0,0"
+            Text="{Binding SelectedNav.Title}"
+            VerticalAlignment="Center" />
         <ContentControl Content="{Binding SelectedNav.Page}" />
     </DockPanel>
 </UserControl>

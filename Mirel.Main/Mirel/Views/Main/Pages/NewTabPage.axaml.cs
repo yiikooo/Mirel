@@ -7,6 +7,7 @@ using Avalonia.Controls.Notifications;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
+using DynamicData;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Module.IO.Local;
@@ -20,9 +21,9 @@ namespace Mirel.Views.Main.Pages;
 public partial class NewTabPage : PageMixModelBase, IMirelTabPage
 {
     public string ShortInfo { get; set; }
-
+    public ObservableCollection<AggregateSearchEntry> Items { get; set; } = [];
     private bool _fl = true;
-  
+
     public NewTabPage()
     {
         InitializeComponent();
@@ -41,6 +42,15 @@ public partial class NewTabPage : PageMixModelBase, IMirelTabPage
             if (!_fl) return;
             _fl = false;
         };
+        SearchBox.GotFocus += (_, _) => Filter();
+        ListBox.SelectionChanged += (_, _) =>
+        {
+            if (ListBox.SelectedItem is AggregateSearchEntry entry)
+            {
+                AggregateSearchService.HandleSelection(entry, this);
+            }
+            ListBox.SelectedItem = null;
+        };
         SizeChanged += (_, _) =>
         {
             int t;
@@ -58,12 +68,15 @@ public partial class NewTabPage : PageMixModelBase, IMirelTabPage
                 TitleRoot.IsVisible = false;
                 return;
             }
+
+            if (Bounds.Width < 340)
+            {
+                TitleRoot.IsVisible = false;
+                return;
+            }
+
             TitleRoot.IsVisible = true;
             TitleRoot.Margin = new Thickness(0, t, 0, 0);
-        };
-        SizeChanged += (_, _) =>
-        {
-            TitleRoot.IsVisible = Bounds.Width >= 340;
         };
     }
 
@@ -79,10 +92,12 @@ public partial class NewTabPage : PageMixModelBase, IMirelTabPage
 
     private void Filter()
     {
+        Items.Clear();
+        Items.AddRange(AggregateSearchService.Search(SearchFilter));
     }
 
 
-    public Control RootElement { get; set; }
+    public Control RootElement { get; init; }
     public PageLoadingAnimator InAnimator { get; set; }
     public TabEntry HostTab { get; set; }
     public PageInfoEntry PageInfo { get; }
@@ -116,7 +131,7 @@ public partial class NewTabPage : PageMixModelBase, IMirelTabPage
         // Dialog.ShowCustom<AggregateSearchDialog, AggregateSearchDialog>(new AggregateSearchDialog(),
         //     this.GetVisualRoot() as Window, options: options); //TODO
     }
-    
+
     public void OpenInNewWindowCommand()
     {
         HostTab.MoveTabToNewWindow();
