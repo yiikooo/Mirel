@@ -1,21 +1,22 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
+    xmlns:controls="clr-namespace:Mirel.Controls"
     xmlns:helper="clr-namespace:Mirel.Module.Ui.Helper"
     xmlns:u="https://irihi.tech/ursa"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <ThemeVariantScope RequestedThemeVariant="Dark">
             <ReversibleStackPanel>
-                <u:ToastCard ShowClose="False" ShowIcon="False" />
-                <u:ToastCard />
-                <u:ToastCard>
+                <controls:MirelToastCard ShowClose="False" ShowIcon="False" />
+                <controls:MirelToastCard />
+                <controls:MirelToastCard>
                     Hello, Ursa!
-                </u:ToastCard>
-                <u:ToastCard Classes="Light" NotificationType="Success">
+                </controls:MirelToastCard>
+                <controls:MirelToastCard Classes="Light" NotificationType="Success">
                     <u:Toast>
                         Hello, Ursa!
                     </u:Toast>
-                </u:ToastCard>
+                </controls:MirelToastCard>
             </ReversibleStackPanel>
         </ThemeVariantScope>
     </Design.PreviewWith>
@@ -33,14 +34,14 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme TargetType="u:ToastCard" x:Key="{x:Type u:ToastCard}">
+    <ControlTheme TargetType="controls:MirelToastCard" x:Key="{x:Type controls:MirelToastCard}">
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="{DynamicResource ToastCardBorderThickness}" />
         <Setter Property="Background" Value="{DynamicResource ToastCardBackground}" />
         <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="u:ToastCard">
+            <ControlTemplate TargetType="controls:MirelToastCard">
                 <LayoutTransformControl UseRenderTransform="True" x:Name="PART_LayoutTransformControl">
                     <Border
                         Background="{TemplateBinding Background}"

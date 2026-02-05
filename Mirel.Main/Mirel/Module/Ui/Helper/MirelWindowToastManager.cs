@@ -7,21 +7,53 @@ using Avalonia.Controls.Notifications;
 using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using Mirel.Controls;
 using Ursa.Controls;
 
 namespace Mirel.Module.Ui.Helper;
 
-public class MirelWindowToastManager : WindowToastManager
+public class MirelWindowToastManager : WindowMessageManager, IToastManager
 {
     public MirelWindowToastManager()
     {
     }
-    
+
     public MirelWindowToastManager(TopLevel? host) : this()
     {
         if (host is not null)
         {
             InstallFromTopLevel(host);
+        }
+    }
+
+    public MirelWindowToastManager(VisualLayerManager? visualLayerManager) : base(visualLayerManager)
+    {
+    }
+    
+    public static bool TryGetToastManager(Visual? visual, out WindowToastManager? manager)
+    {
+        manager = visual?.FindDescendantOfType<WindowToastManager>();
+        return manager is not null;
+    }
+
+    public void Show(IToast content)
+    {
+        Show(content, content.Type, content.Expiration,
+            content.ShowIcon, content.ShowClose,
+            true, content.OnClick, content.OnClose);
+    }
+
+    public override void Show(object content)
+    {
+        if (content is IToast toast)
+        {
+            Show(toast, toast.Type, toast.Expiration,
+                toast.ShowIcon, toast.ShowClose,
+                true, toast.OnClick, toast.OnClose);
+        }
+        else
+        {
+            Show(content, NotificationType.Information);
         }
     }
     
@@ -38,7 +70,7 @@ public class MirelWindowToastManager : WindowToastManager
     {
         Dispatcher.UIThread.VerifyAccess();
 
-        var toastControl = new ToastCard
+        var toastControl = new MirelToastCard
         {
             Content = content,
             NotificationType = type,
@@ -72,9 +104,9 @@ public class MirelWindowToastManager : WindowToastManager
         {
             _items?.Add(toastControl);
 
-            if (_items?.OfType<ToastCard>().Count(i => !i.IsClosing) > MaxItems)
+            if (_items?.OfType<MirelToastCard>().Count(i => !i.IsClosing) > MaxItems)
             {
-                _items.OfType<ToastCard>().First(i => !i.IsClosing).Close();
+                _items.OfType<MirelToastCard>().First(i => !i.IsClosing).Close();
             }
         });
 
