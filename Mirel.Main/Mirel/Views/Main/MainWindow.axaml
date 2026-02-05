@@ -15,7 +15,7 @@
     MinHeight="250"
     MinWidth="450"
     SystemDecorations="Full"
-    Title="Aurelio"
+    Title="Mirel"
     WindowStartupLocation="CenterScreen"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -28,6 +28,7 @@
     xmlns:converter="clr-namespace:Mirel.Module.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:entries="clr-namespace:Mirel.Classes.Entries"
+    xmlns:helper="clr-namespace:Mirel.Module.Ui.Helper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:u="https://irihi.tech/ursa"
     xmlns:viewModels="clr-namespace:Mirel.ViewModels"
@@ -36,7 +37,7 @@
         <converter:BoolReversalConverter x:Key="BoolReversalConverter" />
         <converter:EnumIndexToBoolConverter x:Key="EnumIndexToBoolConverter" />
         <converter:NavScrollOpacityMaskConverter x:Key="NavScrollOpacityMaskConverter" />
-        <converter:NotificationTypeToClassesConverter x:Key="NotificationTypeToClassesConverter" />
+        <helper:SukiEaseInBackOutBack x:Key="SukiEaseInBackOutBack" />
     </u:UrsaWindow.Resources>
     <u:UrsaWindow.Styles>
         <Style Selector="FlyoutPresenter.nt /template/ ContentPresenter">
@@ -44,6 +45,16 @@
         </Style>
         <Style Selector="Border#NotificationCard.closing">
             <Setter Property="Opacity" Value="0" />
+        </Style>
+        <Style Selector="Border#ASide">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PanelBackgroundColor}" />
+            <Setter Property="Width" Value="0" />
+        </Style>
+        <Style Selector="Border#ASide.expanded">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PanelBorderBrush}" />
+            <Setter Property="Width" Value="310" />
         </Style>
     </u:UrsaWindow.Styles>
     <Border
@@ -53,456 +64,456 @@
         ClipToBounds="True"
         CornerRadius="8"
         x:Name="Root">
-        <DockPanel>
-            <Border
-                Background="{DynamicResource PanelBackgroundColor}"
-                DockPanel.Dock="Bottom"
-                Height="25"
-                IsVisible="{Binding Data.SettingEntry.EnableBottomContainer}"
-                Padding="5,3">
-                <DockPanel>
-                    <TextBlock
-                        Classes="eq-width"
-                        DockPanel.Dock="Left"
-                        FontSize="12.5"
-                        HorizontalAlignment="Left"
-                        Text="{Binding SelectedTab.Content.ShortInfo}"
-                        VerticalAlignment="Center" />
-                    <TextBlock
-                        Classes="eq-width"
-                        DockPanel.Dock="Right"
-                        FontSize="12.5"
-                        HorizontalAlignment="Right"
-                        Margin="0,0,3,0"
-                        Text="{Binding Time}"
-                        VerticalAlignment="Center" />
-                    <ContentControl Content="{Binding SelectedTab.Content.BottomElement}" Margin="5,0" />
-                </DockPanel>
-            </Border>
-            <Grid>
+        <Grid>
+            <DockPanel>
+                <Border
+                    ClipToBounds="True"
+                    DockPanel.Dock="Top"
+                    VerticalAlignment="Top">
+                    <Grid Margin="3">
+                        <controls:TitleBar
+                            DockPanel.Dock="Top"
+                            IsCloseBtnExitApp="True"
+                            IsCloseBtnShow="True"
+                            IsMaxBtnShow="True"
+                            IsVisible="True"
+                            Name="TitleBar">
+                            <controls:TitleBar.LeftContent>
+                                <StackPanel Name="TitleBarContainer" Orientation="Horizontal">
+                                    <u:Badge Background="#ff6666" Dot="{Binding Notifications.Count}">
+                                        <u:Badge.Styles>
+                                            <Style Selector="u|Badge /template/ Border#PART_BadgeContainer">
+                                                <Setter Property="Margin" Value="0,8,5,0" />
+                                            </Style>
+                                        </u:Badge.Styles>
+                                        <Button
+                                            Classes="title-bar-button big-title-bar-icon popup"
+                                            Content="F1 M 10 21.796875 C 11.381836 21.796875 12.5 20.678711 12.5 19.296875 L 7.5 19.296875 C 7.5 20.678711 8.618164 21.796875 10 21.796875 Z M 18.413086 15.947266 C 17.661133 15.136719 16.245117 13.916016 16.245117 9.921875 C 16.245117 6.884766 14.121094 4.458008 11.25 3.862305 L 11.25 3.046875 C 11.25 2.358398 10.688477 1.796875 10 1.796875 C 9.311523 1.796875 8.75 2.358398 8.75 3.046875 L 8.75 3.862305 C 5.878906 4.458008 3.754883 6.884766 3.754883 9.921875 C 3.754883 13.916016 2.338867 15.136719 1.586914 15.947266 C 1.352539 16.201172 1.25 16.503906 1.25 16.796875 C 1.254883 17.436523 1.757812 18.046875 2.504883 18.046875 L 17.495117 18.046875 C 18.242188 18.046875 18.745117 17.436523 18.75 16.796875 C 18.75 16.503906 18.647461 16.201172 18.413086 15.947266 Z "
+                                            Name="Bell"
+                                            VerticalAlignment="Center">
+                                            <Button.Styles>
+                                                <Style Selector="Button#Bell.title-bar-button.big-title-bar-icon.popup /template/ Border#bd">
+                                                    <Setter Property="Padding" Value="1,0,0,0" />
+                                                </Style>
+                                            </Button.Styles>
+                                            <Button.Flyout>
+                                                <Flyout FlyoutPresenterClasses="nt">
+                                                    <Border
+                                                        BorderThickness="1"
+                                                        ClipToBounds="True"
+                                                        Height="150"
+                                                        Width="330">
+                                                        <Grid>
+                                                            <DockPanel IsVisible="{Binding !Notifications.Count}" VerticalAlignment="Center">
+                                                                <Border
+                                                                    Background="{DynamicResource BackgroundColor}"
+                                                                    CornerRadius="{DynamicResource CardCornerRadius}"
+                                                                    DockPanel.Dock="Top"
+                                                                    Height="52"
+                                                                    Width="52">
+                                                                    <PathIcon
+                                                                        Data="F1 M 1.586952 15.947342 C 1.352577 16.201248 1.250038 16.503983 1.250038 16.796951 C 1.254921 17.4366 1.757851 18.046913 2.504921 18.046913 L 13.414993 18.046913 L 3.730659 10.456581 C 3.604164 14.004555 2.302284 15.176239 1.586952 15.947342 Z M 10.000038 21.796875 C 11.381874 21.796875 12.5 20.678711 12.5 19.296913 L 7.500038 19.296913 C 7.500038 20.678711 8.618202 21.796875 10.000038 21.796875 Z M 22.141151 20.121155 L 18.595886 17.342529 C 18.684769 17.173424 18.74855 16.991959 18.75 16.796951 C 18.75 16.503983 18.647461 16.201248 18.413086 15.947342 C 17.661133 15.136833 16.245117 13.91613 16.245117 9.922066 C 16.245117 6.884995 14.121094 4.458275 11.250038 3.862572 L 11.250038 3.047142 C 11.250038 2.358704 10.688515 1.79718 10.000038 1.79718 C 9.311562 1.79718 8.750038 2.358704 8.750038 3.047142 L 8.750038 3.862572 C 7.082939 4.208488 5.687752 5.184174 4.798317 6.52832 L -0.98381 1.99646 C -1.397972 1.673355 -1.985397 1.75396 -2.299767 2.155724 C -2.619553 2.563477 -2.54879 3.153038 -2.141037 3.472252 L 20.983925 21.596985 C 21.394081 21.917419 21.982422 21.844177 22.299805 21.437683 C 22.619667 21.029968 22.548828 20.440407 22.141151 20.121155 Z "
+                                                                        Height="24"
+                                                                        HorizontalAlignment="Center"
+                                                                        Margin="0,5,0,0"
+                                                                        VerticalAlignment="Center"
+                                                                        Width="24" />
+                                                                </Border>
+                                                                <TextBlock
+                                                                    DockPanel.Dock="Bottom"
+                                                                    HorizontalAlignment="Center"
+                                                                    Margin="0,12,0,0"
+                                                                    Text="无通知" />
+                                                            </DockPanel>
+                                                            <ScrollViewer
+                                                                Classes="flat-scroll"
+                                                                IsVisible="{Binding Notifications.Count}"
+                                                                Margin="8,8,3,8"
+                                                                Padding="0,0,5,0">
+                                                                <ScrollViewer.OpacityMask>
+                                                                    <LinearGradientBrush EndPoint="0%,100%" StartPoint="0%,0%">
+                                                                        <GradientStop Color="Black" Offset="0" />
+                                                                        <GradientStop Color="Black" Offset="0.85" />
+                                                                        <GradientStop Color="Transparent" Offset="1" />
+                                                                    </LinearGradientBrush>
+                                                                </ScrollViewer.OpacityMask>
+                                                                <ScrollViewer.Styles>
+                                                                    <Style Selector="Border#NotificationCard.succes">
+                                                                        <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
+                                                                        <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightSuccessBorderBrush}" />
+                                                                        <Style Selector="^ TextBlock#NotificationTitle">
+                                                                            <Setter Property="Text" Value="成功" />
+                                                                        </Style>
+                                                                        <Style Selector="^ Button#CloseButton">
+                                                                            <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
+                                                                        </Style>
+                                                                        <Style Selector="^ PathIcon#NotificationIcon">
+                                                                            <Setter Property="IsVisible" Value="True" />
+                                                                            <Setter Property="Foreground" Value="{DynamicResource NotificationCardSuccessIconForeground}" />
+                                                                            <Setter Property="Data" Value="{DynamicResource NotificationCardSuccessIconPathData}" />
+                                                                        </Style>
+                                                                    </Style>
+
+                                                                    <Style Selector="Border#NotificationCard.info">
+                                                                        <Setter Property="Background" Value="{DynamicResource SemiColorInformationLight}" />
+                                                                        <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightInformationBorderBrush}" />
+                                                                        <Style Selector="^ TextBlock#NotificationTitle">
+                                                                            <Setter Property="Text" Value="提示" />
+                                                                        </Style>
+                                                                        <Style Selector="^ Button#CloseButton">
+                                                                            <Setter Property="Background" Value="{DynamicResource SemiColorInformationLight}" />
+                                                                        </Style>
+                                                                        <Style Selector="^ PathIcon#NotificationIcon">
+                                                                            <Setter Property="IsVisible" Value="True" />
+                                                                            <Setter Property="Foreground" Value="{DynamicResource NotificationCardInformationIconForeground}" />
+                                                                            <Setter Property="Data" Value="{DynamicResource NotificationCardInformationIconPathData}" />
+                                                                        </Style>
+                                                                    </Style>
+
+                                                                    <Style Selector="Border#NotificationCard.error">
+                                                                        <Setter Property="Background" Value="{DynamicResource SemiColorDangerLight}" />
+                                                                        <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightErrorBorderBrush}" />
+                                                                        <Style Selector="^ TextBlock#NotificationTitle">
+                                                                            <Setter Property="Text" Value="错误" />
+                                                                        </Style>
+                                                                        <Style Selector="^ Button#CloseButton">
+                                                                            <Setter Property="Background" Value="{DynamicResource SemiColorDangerLight}" />
+                                                                        </Style>
+                                                                        <Style Selector="^ PathIcon#NotificationIcon">
+                                                                            <Setter Property="IsVisible" Value="True" />
+                                                                            <Setter Property="Foreground" Value="{DynamicResource NotificationCardErrorIconForeground}" />
+                                                                            <Setter Property="Data" Value="{DynamicResource NotificationCardErrorIconPathData}" />
+                                                                        </Style>
+                                                                    </Style>
+
+                                                                    <Style Selector="Border#NotificationCard.warn">
+                                                                        <Setter Property="Background" Value="{DynamicResource SemiColorWarningLight}" />
+                                                                        <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightWarningBorderBrush}" />
+                                                                        <Style Selector="^ TextBlock#NotificationTitle">
+                                                                            <Setter Property="Text" Value="警告" />
+                                                                        </Style>
+                                                                        <Style Selector="^ Button#CloseButton">
+                                                                            <Setter Property="Background" Value="{DynamicResource SemiColorWarningLight}" />
+                                                                        </Style>
+                                                                        <Style Selector="^ PathIcon#NotificationIcon">
+                                                                            <Setter Property="IsVisible" Value="True" />
+                                                                            <Setter Property="Foreground" Value="{DynamicResource NotificationCardWarningIconForeground}" />
+                                                                            <Setter Property="Data" Value="{DynamicResource NotificationCardWarningIconPathData}" />
+                                                                        </Style>
+                                                                    </Style>
+                                                                </ScrollViewer.Styles>
+                                                                <ItemsControl ItemsSource="{Binding Notifications}">
+                                                                    <ItemsControl.ItemsPanel>
+                                                                        <ItemsPanelTemplate>
+                                                                            <VirtualizingStackPanel />
+                                                                        </ItemsPanelTemplate>
+                                                                    </ItemsControl.ItemsPanel>
+                                                                    <ItemsControl.ItemTemplate>
+                                                                        <DataTemplate DataType="entries:NotificationEntry">
+                                                                            <Border
+                                                                                BorderThickness="1"
+                                                                                Classes.closing="{Binding IsClosing}"
+                                                                                Classes.error="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=3}"
+                                                                                Classes.info="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=0}"
+                                                                                Classes.succes="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=1}"
+                                                                                Classes.warn="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=2}"
+                                                                                CornerRadius="{DynamicResource CardCornerRadius}"
+                                                                                Margin="0,0,0,10"
+                                                                                Name="NotificationCard"
+                                                                                Padding="5">
+                                                                                <Border.Transitions>
+                                                                                    <Transitions>
+                                                                                        <DoubleTransition Duration="0:0:0.15" Property="Opacity" />
+                                                                                    </Transitions>
+                                                                                </Border.Transitions>
+                                                                                <Grid>
+                                                                                    <Grid.Styles>
+                                                                                        <Style Selector="Border#NotificationCard:not(:pointerover) Button">
+                                                                                            <Setter Property="Opacity" Value="0" />
+                                                                                        </Style>
+                                                                                        <Style Selector="Border#NotificationCard:pointerover Button">
+                                                                                            <Setter Property="Opacity" Value="1" />
+                                                                                        </Style>
+                                                                                    </Grid.Styles>
+                                                                                    <DockPanel Dock="Left" Margin="2,0,0,0">
+                                                                                        <DockPanel DockPanel.Dock="Top" Height="16">
+                                                                                            <PathIcon
+                                                                                                Height="14"
+                                                                                                Margin="0,0,5,0"
+                                                                                                Name="NotificationIcon"
+                                                                                                VerticalAlignment="Center"
+                                                                                                Width="14" />
+                                                                                            <TextBlock
+                                                                                                FontSize="12"
+                                                                                                Name="NotificationTitle"
+                                                                                                VerticalAlignment="Center" />
+                                                                                            <TextBlock
+                                                                                                FontSize="12"
+                                                                                                Text=" - "
+                                                                                                VerticalAlignment="Center" />
+                                                                                            <TextBlock
+                                                                                                FontSize="12"
+                                                                                                Text="{Binding Time, StringFormat={}{0:HH:mm:ss}}"
+                                                                                                VerticalAlignment="Center" />
+                                                                                        </DockPanel>
+                                                                                        <TextBlock
+                                                                                            DockPanel.Dock="Bottom"
+                                                                                            FontSize="14"
+                                                                                            Margin="0,4,0,0"
+                                                                                            Text="{Binding Entry.Content}"
+                                                                                            TextWrapping="Wrap" />
+                                                                                    </DockPanel>
+                                                                                    <Button
+                                                                                        Classes="icon-button"
+                                                                                        Command="{Binding Remove}"
+                                                                                        Content="{DynamicResource Close}"
+                                                                                        DockPanel.Dock="Right"
+                                                                                        HorizontalAlignment="Right"
+                                                                                        Margin="0,6,6,0"
+                                                                                        MaxHeight="10"
+                                                                                        MaxWidth="10"
+                                                                                        MinHeight="10"
+                                                                                        Name="CloseButton"
+                                                                                        VerticalAlignment="Top">
+                                                                                        <Button.Transitions>
+                                                                                            <Transitions>
+                                                                                                <DoubleTransition Duration="0:0:0.07" Property="Opacity" />
+                                                                                            </Transitions>
+                                                                                        </Button.Transitions>
+                                                                                    </Button>
+                                                                                </Grid>
+                                                                            </Border>
+                                                                        </DataTemplate>
+                                                                    </ItemsControl.ItemTemplate>
+                                                                </ItemsControl>
+                                                            </ScrollViewer>
+                                                        </Grid>
+                                                    </Border>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </u:Badge>
+                                    <Button
+                                        Classes="title-bar-button big-title-bar-icon"
+                                        Content="F1 M 1.25 8.671875 L 15.732422 8.671875 L 13.491211 10.913086 C 13.00293 11.401367 13.00293 12.192383 13.491211 12.680664 C 13.735352 12.924805 14.055138 13.046875 14.375 13.046875 C 14.694862 13.046875 15.014648 12.924805 15.258789 12.680664 L 19.633789 8.305664 C 20.12207 7.817383 20.12207 7.026367 19.633789 6.538086 L 15.258789 2.163086 C 14.770508 1.674805 13.979492 1.674805 13.491211 2.163086 C 13.00293 2.651367 13.00293 3.442383 13.491211 3.930664 L 15.732422 6.171875 L 1.25 6.171875 C 0.559044 6.171875 0 6.730919 0 7.421875 C 0 8.112831 0.559044 8.671875 1.25 8.671875 Z M 18.75 14.921875 L 4.267578 14.921875 L 6.508789 12.680664 C 6.99707 12.192383 6.99707 11.401367 6.508789 10.913086 C 6.020508 10.424805 5.229492 10.424805 4.741211 10.913086 L 0.366211 15.288086 C -0.12207 15.776367 -0.12207 16.567383 0.366211 17.055664 L 4.741211 21.430664 C 4.985352 21.674805 5.305138 21.796875 5.625 21.796875 C 5.944862 21.796875 6.264648 21.674805 6.508789 21.430664 C 6.99707 20.942383 6.99707 20.151367 6.508789 19.663086 L 4.267578 17.421875 L 18.75 17.421875 C 19.440956 17.421875 20 16.862831 20 16.171875 C 20 15.480919 19.440956 14.921875 18.75 14.921875 Z "
+                                        Name="ASideButton"
+                                        VerticalAlignment="Center" />
+                                    <Separator
+                                        Background="{DynamicResource TabTextColor}"
+                                        Foreground="{DynamicResource TabTextColor}"
+                                        Height="16"
+                                        Margin="5,0,5,0"
+                                        Name="Separator"
+                                        VerticalAlignment="Center"
+                                        Width="1" />
+                                </StackPanel>
+                            </controls:TitleBar.LeftContent>
+                        </controls:TitleBar>
+                        <Border
+                            Background="Transparent"
+                            ClipToBounds="True"
+                            DockPanel.Dock="Top"
+                            Height="40"
+                            HorizontalAlignment="Left"
+                            Margin="80,0,150,0"
+                            Name="NavRoot"
+                            VerticalAlignment="Top">
+                            <Grid>
+                                <ScrollViewer
+                                    AllowAutoHide="True"
+                                    Classes="flat-scroll"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    Name="NavScrollViewer"
+                                    Offset="{Binding TabScrollOffset}"
+                                    OpacityMask="{Binding IsTabMaskVisible, Converter={StaticResource NavScrollOpacityMaskConverter}}"
+                                    PointerWheelChanged="NavScrollViewer_PointerWheelChanged"
+                                    VerticalScrollBarVisibility="Disabled">
+                                    <StackPanel Margin="0,0,20,0" Orientation="Horizontal">
+                                        <u:SelectionList
+                                            AutoScrollToSelectedItem="True"
+                                            ItemsSource="{Binding Tabs}"
+                                            Name="NavMenu"
+                                            SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
+                                            VerticalAlignment="Center">
+                                            <u:SelectionList.Styles>
+                                                <Style Selector="u|SelectionListItem:not(:selected)">
+                                                    <Style Selector="^ TextBlock.tab">
+                                                        <Setter Property="Foreground" Value="{DynamicResource TabTextColor}" />
+                                                    </Style>
+                                                    <Style Selector="^ PathIcon">
+                                                        <Setter Property="Foreground" Value="{DynamicResource TabTextColor}" />
+                                                    </Style>
+                                                    <Style Selector="^ Button">
+                                                        <Setter Property="Opacity" Value="0" />
+                                                    </Style>
+                                                    <Style Selector="^ Border#ItemRoot">
+                                                        <Setter Property="Background" Value="{DynamicResource TabBackgroundColor}" />
+                                                    </Style>
+                                                </Style>
+                                                <Style Selector="u|SelectionListItem:pointerover">
+                                                    <Style Selector="^ Button">
+                                                        <Setter Property="Opacity" Value="1" />
+                                                    </Style>
+                                                    <Style Selector="^ Border#ItemRoot">
+                                                        <Setter Property="Background" Value="{DynamicResource HoverTabBackgroundColor}" />
+                                                    </Style>
+                                                </Style>
+                                                <Style Selector="u|SelectionListItem:selected">
+                                                    <Style Selector="^ TextBlock.tab">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
+                                                    </Style>
+                                                    <Style Selector="^ PathIcon">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
+                                                    </Style>
+                                                    <Style Selector="^ Button">
+                                                        <Setter Property="Opacity" Value="1" />
+                                                    </Style>
+                                                    <Style Selector="^ Border#ItemRoot">
+                                                        <Setter Property="Background" Value="{DynamicResource SelectedTabBackgroundColor}" />
+                                                    </Style>
+                                                </Style>
+                                            </u:SelectionList.Styles>
+                                            <u:SelectionList.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="5" />
+                                                </ItemsPanelTemplate>
+                                            </u:SelectionList.ItemsPanel>
+                                            <u:SelectionList.Indicator>
+                                                <Border IsVisible="False" />
+                                            </u:SelectionList.Indicator>
+                                            <u:SelectionList.ItemTemplate>
+                                                <DataTemplate DataType="entries:TabEntry">
+                                                    <Border
+                                                        BorderThickness="1"
+                                                        CornerRadius="{DynamicResource CardCornerRadius}"
+                                                        Height="30"
+                                                        MinWidth="{Binding MinWidth}"
+                                                        Name="ItemRoot"
+                                                        PointerPressed="TabItem_OnPointerPressed"
+                                                        Tag="{Binding}"
+                                                        behavior:TabDragBehavior.IsEnabled="True">
+                                                        <DockPanel Margin="8,-1,10,0" VerticalAlignment="Center">
+                                                            <PathIcon
+                                                                Data="{Binding Icon}"
+                                                                Height="15"
+                                                                IsVisible="{Binding IconIsVisible}"
+                                                                Margin="0,0,4,0"
+                                                                Width="15" />
+                                                            <Grid>
+                                                                <ContentControl
+                                                                    Content="{Binding HeaderContent}"
+                                                                    Foreground="{DynamicResource ForegroundColor}"
+                                                                    IsVisible="{Binding IsUseHeaderContent}" />
+                                                                <TextBlock
+                                                                    Classes="tab"
+                                                                    IsVisible="{Binding IsUseHeaderContent, Converter={StaticResource BoolReversalConverter}}"
+                                                                    Margin="2,0,0,0"
+                                                                    Text="{Binding Title}" />
+                                                            </Grid>
+                                                            <Grid
+                                                                HorizontalAlignment="Right"
+                                                                IsVisible="{Binding CanClose}"
+                                                                Margin="0,0,-4,0">
+                                                                <Button
+                                                                    Classes="icon-button tab"
+                                                                    Command="{Binding Close}"
+                                                                    Content="{DynamicResource Close}"
+                                                                    HorizontalAlignment="Right"
+                                                                    Margin="3,1,0,0"
+                                                                    MaxHeight="14"
+                                                                    MaxWidth="16"
+                                                                    MinHeight="14"
+                                                                    Name="CloseButton"
+                                                                    VerticalAlignment="Center">
+                                                                    <Button.Transitions>
+                                                                        <Transitions>
+                                                                            <DoubleTransition Duration="0:0:0.07" Property="Opacity" />
+                                                                        </Transitions>
+                                                                    </Button.Transitions>
+                                                                </Button>
+                                                            </Grid>
+                                                        </DockPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </u:SelectionList.ItemTemplate>
+                                        </u:SelectionList>
+                                        <Button
+                                            Classes="custom-hover-button tab"
+                                            Content="{DynamicResource Plus}"
+                                            Margin="4,0,0,0"
+                                            Name="NewTabButton" />
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
+                        <Border
+                            Classes="popup"
+                            CornerRadius="{DynamicResource CardCornerRadius}"
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            Margin="5,0,0,0"
+                            Name="TitleRoot"
+                            VerticalAlignment="Center"
+                            Width="30">
+                            <Border.Styles>
+                                <Style Selector="Border#TitleRoot">
+                                    <Setter Property="Background" Value="{DynamicResource TabBackgroundColor}" />
+                                </Style>
+                                <Style Selector="Border#TitleRoot:pointerover">
+                                    <Setter Property="Background" Value="{DynamicResource HoverTabBackgroundColor}" />
+                                </Style>
+                            </Border.Styles>
+                            <PathIcon
+                                Data="F1 M 17.012291 10.744324 C 17.638512 10.151176 17.665367 9.162521 17.071495 8.536415 C 16.477623 7.907867 15.488243 7.881012 14.862671 8.476601 L 10 13.082848 L 5.137329 8.476601 C 4.511147 7.882233 3.521767 7.90905 2.928505 8.536415 C 2.334633 9.162521 2.361488 10.151176 2.987709 10.744324 L 8.925171 16.368484 C 9.226685 16.654053 9.613647 16.796875 10 16.796875 C 10.386353 16.796875 10.773315 16.654053 11.074829 16.368484 Z "
+                                Foreground="{DynamicResource TabTextColor}"
+                                Height="12"
+                                HorizontalAlignment="Center"
+                                Margin="0,0,0,-2"
+                                VerticalAlignment="Center"
+                                Width="12" />
+                        </Border>
+                    </Grid>
+                </Border>
                 <DockPanel>
                     <Border
-                        ClipToBounds="True"
-                        DockPanel.Dock="Top"
-                        VerticalAlignment="Top">
-                        <Grid Margin="3">
-                            <controls:TitleBar
-                                DockPanel.Dock="Top"
-                                IsCloseBtnExitApp="True"
-                                IsCloseBtnShow="True"
-                                IsMaxBtnShow="True"
-                                IsVisible="True"
-                                Name="TitleBar">
-                                <controls:TitleBar.LeftContent>
-                                    <StackPanel Name="TitleBarContainer" Orientation="Horizontal">
-                                        <u:Badge Background="#ff6666" Dot="{Binding Notifications.Count}">
-                                            <u:Badge.Styles>
-                                                <Style Selector="u|Badge /template/ Border#PART_BadgeContainer">
-                                                    <Setter Property="Margin" Value="0,8,5,0" />
-                                                </Style>
-                                            </u:Badge.Styles>
-                                            <Button
-                                                Classes="title-bar-button big-title-bar-icon popup"
-                                                Content="F1 M 10 21.796875 C 11.381836 21.796875 12.5 20.678711 12.5 19.296875 L 7.5 19.296875 C 7.5 20.678711 8.618164 21.796875 10 21.796875 Z M 18.413086 15.947266 C 17.661133 15.136719 16.245117 13.916016 16.245117 9.921875 C 16.245117 6.884766 14.121094 4.458008 11.25 3.862305 L 11.25 3.046875 C 11.25 2.358398 10.688477 1.796875 10 1.796875 C 9.311523 1.796875 8.75 2.358398 8.75 3.046875 L 8.75 3.862305 C 5.878906 4.458008 3.754883 6.884766 3.754883 9.921875 C 3.754883 13.916016 2.338867 15.136719 1.586914 15.947266 C 1.352539 16.201172 1.25 16.503906 1.25 16.796875 C 1.254883 17.436523 1.757812 18.046875 2.504883 18.046875 L 17.495117 18.046875 C 18.242188 18.046875 18.745117 17.436523 18.75 16.796875 C 18.75 16.503906 18.647461 16.201172 18.413086 15.947266 Z "
-                                                Name="Bell"
-                                                VerticalAlignment="Center">
-                                                <Button.Styles>
-                                                    <Style Selector="Button#Bell.title-bar-button.big-title-bar-icon.popup /template/ Border#bd">
-                                                        <Setter Property="Padding" Value="1,0,0,0" />
-                                                    </Style>
-                                                </Button.Styles>
-                                                <Button.Flyout>
-                                                    <Flyout FlyoutPresenterClasses="nt">
-                                                        <Border
-                                                            BorderThickness="1"
-                                                            ClipToBounds="True"
-                                                            Height="150"
-                                                            Width="330">
-                                                            <Grid>
-                                                                <DockPanel IsVisible="{Binding !Notifications.Count}" VerticalAlignment="Center">
-                                                                    <Border
-                                                                        Background="{DynamicResource BackgroundColor}"
-                                                                        CornerRadius="{DynamicResource CardCornerRadius}"
-                                                                        DockPanel.Dock="Top"
-                                                                        Height="60"
-                                                                        Width="60">
-                                                                        <PathIcon
-                                                                            Data="F1 M 1.586952 15.947342 C 1.352577 16.201248 1.250038 16.503983 1.250038 16.796951 C 1.254921 17.4366 1.757851 18.046913 2.504921 18.046913 L 13.414993 18.046913 L 3.730659 10.456581 C 3.604164 14.004555 2.302284 15.176239 1.586952 15.947342 Z M 10.000038 21.796875 C 11.381874 21.796875 12.5 20.678711 12.5 19.296913 L 7.500038 19.296913 C 7.500038 20.678711 8.618202 21.796875 10.000038 21.796875 Z M 22.141151 20.121155 L 18.595886 17.342529 C 18.684769 17.173424 18.74855 16.991959 18.75 16.796951 C 18.75 16.503983 18.647461 16.201248 18.413086 15.947342 C 17.661133 15.136833 16.245117 13.91613 16.245117 9.922066 C 16.245117 6.884995 14.121094 4.458275 11.250038 3.862572 L 11.250038 3.047142 C 11.250038 2.358704 10.688515 1.79718 10.000038 1.79718 C 9.311562 1.79718 8.750038 2.358704 8.750038 3.047142 L 8.750038 3.862572 C 7.082939 4.208488 5.687752 5.184174 4.798317 6.52832 L -0.98381 1.99646 C -1.397972 1.673355 -1.985397 1.75396 -2.299767 2.155724 C -2.619553 2.563477 -2.54879 3.153038 -2.141037 3.472252 L 20.983925 21.596985 C 21.394081 21.917419 21.982422 21.844177 22.299805 21.437683 C 22.619667 21.029968 22.548828 20.440407 22.141151 20.121155 Z "
-                                                                            Height="35"
-                                                                            HorizontalAlignment="Center"
-                                                                            Margin="0,10,0,0"
-                                                                            VerticalAlignment="Center"
-                                                                            Width="35" />
-                                                                    </Border>
-                                                                    <TextBlock
-                                                                        DockPanel.Dock="Bottom"
-                                                                        HorizontalAlignment="Center"
-                                                                        Margin="0,12,0,0"
-                                                                        Text="无通知" />
-                                                                </DockPanel>
-                                                                <ScrollViewer
-                                                                    Classes="flat-scroll"
-                                                                    IsVisible="{Binding Notifications.Count}"
-                                                                    Margin="8,8,3,8"
-                                                                    Padding="0,0,5,0">
-                                                                    <ScrollViewer.OpacityMask>
-                                                                        <LinearGradientBrush EndPoint="0%,100%" StartPoint="0%,0%">
-                                                                            <GradientStop Color="Black" Offset="0" />
-                                                                            <GradientStop Color="Black" Offset="0.85" />
-                                                                            <GradientStop Color="Transparent" Offset="1" />
-                                                                        </LinearGradientBrush>
-                                                                    </ScrollViewer.OpacityMask>
-                                                                    <ScrollViewer.Styles>
-                                                                        <Style Selector="Border#NotificationCard.succes">
-                                                                            <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
-                                                                            <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightSuccessBorderBrush}" />
-                                                                            <Style Selector="^ TextBlock#NotificationTitle">
-                                                                                <Setter Property="Text" Value="成功" />
-                                                                            </Style>
-                                                                            <Style Selector="^ Button#CloseButton">
-                                                                                <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
-                                                                            </Style>
-                                                                            <Style Selector="^ PathIcon#NotificationIcon">
-                                                                                <Setter Property="IsVisible" Value="True" />
-                                                                                <Setter Property="Foreground" Value="{DynamicResource NotificationCardSuccessIconForeground}" />
-                                                                                <Setter Property="Data" Value="{DynamicResource NotificationCardSuccessIconPathData}" />
-                                                                            </Style>
-                                                                        </Style>
-
-                                                                        <Style Selector="Border#NotificationCard.info">
-                                                                            <Setter Property="Background" Value="{DynamicResource SemiColorInformationLight}" />
-                                                                            <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightInformationBorderBrush}" />
-                                                                            <Style Selector="^ TextBlock#NotificationTitle">
-                                                                                <Setter Property="Text" Value="提示" />
-                                                                            </Style>
-                                                                            <Style Selector="^ Button#CloseButton">
-                                                                                <Setter Property="Background" Value="{DynamicResource SemiColorInformationLight}" />
-                                                                            </Style>
-                                                                            <Style Selector="^ PathIcon#NotificationIcon">
-                                                                                <Setter Property="IsVisible" Value="True" />
-                                                                                <Setter Property="Foreground" Value="{DynamicResource NotificationCardInformationIconForeground}" />
-                                                                                <Setter Property="Data" Value="{DynamicResource NotificationCardInformationIconPathData}" />
-                                                                            </Style>
-                                                                        </Style>
-
-                                                                        <Style Selector="Border#NotificationCard.error">
-                                                                            <Setter Property="Background" Value="{DynamicResource SemiColorDangerLight}" />
-                                                                            <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightErrorBorderBrush}" />
-                                                                            <Style Selector="^ TextBlock#NotificationTitle">
-                                                                                <Setter Property="Text" Value="错误" />
-                                                                            </Style>
-                                                                            <Style Selector="^ Button#CloseButton">
-                                                                                <Setter Property="Background" Value="{DynamicResource SemiColorDangerLight}" />
-                                                                            </Style>
-                                                                            <Style Selector="^ PathIcon#NotificationIcon">
-                                                                                <Setter Property="IsVisible" Value="True" />
-                                                                                <Setter Property="Foreground" Value="{DynamicResource NotificationCardErrorIconForeground}" />
-                                                                                <Setter Property="Data" Value="{DynamicResource NotificationCardErrorIconPathData}" />
-                                                                            </Style>
-                                                                        </Style>
-
-                                                                        <Style Selector="Border#NotificationCard.warn">
-                                                                            <Setter Property="Background" Value="{DynamicResource SemiColorWarningLight}" />
-                                                                            <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightWarningBorderBrush}" />
-                                                                            <Style Selector="^ TextBlock#NotificationTitle">
-                                                                                <Setter Property="Text" Value="警告" />
-                                                                            </Style>
-                                                                            <Style Selector="^ Button#CloseButton">
-                                                                                <Setter Property="Background" Value="{DynamicResource SemiColorWarningLight}" />
-                                                                            </Style>
-                                                                            <Style Selector="^ PathIcon#NotificationIcon">
-                                                                                <Setter Property="IsVisible" Value="True" />
-                                                                                <Setter Property="Foreground" Value="{DynamicResource NotificationCardWarningIconForeground}" />
-                                                                                <Setter Property="Data" Value="{DynamicResource NotificationCardWarningIconPathData}" />
-                                                                            </Style>
-                                                                        </Style>
-                                                                    </ScrollViewer.Styles>
-                                                                    <ItemsControl ItemsSource="{Binding Notifications}">
-                                                                        <ItemsControl.ItemsPanel>
-                                                                            <ItemsPanelTemplate>
-                                                                                <VirtualizingStackPanel />
-                                                                            </ItemsPanelTemplate>
-                                                                        </ItemsControl.ItemsPanel>
-                                                                        <ItemsControl.ItemTemplate>
-                                                                            <DataTemplate DataType="entries:NotificationEntry">
-                                                                                <Border
-                                                                                    BorderThickness="1"
-                                                                                    Classes.closing="{Binding IsClosing}"
-                                                                                    Classes.error="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=3}"
-                                                                                    Classes.info="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=0}"
-                                                                                    Classes.succes="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=1}"
-                                                                                    Classes.warn="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=2}"
-                                                                                    CornerRadius="{DynamicResource CardCornerRadius}"
-                                                                                    Margin="0,0,0,10"
-                                                                                    Name="NotificationCard"
-                                                                                    Padding="5">
-                                                                                    <Border.Transitions>
-                                                                                        <Transitions>
-                                                                                            <DoubleTransition Duration="0:0:0.15" Property="Opacity" />
-                                                                                        </Transitions>
-                                                                                    </Border.Transitions>
-                                                                                    <Grid>
-                                                                                        <Grid.Styles>
-                                                                                            <Style Selector="Border#NotificationCard:not(:pointerover) Button">
-                                                                                                <Setter Property="Opacity" Value="0" />
-                                                                                            </Style>
-                                                                                            <Style Selector="Border#NotificationCard:pointerover Button">
-                                                                                                <Setter Property="Opacity" Value="1" />
-                                                                                            </Style>
-                                                                                        </Grid.Styles>
-                                                                                        <DockPanel Dock="Left" Margin="2,0,0,0">
-                                                                                            <DockPanel DockPanel.Dock="Top" Height="16">
-                                                                                                <PathIcon
-                                                                                                    Height="14"
-                                                                                                    Margin="0,0,5,0"
-                                                                                                    Name="NotificationIcon"
-                                                                                                    VerticalAlignment="Center"
-                                                                                                    Width="14" />
-                                                                                                <TextBlock
-                                                                                                    FontSize="12"
-                                                                                                    Name="NotificationTitle"
-                                                                                                    VerticalAlignment="Center" />
-                                                                                                <TextBlock
-                                                                                                    FontSize="12"
-                                                                                                    Text=" - "
-                                                                                                    VerticalAlignment="Center" />
-                                                                                                <TextBlock
-                                                                                                    FontSize="12"
-                                                                                                    Text="{Binding Time, StringFormat={}{0:HH:mm:ss}}"
-                                                                                                    VerticalAlignment="Center" />
-                                                                                            </DockPanel>
-                                                                                            <TextBlock
-                                                                                                DockPanel.Dock="Bottom"
-                                                                                                FontSize="14"
-                                                                                                Margin="0,4,0,0"
-                                                                                                Text="{Binding Entry.Content}"
-                                                                                                TextWrapping="Wrap" />
-                                                                                        </DockPanel>
-                                                                                        <Button
-                                                                                            Classes="icon-button"
-                                                                                            Command="{Binding Remove}"
-                                                                                            Content="{DynamicResource Close}"
-                                                                                            DockPanel.Dock="Right"
-                                                                                            HorizontalAlignment="Right"
-                                                                                            Margin="0,6,6,0"
-                                                                                            MaxHeight="10"
-                                                                                            MaxWidth="10"
-                                                                                            MinHeight="10"
-                                                                                            Name="CloseButton"
-                                                                                            VerticalAlignment="Top">
-                                                                                            <Button.Transitions>
-                                                                                                <Transitions>
-                                                                                                    <DoubleTransition Duration="0:0:0.07" Property="Opacity" />
-                                                                                                </Transitions>
-                                                                                            </Button.Transitions>
-                                                                                        </Button>
-                                                                                    </Grid>
-                                                                                </Border>
-                                                                            </DataTemplate>
-                                                                        </ItemsControl.ItemTemplate>
-                                                                    </ItemsControl>
-                                                                </ScrollViewer>
-                                                            </Grid>
-                                                        </Border>
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </u:Badge>
-                                        <Button
-                                            Classes="title-bar-button big-title-bar-icon"
-                                            Content="F1 M 1.25 8.671875 L 15.732422 8.671875 L 13.491211 10.913086 C 13.00293 11.401367 13.00293 12.192383 13.491211 12.680664 C 13.735352 12.924805 14.055138 13.046875 14.375 13.046875 C 14.694862 13.046875 15.014648 12.924805 15.258789 12.680664 L 19.633789 8.305664 C 20.12207 7.817383 20.12207 7.026367 19.633789 6.538086 L 15.258789 2.163086 C 14.770508 1.674805 13.979492 1.674805 13.491211 2.163086 C 13.00293 2.651367 13.00293 3.442383 13.491211 3.930664 L 15.732422 6.171875 L 1.25 6.171875 C 0.559044 6.171875 0 6.730919 0 7.421875 C 0 8.112831 0.559044 8.671875 1.25 8.671875 Z M 18.75 14.921875 L 4.267578 14.921875 L 6.508789 12.680664 C 6.99707 12.192383 6.99707 11.401367 6.508789 10.913086 C 6.020508 10.424805 5.229492 10.424805 4.741211 10.913086 L 0.366211 15.288086 C -0.12207 15.776367 -0.12207 16.567383 0.366211 17.055664 L 4.741211 21.430664 C 4.985352 21.674805 5.305138 21.796875 5.625 21.796875 C 5.944862 21.796875 6.264648 21.674805 6.508789 21.430664 C 6.99707 20.942383 6.99707 20.151367 6.508789 19.663086 L 4.267578 17.421875 L 18.75 17.421875 C 19.440956 17.421875 20 16.862831 20 16.171875 C 20 15.480919 19.440956 14.921875 18.75 14.921875 Z "
-                                            Name="ASide"
-                                            VerticalAlignment="Center" />
-                                        <Separator
-                                            Background="{DynamicResource TabTextColor}"
-                                            Foreground="{DynamicResource TabTextColor}"
-                                            Height="16"
-                                            Margin="5,0,5,0"
-                                            Name="Separator"
-                                            VerticalAlignment="Center"
-                                            Width="1" />
-                                    </StackPanel>
-                                </controls:TitleBar.LeftContent>
-                            </controls:TitleBar>
-                            <Border
-                                Background="Transparent"
-                                ClipToBounds="True"
-                                DockPanel.Dock="Top"
-                                Height="40"
-                                HorizontalAlignment="Left"
-                                Margin="80,0,150,0"
-                                Name="NavRoot"
-                                VerticalAlignment="Top">
-                                <Grid>
-                                    <ScrollViewer
-                                        AllowAutoHide="True"
-                                        Classes="flat-scroll"
-                                        HorizontalScrollBarVisibility="Auto"
-                                        Name="NavScrollViewer"
-                                        Offset="{Binding TabScrollOffset}"
-                                        OpacityMask="{Binding IsTabMaskVisible, Converter={StaticResource NavScrollOpacityMaskConverter}}"
-                                        PointerWheelChanged="NavScrollViewer_PointerWheelChanged"
-                                        VerticalScrollBarVisibility="Disabled">
-                                        <StackPanel Margin="0,0,20,0" Orientation="Horizontal">
-                                            <u:SelectionList
-                                                AutoScrollToSelectedItem="True"
-                                                ItemsSource="{Binding Tabs}"
-                                                Name="NavMenu"
-                                                SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
-                                                VerticalAlignment="Center">
-                                                <u:SelectionList.Styles>
-                                                    <Style Selector="u|SelectionListItem:not(:selected)">
-                                                        <Style Selector="^ TextBlock.tab">
-                                                            <Setter Property="Foreground" Value="{DynamicResource TabTextColor}" />
-                                                        </Style>
-                                                        <Style Selector="^ PathIcon">
-                                                            <Setter Property="Foreground" Value="{DynamicResource TabTextColor}" />
-                                                        </Style>
-                                                        <Style Selector="^ Button">
-                                                            <Setter Property="Opacity" Value="0" />
-                                                        </Style>
-                                                        <Style Selector="^ Border#ItemRoot">
-                                                            <Setter Property="Background" Value="{DynamicResource TabBackgroundColor}" />
-                                                        </Style>
-                                                    </Style>
-                                                    <Style Selector="u|SelectionListItem:pointerover">
-                                                        <Style Selector="^ Button">
-                                                            <Setter Property="Opacity" Value="1" />
-                                                        </Style>
-                                                        <Style Selector="^ Border#ItemRoot">
-                                                            <Setter Property="Background" Value="{DynamicResource HoverTabBackgroundColor}" />
-                                                        </Style>
-                                                    </Style>
-                                                    <Style Selector="u|SelectionListItem:selected">
-                                                        <Style Selector="^ TextBlock.tab">
-                                                            <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
-                                                        </Style>
-                                                        <Style Selector="^ PathIcon">
-                                                            <Setter Property="Foreground" Value="{DynamicResource SelectedTabTextColor}" />
-                                                        </Style>
-                                                        <Style Selector="^ Button">
-                                                            <Setter Property="Opacity" Value="1" />
-                                                        </Style>
-                                                        <Style Selector="^ Border#ItemRoot">
-                                                            <Setter Property="Background" Value="{DynamicResource SelectedTabBackgroundColor}" />
-                                                        </Style>
-                                                    </Style>
-                                                </u:SelectionList.Styles>
-                                                <u:SelectionList.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" Spacing="5" />
-                                                    </ItemsPanelTemplate>
-                                                </u:SelectionList.ItemsPanel>
-                                                <u:SelectionList.Indicator>
-                                                    <Border IsVisible="False" />
-                                                </u:SelectionList.Indicator>
-                                                <u:SelectionList.ItemTemplate>
-                                                    <DataTemplate DataType="entries:TabEntry">
-                                                        <Border
-                                                            BorderThickness="1"
-                                                            CornerRadius="{DynamicResource CardCornerRadius}"
-                                                            Height="30"
-                                                            MinWidth="{Binding MinWidth}"
-                                                            Name="ItemRoot"
-                                                            PointerPressed="TabItem_OnPointerPressed"
-                                                            Tag="{Binding}"
-                                                            behavior:TabDragBehavior.IsEnabled="True">
-                                                            <DockPanel Margin="8,-1,10,0" VerticalAlignment="Center">
-                                                                <PathIcon
-                                                                    Data="{Binding Icon}"
-                                                                    Height="15"
-                                                                    IsVisible="{Binding IconIsVisible}"
-                                                                    Margin="0,0,4,0"
-                                                                    Width="15" />
-                                                                <Grid>
-                                                                    <ContentControl
-                                                                        Content="{Binding HeaderContent}"
-                                                                        Foreground="{DynamicResource ForegroundColor}"
-                                                                        IsVisible="{Binding IsUseHeaderContent}" />
-                                                                    <TextBlock
-                                                                        Classes="tab"
-                                                                        IsVisible="{Binding IsUseHeaderContent, Converter={StaticResource BoolReversalConverter}}"
-                                                                        Margin="2,0,0,0"
-                                                                        Text="{Binding Title}" />
-                                                                </Grid>
-                                                                <Grid
-                                                                    HorizontalAlignment="Right"
-                                                                    IsVisible="{Binding CanClose}"
-                                                                    Margin="0,0,-4,0">
-                                                                    <Button
-                                                                        Classes="icon-button tab"
-                                                                        Command="{Binding Close}"
-                                                                        Content="{DynamicResource Close}"
-                                                                        HorizontalAlignment="Right"
-                                                                        Margin="3,1,0,0"
-                                                                        MaxHeight="14"
-                                                                        MaxWidth="16"
-                                                                        MinHeight="14"
-                                                                        Name="CloseButton"
-                                                                        VerticalAlignment="Center">
-                                                                        <Button.Transitions>
-                                                                            <Transitions>
-                                                                                <DoubleTransition Duration="0:0:0.07" Property="Opacity" />
-                                                                            </Transitions>
-                                                                        </Button.Transitions>
-                                                                    </Button>
-                                                                </Grid>
-                                                            </DockPanel>
-                                                        </Border>
-                                                    </DataTemplate>
-                                                </u:SelectionList.ItemTemplate>
-                                            </u:SelectionList>
-                                            <Button
-                                                Classes="custom-hover-button tab"
-                                                Content="{DynamicResource Plus}"
-                                                Margin="4,0,0,0"
-                                                Name="NewTabButton" />
-                                        </StackPanel>
-                                    </ScrollViewer>
-                                </Grid>
-                            </Border>
-                            <Border
-                                CornerRadius="{DynamicResource CardCornerRadius}"
-                                Height="30"
-                                HorizontalAlignment="Left"
-                                Margin="5,0,0,0"
-                                Name="TitleRoot"
-                                VerticalAlignment="Center"
-                                Width="30">
-                                <Border.Styles>
-                                    <Style Selector="Border#TitleRoot">
-                                        <Setter Property="Background" Value="{DynamicResource TabBackgroundColor}" />
-                                    </Style>
-                                    <Style Selector="Border#TitleRoot:pointerover">
-                                        <Setter Property="Background" Value="{DynamicResource HoverTabBackgroundColor}" />
-                                    </Style>
-                                </Border.Styles>
-                                <PathIcon
-                                    Data="F1 M 17.012291 10.744324 C 17.638512 10.151176 17.665367 9.162521 17.071495 8.536415 C 16.477623 7.907867 15.488243 7.881012 14.862671 8.476601 L 10 13.082848 L 5.137329 8.476601 C 4.511147 7.882233 3.521767 7.90905 2.928505 8.536415 C 2.334633 9.162521 2.361488 10.151176 2.987709 10.744324 L 8.925171 16.368484 C 9.226685 16.654053 9.613647 16.796875 10 16.796875 C 10.386353 16.796875 10.773315 16.654053 11.074829 16.368484 Z "
-                                    Foreground="{DynamicResource TabTextColor}"
-                                    Height="12"
-                                    HorizontalAlignment="Center"
-                                    Margin="0,0,0,-2"
-                                    VerticalAlignment="Center"
-                                    Width="12" />
-                            </Border>
-                        </Grid>
+                        Background="{DynamicResource PanelBackgroundColor}"
+                        Classes.expanded="{Binding Data.SettingEntry.EnableAside}"
+                        CornerRadius="{DynamicResource CardCornerRadius}"
+                        DockPanel.Dock="Right"
+                        Margin="0,0,10,10"
+                        Name="ASide"
+                        VerticalAlignment="Stretch">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition
+                                    Duration="0:0:0.3"
+                                    Easing="{StaticResource SukiEaseInBackOutBack}"
+                                    Property="Width" />
+                                <ThicknessTransition
+                                    Duration="0:0:0.3"
+                                    Easing="{StaticResource SukiEaseInBackOutBack}"
+                                    Property="BorderThickness" />
+                            </Transitions>
+                        </Border.Transitions>
                     </Border>
-                    <ContentControl Content="{Binding SelectedTab.Content}" Name="Frame" />
+                    <ContentControl
+                        Content="{Binding SelectedTab.Content}"
+                        DockPanel.Dock="Left"
+                        Name="Frame" />
                 </DockPanel>
-                <Border
-                    Background="{DynamicResource BackgroundColor}"
-                    DockPanel.Dock="Bottom"
-                    Height="1"
-                    HorizontalAlignment="Center"
-                    IsHitTestVisible="False"
-                    Margin="0,50,0,0"
-                    Name="FlyoutPoint"
-                    Opacity="0"
-                    VerticalAlignment="Top"
-                    Width="1" />
-                <u:OverlayDialogHost HostId="MainWindow" />
-            </Grid>
-        </DockPanel>
+            </DockPanel>
+            <Border
+                Background="{DynamicResource BackgroundColor}"
+                DockPanel.Dock="Bottom"
+                Height="1"
+                HorizontalAlignment="Center"
+                IsHitTestVisible="False"
+                Margin="0,50,0,0"
+                Name="FlyoutPoint"
+                Opacity="0"
+                VerticalAlignment="Top"
+                Width="1" />
+            <u:OverlayDialogHost HostId="MainWindow" />
+        </Grid>
     </Border>
 </u:UrsaWindow>

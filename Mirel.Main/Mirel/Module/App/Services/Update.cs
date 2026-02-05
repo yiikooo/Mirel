@@ -140,8 +140,8 @@ public class Update
         };
 
         await downloader.DownloadFileTaskAsync(
-            Data.SettingEntry.EnableSpeedUpGithubApi
-                ? Data.SettingEntry.GithubSpeedUpApiUrl.Replace("%url%", $"{DOWNLOAD_BASE_URL}{file}")
+            Data.SettingEntry.EnableGithubProxy
+                ? Data.SettingEntry.GithubProxy.Replace("%url%", $"{DOWNLOAD_BASE_URL}{file}")
                 : $"{DOWNLOAD_BASE_URL}{file}", Path.Combine
                 (ConfigPath.TempFolderPath, file!), cts.Token);
     }
@@ -233,8 +233,8 @@ public class Update
         };
 
         await downloader.DownloadFileTaskAsync(
-            Data.SettingEntry.EnableSpeedUpGithubApi
-                ? Data.SettingEntry.GithubSpeedUpApiUrl.Replace("%url%", $"{DOWNLOAD_BASE_URL}{file}")
+            Data.SettingEntry.EnableGithubProxy
+                ? Data.SettingEntry.GithubProxy.Replace("%url%", $"{DOWNLOAD_BASE_URL}{file}")
                 : $"{DOWNLOAD_BASE_URL}{file}", path, cts.Token);
     }
 }

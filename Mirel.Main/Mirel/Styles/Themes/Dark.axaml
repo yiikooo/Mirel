@@ -4,7 +4,7 @@
             <SolidColorBrush Color="#e6e1cf" x:Key="ForegroundColor" />
             <SolidColorBrush Color="#1B1F29" x:Key="LineColor" />
             <Color x:Key="BackgroundColor">
-                #0f1419
+                #0d1017
             </Color>
             <SolidColorBrush
                 Color="#181d26"
@@ -15,15 +15,15 @@
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PanelBackgroundColor" />
             <SolidColorBrush
-                Color="#171f2b"
+                Color="#06080b"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PanelBorderBrush" />
             <SolidColorBrush
-                Color="#141821"
+                Color="#0f131a"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PopupBackgroundColor" />
             <SolidColorBrush
-                Color="#171f2b"
+                Color="#06080b"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PopupBorderBrush" />
 

@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-
 namespace Mirel.Classes.Entries;
 
 public class SettingEntry : ReactiveObject
@@ -36,12 +35,10 @@ public class SettingEntry : ReactiveObject
     [Reactive] [JsonProperty] public Color ThemeColor { get; set; } = Color.Parse("#1BD76A");
     [Reactive] [JsonProperty] public Color BackGroundColor { get; set; } = Color.Parse("#00B7FF52");
     [Reactive] [JsonProperty] public bool UseFilePicker { get; set; } = true;
-    [Reactive] [JsonProperty] public bool EnableBottomContainer { get; set; }
     [Reactive] [JsonProperty] public bool AutoCheckUpdate { get; set; } = true;
-    [Reactive] [JsonProperty] public bool EnableSpeedUpGithubApi { get; set; } = true;
-    [Reactive] [JsonProperty] public string PoemApiToken { get; set; }
-    [Reactive] [JsonProperty] public string GithubSpeedUpApiUrl { get; set; } = "https://ghproxy.net/%url%";
-    [Reactive] [JsonProperty] public string BackGroundImgData { get; set; }
+    [Reactive] [JsonProperty] public bool EnableGithubProxy { get; set; } = true;
+    [Reactive] [JsonProperty] public bool EnableAside { get; set; }
+    [Reactive] [JsonProperty] public string GithubProxy { get; set; } = "https://ghproxy.net/%url%";
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {

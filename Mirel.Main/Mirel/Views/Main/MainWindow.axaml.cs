@@ -101,7 +101,7 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
 #endif
     private void InitTitleBar()
     {
-        var c = new MoreButtonMenu();
+        var c = new Pages.MoreButtonMenu();
         var menu = (MenuFlyout)c.MainControl!.Flyout;
         TitleRoot.ContextFlyout = menu;
         TitleRoot.DataContext = new MoreButtonMenuCommands();
@@ -143,7 +143,10 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
                 }
             };
         }
-
+        ASideButton.Click += (_, _) =>
+        {
+            Data.SettingEntry.EnableAside = !Data.SettingEntry.EnableAside;
+        };
         NavScrollViewer.ScrollChanged += (_, _) => { ViewModel.IsTabMaskVisible = NavScrollViewer.Offset.X > 0; };
         Loaded += (_, _) =>
         {

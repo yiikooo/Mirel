@@ -4,14 +4,14 @@
             <SolidColorBrush Color="#828e9f" x:Key="ForegroundColor" />
             <SolidColorBrush Color="#e7eaed" x:Key="LineColor" />
             <Color x:Key="BackgroundColor">
-                #fafafa
+                #f8f9fa
             </Color>
             <SolidColorBrush
                 Color="#e7eaed"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="SelectionNormal" />
             <SolidColorBrush
-                Color="#fafafa"
+                Color="#f5f5f5"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PanelBackgroundColor" />
             <SolidColorBrush

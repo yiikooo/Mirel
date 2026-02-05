@@ -50,7 +50,7 @@ public class MainViewModel : ViewModelBase
         set => SetField(ref field, value);
     }
 
-    public TabEntry? SelectedTab
+    public TabEntry SelectedTab
     {
         get;
         set => SetField(ref field, value);

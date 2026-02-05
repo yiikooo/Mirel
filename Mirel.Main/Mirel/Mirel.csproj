@@ -67,4 +67,11 @@
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
     <PackageReference Include="Semi.Avalonia" Version="11.3.7.2" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Main\Pages\MoreButtonMenu.axaml.cs">
+      <DependentUpon>MoreButtonMenu.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

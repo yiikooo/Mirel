@@ -24,7 +24,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:behavior="clr-namespace:Mirel.Module.Behavior"
     xmlns:controls="clr-namespace:Mirel.Controls"
-    xmlns:converter1="clr-namespace:Mirel.Module.Converter"
+    xmlns:converter="clr-namespace:Mirel.Module.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:entries="clr-namespace:Mirel.Classes.Entries"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -32,7 +32,8 @@
     xmlns:viewModels="clr-namespace:Mirel.ViewModels"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <u:UrsaWindow.Resources>
-        <converter1:NavScrollOpacityMaskConverter x:Key="NavScrollOpacityMaskConverter" />
+        <converter:BoolReversalConverter x:Key="BoolReversalConverter" />
+        <converter:NavScrollOpacityMaskConverter x:Key="NavScrollOpacityMaskConverter" />
     </u:UrsaWindow.Resources>
     <Border
         Background="{DynamicResource BackgroundColor}"
@@ -147,7 +148,17 @@
                                                                         IsVisible="{Binding IconIsVisible}"
                                                                         Margin="0,0,4,0"
                                                                         Width="15" />
-                                                                    <ContentControl Content="{Binding HeaderContent}" Foreground="{DynamicResource ForegroundColor}" />
+                                                                    <Grid>
+                                                                        <ContentControl
+                                                                            Content="{Binding HeaderContent}"
+                                                                            Foreground="{DynamicResource ForegroundColor}"
+                                                                            IsVisible="{Binding IsUseHeaderContent}" />
+                                                                        <TextBlock
+                                                                            Classes="tab"
+                                                                            IsVisible="{Binding IsUseHeaderContent, Converter={StaticResource BoolReversalConverter}}"
+                                                                            Margin="2,0,0,0"
+                                                                            Text="{Binding Title}" />
+                                                                    </Grid>
                                                                     <Grid
                                                                         HorizontalAlignment="Right"
                                                                         IsVisible="{Binding CanClose}"
