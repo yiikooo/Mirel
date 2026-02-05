@@ -73,6 +73,7 @@ public abstract class Overlay
         var notification = new Notification(showTitle, msg, type);
         var entry = new NotificationEntry(notification, notification.Type, t, title);
         UiProperty.Notifications.Insert(0, entry);
+        UiProperty.HistoryNotifications.Insert(0, entry);
 
         var closeAction = () => { UiProperty.Notifications.Remove(entry); };
 

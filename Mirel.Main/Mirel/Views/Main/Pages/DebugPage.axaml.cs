@@ -86,6 +86,26 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
         );
     }
 
+    private void NoticeWithButtonsNoClose(object? sender, RoutedEventArgs e)
+    {
+        var buttons = new List<OperateButtonEntry>
+        {
+            new OperateButtonEntry("查看详情", _ => { Logger.Debug("查看详情按钮被点击");  })
+            {
+                CloseOnClick = false
+            },
+            new OperateButtonEntry("不关闭", _ => { Logger.Debug("不关闭按钮被点击"); })
+            {
+                CloseOnClick = false
+            }
+        };
+
+        Module.Ui.Overlay.Notice(
+            "这是一条点击按钮后不关闭的通知",
+            operateButtons: buttons
+        );
+    }
+
     private void Crush(object? sender, RoutedEventArgs e)
     {
         var a = 0;

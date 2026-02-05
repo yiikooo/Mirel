@@ -1,0 +1,203 @@
+<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Mirel.Views.Main.Pages.AsidePages.NotificationHistoryPage"
+    x:DataType="asidePages:NotificationHistoryPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:asidePages="clr-namespace:Mirel.Views.Main.Pages.AsidePages"
+    xmlns:converter="clr-namespace:Mirel.Module.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:entries="clr-namespace:Mirel.Classes.Entries"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <converter:EnumIndexToBoolConverter x:Key="EnumIndexToBoolConverter" />
+    </UserControl.Resources>
+    <Grid Margin="5" Name="Root">
+        <DockPanel IsVisible="{Binding !Notifications.Count}" VerticalAlignment="Center">
+            <Border
+                Background="{DynamicResource BackgroundColor}"
+                CornerRadius="{DynamicResource CardCornerRadius}"
+                DockPanel.Dock="Top"
+                Height="52"
+                Width="52">
+                <PathIcon
+                    Data="F1 M 1.586952 15.947342 C 1.352577 16.201248 1.250038 16.503983 1.250038 16.796951 C 1.254921 17.4366 1.757851 18.046913 2.504921 18.046913 L 13.414993 18.046913 L 3.730659 10.456581 C 3.604164 14.004555 2.302284 15.176239 1.586952 15.947342 Z M 10.000038 21.796875 C 11.381874 21.796875 12.5 20.678711 12.5 19.296913 L 7.500038 19.296913 C 7.500038 20.678711 8.618202 21.796875 10.000038 21.796875 Z M 22.141151 20.121155 L 18.595886 17.342529 C 18.684769 17.173424 18.74855 16.991959 18.75 16.796951 C 18.75 16.503983 18.647461 16.201248 18.413086 15.947342 C 17.661133 15.136833 16.245117 13.91613 16.245117 9.922066 C 16.245117 6.884995 14.121094 4.458275 11.250038 3.862572 L 11.250038 3.047142 C 11.250038 2.358704 10.688515 1.79718 10.000038 1.79718 C 9.311562 1.79718 8.750038 2.358704 8.750038 3.047142 L 8.750038 3.862572 C 7.082939 4.208488 5.687752 5.184174 4.798317 6.52832 L -0.98381 1.99646 C -1.397972 1.673355 -1.985397 1.75396 -2.299767 2.155724 C -2.619553 2.563477 -2.54879 3.153038 -2.141037 3.472252 L 20.983925 21.596985 C 21.394081 21.917419 21.982422 21.844177 22.299805 21.437683 C 22.619667 21.029968 22.548828 20.440407 22.141151 20.121155 Z "
+                    Height="24"
+                    HorizontalAlignment="Center"
+                    Margin="0,5,0,0"
+                    VerticalAlignment="Center"
+                    Width="24" />
+            </Border>
+            <TextBlock
+                DockPanel.Dock="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,12,0,0"
+                Text="无通知" />
+        </DockPanel>
+        <ScrollViewer
+            Classes="flat-scroll"
+            IsVisible="{Binding Notifications.Count}"
+            Margin="8,8,3,8"
+            Padding="0,0,5,0">
+            <ScrollViewer.OpacityMask>
+                <LinearGradientBrush EndPoint="0%,100%" StartPoint="0%,0%">
+                    <GradientStop Color="Black" Offset="0" />
+                    <GradientStop Color="Black" Offset="0.85" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush>
+            </ScrollViewer.OpacityMask>
+            <ScrollViewer.Styles>
+                <Style Selector="Border#NotificationCard.succes">
+                    <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightSuccessBorderBrush}" />
+                    <Style Selector="^ TextBlock#NotificationTitle">
+                        <Setter Property="Text" Value="成功" />
+                    </Style>
+                    <Style Selector="^ Button#CloseButton">
+                        <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
+                    </Style>
+                    <Style Selector="^ PathIcon#NotificationIcon">
+                        <Setter Property="IsVisible" Value="True" />
+                        <Setter Property="Foreground" Value="{DynamicResource NotificationCardSuccessIconForeground}" />
+                        <Setter Property="Data" Value="{DynamicResource NotificationCardSuccessIconPathData}" />
+                    </Style>
+                </Style>
+
+                <Style Selector="Border#NotificationCard.info">
+                    <Setter Property="Background" Value="{DynamicResource SemiColorInformationLight}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightInformationBorderBrush}" />
+                    <Style Selector="^ TextBlock#NotificationTitle">
+                        <Setter Property="Text" Value="提示" />
+                    </Style>
+                    <Style Selector="^ Button#CloseButton">
+                        <Setter Property="Background" Value="{DynamicResource SemiColorInformationLight}" />
+                    </Style>
+                    <Style Selector="^ PathIcon#NotificationIcon">
+                        <Setter Property="IsVisible" Value="True" />
+                        <Setter Property="Foreground" Value="{DynamicResource NotificationCardInformationIconForeground}" />
+                        <Setter Property="Data" Value="{DynamicResource NotificationCardInformationIconPathData}" />
+                    </Style>
+                </Style>
+
+                <Style Selector="Border#NotificationCard.error">
+                    <Setter Property="Background" Value="{DynamicResource SemiColorDangerLight}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightErrorBorderBrush}" />
+                    <Style Selector="^ TextBlock#NotificationTitle">
+                        <Setter Property="Text" Value="错误" />
+                    </Style>
+                    <Style Selector="^ Button#CloseButton">
+                        <Setter Property="Background" Value="{DynamicResource SemiColorDangerLight}" />
+                    </Style>
+                    <Style Selector="^ PathIcon#NotificationIcon">
+                        <Setter Property="IsVisible" Value="True" />
+                        <Setter Property="Foreground" Value="{DynamicResource NotificationCardErrorIconForeground}" />
+                        <Setter Property="Data" Value="{DynamicResource NotificationCardErrorIconPathData}" />
+                    </Style>
+                </Style>
+
+                <Style Selector="Border#NotificationCard.warn">
+                    <Setter Property="Background" Value="{DynamicResource SemiColorWarningLight}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightWarningBorderBrush}" />
+                    <Style Selector="^ TextBlock#NotificationTitle">
+                        <Setter Property="Text" Value="警告" />
+                    </Style>
+                    <Style Selector="^ Button#CloseButton">
+                        <Setter Property="Background" Value="{DynamicResource SemiColorWarningLight}" />
+                    </Style>
+                    <Style Selector="^ PathIcon#NotificationIcon">
+                        <Setter Property="IsVisible" Value="True" />
+                        <Setter Property="Foreground" Value="{DynamicResource NotificationCardWarningIconForeground}" />
+                        <Setter Property="Data" Value="{DynamicResource NotificationCardWarningIconPathData}" />
+                    </Style>
+                </Style>
+            </ScrollViewer.Styles>
+            <ItemsControl ItemsSource="{Binding Notifications}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="entries:NotificationEntry">
+                        <Border
+                            BorderThickness="1"
+                            Classes.closing="{Binding IsClosing}"
+                            Classes.error="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=3}"
+                            Classes.info="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=0}"
+                            Classes.succes="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=1}"
+                            Classes.warn="{Binding Type, Converter={StaticResource EnumIndexToBoolConverter}, ConverterParameter=2}"
+                            CornerRadius="{DynamicResource CardCornerRadius}"
+                            Margin="0,0,0,10"
+                            Name="NotificationCard"
+                            Padding="5">
+                            <Border.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Duration="0:0:0.15" Property="Opacity" />
+                                </Transitions>
+                            </Border.Transitions>
+                            <Grid>
+                                <Grid.Styles>
+                                    <Style Selector="Border#NotificationCard:not(:pointerover) Button">
+                                        <Setter Property="Opacity" Value="0" />
+                                    </Style>
+                                    <Style Selector="Border#NotificationCard:pointerover Button">
+                                        <Setter Property="Opacity" Value="1" />
+                                    </Style>
+                                </Grid.Styles>
+                                <DockPanel Dock="Left" Margin="2,0,0,0">
+                                    <DockPanel DockPanel.Dock="Top" Height="16">
+                                        <PathIcon
+                                            Height="14"
+                                            Margin="0,0,5,0"
+                                            Name="NotificationIcon"
+                                            VerticalAlignment="Center"
+                                            Width="14" />
+                                        <TextBlock
+                                            FontSize="12"
+                                            Name="NotificationTitle"
+                                            VerticalAlignment="Center" />
+                                        <TextBlock
+                                            FontSize="12"
+                                            Text=" - "
+                                            VerticalAlignment="Center" />
+                                        <TextBlock
+                                            FontSize="12"
+                                            Text="{Binding Time, StringFormat={}{0:HH:mm:ss}}"
+                                            VerticalAlignment="Center" />
+                                    </DockPanel>
+                                    <TextBlock
+                                        DockPanel.Dock="Bottom"
+                                        FontSize="14"
+                                        Margin="0,4,0,0"
+                                        Text="{Binding Entry.Content}"
+                                        TextWrapping="Wrap" />
+                                </DockPanel>
+                                <Button
+                                    Background="Transparent"
+                                    Classes="icon-button"
+                                    Command="{Binding Remove}"
+                                    Content="{DynamicResource Close}"
+                                    DockPanel.Dock="Right"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,6,6,0"
+                                    MaxHeight="10"
+                                    MaxWidth="10"
+                                    MinHeight="10"
+                                    Name="CloseButton"
+                                    VerticalAlignment="Top">
+                                    <Button.Transitions>
+                                        <Transitions>
+                                            <DoubleTransition Duration="0:0:0.07" Property="Opacity" />
+                                        </Transitions>
+                                    </Button.Transitions>
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

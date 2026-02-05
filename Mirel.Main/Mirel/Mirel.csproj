@@ -73,5 +73,9 @@
       <DependentUpon>MoreButtonMenu.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Main\Pages\AsidePages\NotificationHistoryPage.axaml.cs">
+      <DependentUpon>NotificationHistoryPage.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
