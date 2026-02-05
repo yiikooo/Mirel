@@ -251,13 +251,17 @@ public partial class MainWindow : UrsaWindow, IMirelWindow
         }
     }
 
-    private async void OnMainWindowClosing(object? sender, WindowClosingEventArgs e)
+    private static async void OnMainWindowClosing(object? sender, WindowClosingEventArgs _)
     {
-        // If this is the main window closing and there are other TabWindows open,
-        // we should handle the scenario appropriately
-        if (!await AppEvents.OnAppExiting()) return;
-        TabDragDropService.UnregisterWindow(this);
-        Environment.Exit(0);
+        try
+        {
+            if (!await AppEvents.OnAppExiting()) return;
+            Environment.Exit(0);
+        }
+        catch (Exception e)
+        {
+            ExceptionService.HandleException(e);
+        }
     }
 
     public WindowNotificationManager Notification { get; set; }

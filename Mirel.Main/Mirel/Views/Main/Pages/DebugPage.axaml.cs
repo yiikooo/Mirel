@@ -68,4 +68,11 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
                 break;
         }
     }
+
+    private void Crush(object? sender, RoutedEventArgs e)
+    {
+        var a = 0;
+        // ReSharper disable once IntDivisionByZero
+        var b = 1 / a;
+    }
 }
