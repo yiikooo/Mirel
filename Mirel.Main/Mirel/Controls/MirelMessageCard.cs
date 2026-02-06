@@ -163,6 +163,21 @@ public abstract class MirelMessageCard : ContentControl
         NotificationEntry?.Remove();
     }
 
+    /// <summary>
+    /// 关闭 Toast 卡片但不从通知列表中移除
+    /// </summary>
+    public void CloseWithoutRemovingFromList()
+    {
+        if (IsClosing)
+        {
+            return;
+        }
+
+        IsClosing = true;
+        IsClosed = true;
+        // 不调用 NotificationEntry?.Remove()
+    }
+
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);

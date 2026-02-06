@@ -7,6 +7,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:asidePages="clr-namespace:Mirel.Views.Main.Pages.AsidePages"
     xmlns:converter="clr-namespace:Mirel.Module.Converter"
+    xmlns:converters="clr-namespace:Avalonia.Markup.Xaml.Converters;assembly=Avalonia.Markup.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:entries="clr-namespace:Mirel.Classes.Entries"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -167,10 +168,30 @@
                                             Text="{Binding Time, StringFormat={}{0:HH:mm:ss}}"
                                             VerticalAlignment="Center" />
                                     </DockPanel>
+                                    <ItemsControl
+                                        DockPanel.Dock="Bottom"
+                                        IsVisible="{Binding OperateButtons, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                        ItemsSource="{Binding OperateButtons}"
+                                        Margin="0,1,0,0">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="entries:OperateButtonEntry">
+                                                <HyperlinkButton
+                                                    Command="{Binding Command}"
+                                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                    Content="{Binding Content}"
+                                                    Padding="9,4,9,4" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                     <TextBlock
                                         DockPanel.Dock="Bottom"
                                         FontSize="14"
-                                        Margin="0,4,0,0"
+                                        Margin="0,2,0,0"
                                         Text="{Binding Entry.Content}"
                                         TextWrapping="Wrap" />
                                 </DockPanel>

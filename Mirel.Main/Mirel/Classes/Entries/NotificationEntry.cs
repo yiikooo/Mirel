@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Avalonia.Controls.Notifications;
 using Mirel.Const;
 using ReactiveUI;
@@ -14,13 +15,15 @@ public sealed class NotificationEntry : ReactiveObject
     public DateTime Time { get; }
     public string Title { get; }
     [Reactive] public bool IsClosing { get; set; }
+    public IList<OperateButtonEntry>? OperateButtons { get; set; }
 
-    public NotificationEntry(Notification entry, NotificationType type, DateTime time, string title = "Mirel")
+    public NotificationEntry(Notification entry, NotificationType type, DateTime time, string title = "Mirel", IList<OperateButtonEntry>? operateButtons = null)
     {
         Entry = entry;
         Type = type;
         Time = time;
         Title = title;
+        OperateButtons = operateButtons;
     }
 
     public void Remove()

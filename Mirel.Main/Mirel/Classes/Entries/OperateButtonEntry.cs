@@ -35,7 +35,7 @@ public class OperateButtonEntry : ReactiveObject
                 Action?.Invoke(parameter);
                 if (CloseOnClick)
                 {
-                    CloseNotification(parameter);
+                    CloseToastCard(parameter);
                 }
             });
         else
@@ -43,19 +43,20 @@ public class OperateButtonEntry : ReactiveObject
             Action?.Invoke(parameter);
             if (CloseOnClick)
             {
-                CloseNotification(parameter);
+                CloseToastCard(parameter);
             }
         }
     }
 
-    private void CloseNotification(object parameter)
+    private void CloseToastCard(object parameter)
     {
         // 尝试从参数中获取按钮实例
         if (parameter is Avalonia.Controls.Button button)
         {
-            // 通过 VisualTree 查找按钮所在的 MirelMessageCard 实例
+            // 通过 VisualTree 查找按钮所在的 MirelMessageCard 实例（仅用于 Toast 卡片）
             var messageCard = button.GetVisualAncestors().OfType<MirelMessageCard>().FirstOrDefault();
-            messageCard?.Close();
+            // 关闭 Toast 卡片但不从通知列表中移除
+            messageCard?.CloseWithoutRemovingFromList();
         }
     }
 

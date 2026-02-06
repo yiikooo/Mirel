@@ -71,7 +71,7 @@ public abstract class Overlay
         if (showTime) showTitle += $" - {t:HH:mm:ss}";
 
         var notification = new Notification(showTitle, msg, type);
-        var entry = new NotificationEntry(notification, notification.Type, t, title);
+        var entry = new NotificationEntry(notification, notification.Type, t, title, operateButtons);
         UiProperty.Notifications.Insert(0, entry);
         UiProperty.HistoryNotifications.Insert(0, entry);
 
