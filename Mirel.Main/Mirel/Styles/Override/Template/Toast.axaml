@@ -67,7 +67,10 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                <DockPanel
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Grid.Row="0">
                                     <PathIcon
                                         Classes="Large"
                                         Data="{DynamicResource NotificationCardInformationIconPathData}"
@@ -99,6 +102,26 @@
                                             </DataTemplate>
                                         </ContentControl.DataTemplates>
                                     </ContentControl>
+                                    <!--  内联按钮：显示在同一行  -->
+                                    <ItemsControl
+                                        ItemsSource="{TemplateBinding OperateButtons}"
+                                        Margin="{DynamicResource ToastCardButtonMargin}"
+                                        x:Name="PART_InlineButtons">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="classes:OperateButtonEntry">
+                                                <HyperlinkButton
+                                                    Command="{Binding Command}"
+                                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                    Content="{Binding Content}"
+                                                    Margin="0,0,8,0" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                     <Button
                                         IsVisible="{TemplateBinding ShowClose}"
                                         Theme="{StaticResource OverlayCloseButton}"
@@ -106,13 +129,14 @@
                                         u:MessageCard.CloseOnClick="True"
                                         x:Name="PART_CloseButton" />
                                 </DockPanel>
+                                <!--  新行按钮：显示在新的一行  -->
                                 <ItemsControl
-                                    Grid.Row="1"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
-                                    IsVisible="{TemplateBinding OperateButtons}"
+                                    Grid.Row="1"
                                     ItemsSource="{TemplateBinding OperateButtons}"
-                                    Margin="{DynamicResource ToastCardButtonMargin}">
+                                    Margin="{DynamicResource ToastCardButtonMargin}"
+                                    x:Name="PART_NewLineButtons">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <WrapPanel Orientation="Horizontal" />
@@ -218,6 +242,19 @@
                     </KeyFrame>
                 </Animation>
             </Style.Animations>
+        </Style>
+
+        <Style Selector="^ /template/ ItemsControl#PART_InlineButtons">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^ /template/ ItemsControl#PART_NewLineButtons">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^[IsButtonsInline=true] /template/ ItemsControl#PART_InlineButtons">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^[IsButtonsInline=true] /template/ ItemsControl#PART_NewLineButtons">
+            <Setter Property="IsVisible" Value="False" />
         </Style>
 
         <Style Selector="^:information /template/ PathIcon#ToastIcon">
