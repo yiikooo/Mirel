@@ -11,7 +11,7 @@ using Ursa.Controls;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class SettingTabPage: PageMixModelBase, IMirelTabPage, IMirelNavPage
+public partial class SettingTabPage: PageModelBase, IMirelTabPage, IMirelNavPage
 {
     private SelectionListItem _selectedItem;
     public int DefaultNav = 0;

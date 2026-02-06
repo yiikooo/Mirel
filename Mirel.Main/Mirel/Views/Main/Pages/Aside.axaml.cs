@@ -6,7 +6,7 @@ using Mirel.Views.Main.Pages.AsidePages;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class Aside : PageMixModelBase
+public partial class Aside : PageModelBase
 {
     public NavEntry SelectedNav
     {

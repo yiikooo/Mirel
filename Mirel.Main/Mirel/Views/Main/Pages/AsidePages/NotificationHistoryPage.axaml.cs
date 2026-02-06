@@ -10,7 +10,7 @@ using Mirel.ViewModels;
 
 namespace Mirel.Views.Main.Pages.AsidePages;
 
-public partial class NotificationHistoryPage : PageMixModelBase, IMirelPage
+public partial class NotificationHistoryPage : PageModelBase, IMirelPage
 {
     public static ObservableCollection<NotificationEntry> Notifications => UiProperty.HistoryNotifications;
 

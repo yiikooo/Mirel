@@ -6,7 +6,7 @@ using Ursa.Controls;
 
 namespace Mirel.Controls;
 
-public partial class NotificationCard : PageMixModelBase
+public partial class NotificationCard : PageModelBase
 {
     public static readonly StyledProperty<bool> IsCloseButtonVisibleProperty =
         AvaloniaProperty.Register<NotificationCard, bool>(nameof(IsCloseButtonVisible), defaultValue: true);

@@ -6,7 +6,7 @@ using Mirel.Const;
 
 namespace Mirel.ViewModels;
 
-public class PageMixModelBase : UserControl, INotifyPropertyChanged, INotifyPropertyChanging
+public class PageModelBase : UserControl, INotifyPropertyChanged, INotifyPropertyChanging
 {
     public Data Data => Data.Instance;
     public new event PropertyChangedEventHandler? PropertyChanged;

@@ -12,7 +12,7 @@ using Mirel.ViewModels;
 
 namespace Mirel.Views.Main.Pages.AsidePages;
 
-public partial class TabsPage : PageMixModelBase, IMirelPage
+public partial class TabsPage : PageModelBase, IMirelPage
 {
     public TabsPage()
     {

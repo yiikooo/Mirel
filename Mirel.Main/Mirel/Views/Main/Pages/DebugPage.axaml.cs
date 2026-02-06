@@ -16,7 +16,7 @@ using Mirel.ViewModels;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class DebugPage : PageMixModelBase, IMirelTabPage
+public partial class DebugPage : PageModelBase, IMirelTabPage
 {
     public DebugPage()
     {

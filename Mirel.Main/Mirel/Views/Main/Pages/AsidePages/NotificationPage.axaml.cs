@@ -10,7 +10,7 @@ using Mirel.ViewModels;
 
 namespace Mirel.Views.Main.Pages.AsidePages;
 
-public partial class NotificationPage : PageMixModelBase, IMirelPage
+public partial class NotificationPage : PageModelBase, IMirelPage
 {
     public static ObservableCollection<NotificationEntry> Notifications => UiProperty.Notifications;
 

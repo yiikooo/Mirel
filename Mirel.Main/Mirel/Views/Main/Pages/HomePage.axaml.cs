@@ -12,7 +12,7 @@ using Ursa.Controls;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class HomePage : PageMixModelBase, IMirelTabPage
+public partial class HomePage : PageModelBase, IMirelTabPage
 {
     public HomePage()
     {

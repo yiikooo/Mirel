@@ -18,7 +18,7 @@ using Ursa.Controls;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class NewTabPage : PageMixModelBase, IMirelTabPage
+public partial class NewTabPage : PageModelBase, IMirelTabPage
 {
     public string ShortInfo { get; set; }
     public ObservableCollection<AggregateSearchEntry> Items { get; set; } = [];

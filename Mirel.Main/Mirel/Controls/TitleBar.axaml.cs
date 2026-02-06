@@ -9,7 +9,7 @@ using Mirel.ViewModels;
 
 namespace Mirel.Controls;
 
-public partial class TitleBar : PageMixModelBase
+public partial class TitleBar : PageModelBase
 {
     private bool _isCloseBtnExitApp;
     private bool _isCloseBtnHideWindow;
