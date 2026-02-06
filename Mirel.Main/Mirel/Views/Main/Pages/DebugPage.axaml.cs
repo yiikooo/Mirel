@@ -97,7 +97,7 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
 
         Module.Ui.Overlay.Notice(
             "这是一条点击按钮后不关闭的通知",
-            operateButtons: buttons
+            operateButtons: buttons, time: new TimeSpan(0, 2, 0, 0, 0)
         );
     }
 
@@ -113,7 +113,8 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
         Module.Ui.Overlay.Notice(
             "这是一条按钮在同一行的通知",
             operateButtons: buttons,
-            isButtonsInline: true
+            isButtonsInline: true,
+            time: new TimeSpan(0, 2, 0, 0, 0)
         );
     }
 

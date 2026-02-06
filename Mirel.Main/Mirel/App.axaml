@@ -21,8 +21,8 @@
                 <ResourceInclude Source="avares://FluentAvalonia/Styling/ControlThemes/BasicControls/HyperlinkButtonStyles.axaml" />
                 <ResourceInclude Source="avares://FluentAvalonia/Styling/ControlThemes/BasicControls/ExpanderStyles.axaml" />
                 <ResourceInclude Source="avares://FluentAvalonia/Styling/ControlThemes/BasicControls/ToggleSwitchStyles.axaml" />
-                <ResourceInclude Source="avares://Semi.Avalonia/Controls/TextBox.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/AnimationExpander.axaml" />
+                <ResourceInclude Source="/Styles/Override/Template/HyperlinkButton.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/IconButton.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/ContentDialog.axaml" />
                 <ResourceInclude Source="/Styles/Override/Template/ManagedFileChooser.axaml" />
