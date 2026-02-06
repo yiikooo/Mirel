@@ -8,23 +8,20 @@ using Notification = Ursa.Controls.Notification;
 
 namespace Mirel.Classes.Entries;
 
-public sealed class NotificationEntry : ReactiveObject
+public sealed class NotificationEntry(
+    Notification entry,
+    NotificationType type,
+    DateTime time,
+    string title = "Mirel",
+    IList<OperateButtonEntry>? operateButtons = null,
+    bool isCloseButtonVisible = true)
+    : ReactiveObject
 {
-    public Notification Entry { get; set; }
-    public NotificationType Type { get; }
-    public DateTime Time { get; }
-    public string Title { get; }
-    [Reactive] public bool IsClosing { get; set; }
-    public IList<OperateButtonEntry>? OperateButtons { get; set; }
-
-    public NotificationEntry(Notification entry, NotificationType type, DateTime time, string title = "Mirel", IList<OperateButtonEntry>? operateButtons = null)
-    {
-        Entry = entry;
-        Type = type;
-        Time = time;
-        Title = title;
-        OperateButtons = operateButtons;
-    }
+    public Notification Entry { get; set; } = entry;
+    public NotificationType Type { get; } = type;
+    public DateTime Time { get; } = time;
+    public string Title { get; } = title;
+    public IList<OperateButtonEntry>? OperateButtons { get; set; } = operateButtons;
 
     public void Remove()
     {
