@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Mirel.Classes.Entries;
 using Mirel.ViewModels;
+using Ursa.Controls;
 
 namespace Mirel.Controls;
 
@@ -15,7 +16,7 @@ public partial class NotificationCard : PageMixModelBase
         get => GetValue(IsCloseButtonVisibleProperty);
         set => SetValue(IsCloseButtonVisibleProperty, value);
     }
-
+    
     public static readonly StyledProperty<NotificationEntry> NotificationEntryProperty =
         AvaloniaProperty.Register<NotificationCard, NotificationEntry>(nameof(NotificationEntry));
 
@@ -24,7 +25,7 @@ public partial class NotificationCard : PageMixModelBase
         get => GetValue(NotificationEntryProperty);
         set => SetValue(NotificationEntryProperty, value);
     }
-
+    
     public NotificationCard()
     {
         DataContext = this;

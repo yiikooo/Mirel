@@ -250,7 +250,7 @@ public abstract class MirelMessageCard : ContentControl
         IsClosing = true;
         IsClosed = true;
 
-        NotificationEntry?.RemoveAndDelete();
+        NotificationEntry?.Remove();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
