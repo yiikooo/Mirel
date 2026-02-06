@@ -76,8 +76,8 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
     {
         var buttons = new List<OperateButtonEntry>
         {
-            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击");  }),
-            new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }),
+            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
+            new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, closeOnClick: true),
         };
 
         Module.Ui.Overlay.Notice(
@@ -86,18 +86,13 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
         );
     }
 
+
     private void NoticeWithButtonsNoClose(object? sender, RoutedEventArgs e)
     {
         var buttons = new List<OperateButtonEntry>
         {
-            new OperateButtonEntry("查看详情", _ => { Logger.Debug("查看详情按钮被点击");  })
-            {
-                CloseOnClick = false
-            },
-            new OperateButtonEntry("不关闭", _ => { Logger.Debug("不关闭按钮被点击"); })
-            {
-                CloseOnClick = false
-            }
+            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
+            new("不关闭", _ => { Logger.Debug("不关闭按钮被点击"); }, closeOnClick: false)
         };
 
         Module.Ui.Overlay.Notice(
@@ -105,6 +100,23 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
             operateButtons: buttons
         );
     }
+
+
+    private void NoticeWithButtonsInline(object? sender, RoutedEventArgs e)
+    {
+        var buttons = new List<OperateButtonEntry>
+        {
+            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
+            new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, closeOnClick: true),
+        };
+
+        Module.Ui.Overlay.Notice(
+            "这是一条按钮在同一行的通知",
+            operateButtons: buttons,
+            isButtonsInline: true
+        );
+    }
+
 
     private void Crush(object? sender, RoutedEventArgs e)
     {

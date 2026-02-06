@@ -2,6 +2,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:classes="clr-namespace:Mirel.Classes.Entries"
     xmlns:controls="clr-namespace:Mirel.Controls"
+    xmlns:converters="clr-namespace:Avalonia.Markup.Xaml.Converters;assembly=Avalonia.Markup.Xaml"
     xmlns:helper="clr-namespace:Mirel.Module.Ui.Helper"
     xmlns:u="https://irihi.tech/ursa"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -57,40 +58,58 @@
                             Padding="{DynamicResource ToastCardPadding}"
                             VerticalAlignment="Top"
                             x:Name="PART_RootBorder">
-                            <DockPanel>
-                                <PathIcon
-                                    Classes="Large"
-                                    Data="{DynamicResource NotificationCardInformationIconPathData}"
-                                    IsVisible="{TemplateBinding ShowIcon}"
-                                    Margin="{DynamicResource ToastCardIconMargin}"
-                                    Theme="{StaticResource InnerPathIcon}"
-                                    VerticalAlignment="Top"
-                                    x:Name="ToastIcon" />
-                                <ContentControl
-                                    Content="{TemplateBinding Content}"
-                                    Margin="{DynamicResource ToastCardContentMargin}"
-                                    MaxWidth="{DynamicResource ToastCardContentMaxWidth}"
-                                    VerticalContentAlignment="Center"
-                                    x:Name="PART_Content">
-                                    <ContentControl.DataTemplates>
-                                        <DataTemplate DataType="u:IToast">
-                                            <TextBlock
-                                                FontWeight="{DynamicResource ToastCardContentFontWeight}"
-                                                Foreground="{DynamicResource ToastCardContentForeground}"
-                                                Text="{Binding Content}"
-                                                TextWrapping="Wrap" />
-                                        </DataTemplate>
-                                        <DataTemplate DataType="x:String">
-                                            <TextBlock
-                                                FontWeight="{DynamicResource ToastCardContentFontWeight}"
-                                                Foreground="{DynamicResource ToastCardContentForeground}"
-                                                Text="{Binding}"
-                                                TextWrapping="Wrap" />
-                                        </DataTemplate>
-                                    </ContentControl.DataTemplates>
-                                </ContentControl>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <PathIcon
+                                        Classes="Large"
+                                        Data="{DynamicResource NotificationCardInformationIconPathData}"
+                                        IsVisible="{TemplateBinding ShowIcon}"
+                                        Margin="{DynamicResource ToastCardIconMargin}"
+                                        Theme="{StaticResource InnerPathIcon}"
+                                        VerticalAlignment="Top"
+                                        x:Name="ToastIcon" />
+                                    <ContentControl
+                                        Content="{TemplateBinding Content}"
+                                        Margin="{DynamicResource ToastCardContentMargin}"
+                                        MaxWidth="{DynamicResource ToastCardContentMaxWidth}"
+                                        VerticalContentAlignment="Center"
+                                        x:Name="PART_Content">
+                                        <ContentControl.DataTemplates>
+                                            <DataTemplate DataType="u:IToast">
+                                                <TextBlock
+                                                    FontWeight="{DynamicResource ToastCardContentFontWeight}"
+                                                    Foreground="{DynamicResource ToastCardContentForeground}"
+                                                    Text="{Binding Content}"
+                                                    TextWrapping="Wrap" />
+                                            </DataTemplate>
+                                            <DataTemplate DataType="x:String">
+                                                <TextBlock
+                                                    FontWeight="{DynamicResource ToastCardContentFontWeight}"
+                                                    Foreground="{DynamicResource ToastCardContentForeground}"
+                                                    Text="{Binding}"
+                                                    TextWrapping="Wrap" />
+                                            </DataTemplate>
+                                        </ContentControl.DataTemplates>
+                                    </ContentControl>
+                                    <Button
+                                        IsVisible="{TemplateBinding ShowClose}"
+                                        Theme="{StaticResource OverlayCloseButton}"
+                                        VerticalAlignment="Top"
+                                        u:MessageCard.CloseOnClick="True"
+                                        x:Name="PART_CloseButton" />
+                                </DockPanel>
                                 <ItemsControl
-                                    DockPanel.Dock="Bottom"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
                                     IsVisible="{TemplateBinding OperateButtons}"
                                     ItemsSource="{TemplateBinding OperateButtons}"
                                     Margin="{DynamicResource ToastCardButtonMargin}">
@@ -109,13 +128,7 @@
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                                <Button
-                                    IsVisible="{TemplateBinding ShowClose}"
-                                    Theme="{StaticResource OverlayCloseButton}"
-                                    VerticalAlignment="Top"
-                                    u:MessageCard.CloseOnClick="True"
-                                    x:Name="PART_CloseButton" />
-                            </DockPanel>
+                            </Grid>
                         </Border>
                     </Border>
                 </LayoutTransformControl>

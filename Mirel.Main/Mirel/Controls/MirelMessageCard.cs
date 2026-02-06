@@ -86,6 +86,24 @@ public abstract class MirelMessageCard : ContentControl
     public static readonly StyledProperty<IList<OperateButtonEntry>?> OperateButtonsProperty =
         AvaloniaProperty.Register<MirelMessageCard, IList<OperateButtonEntry>?>(nameof(OperateButtons));
 
+    public bool IsButtonsInline
+    {
+        get => GetValue(IsButtonsInlineProperty);
+        set => SetValue(IsButtonsInlineProperty, value);
+    }
+
+    public static readonly StyledProperty<bool> IsButtonsInlineProperty =
+        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(IsButtonsInline), false);
+
+    public NotificationEntry? NotificationEntry
+    {
+        get => GetValue(NotificationEntryProperty);
+        set => SetValue(NotificationEntryProperty, value);
+    }
+
+    public static readonly StyledProperty<NotificationEntry?> NotificationEntryProperty =
+        AvaloniaProperty.Register<MirelMessageCard, NotificationEntry?>(nameof(NotificationEntry));
+
     public static readonly RoutedEvent<RoutedEventArgs> MessageClosedEvent =
         RoutedEvent.Register<MirelMessageCard, RoutedEventArgs>(nameof(MessageClosed), RoutingStrategies.Bubble);
 
@@ -139,6 +157,10 @@ public abstract class MirelMessageCard : ContentControl
         }
 
         IsClosing = true;
+        IsClosed = true;
+
+        // 从通知列表中移除
+        NotificationEntry?.Remove();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)

@@ -62,7 +62,7 @@ public abstract class Overlay
 
     public static void Notice(string msg, NotificationType type = NotificationType.Information, TimeSpan? time = null,
         Action? onClick = null, bool showTime = true, string title = "Mirel", IMirelWindow? host = null,
-        IList<OperateButtonEntry>? operateButtons = null)
+        IList<OperateButtonEntry>? operateButtons = null, bool isButtonsInline = false)
     {
         var t = DateTime.Now;
         Logger.Info($"[Notice] [{type}] {msg}");
@@ -80,34 +80,36 @@ public abstract class Overlay
         switch (Data.SettingEntry.NoticeWay)
         {
             case Setting.NoticeWay.Bubble:
-                NotificationBubble(msg, type, closeAction, time, onClick, host, operateButtons);
+                NotificationBubble(msg, type, entry, closeAction, time, onClick, host, operateButtons, isButtonsInline);
                 break;
             case Setting.NoticeWay.Card:
-                NotificationCard(msg, type, showTitle, closeAction, time, onClick, host, operateButtons);
+                NotificationCard(msg, type, showTitle, entry, closeAction, time, onClick, host, operateButtons, isButtonsInline);
                 break;
         }
     }
 
-    public static void NotificationBubble(string msg, NotificationType type, Action closeAction, TimeSpan? time = null,
-        Action? onClick = null, IMirelWindow? host = null, IList<OperateButtonEntry>? operateButtons = null)
+    public static void NotificationBubble(string msg, NotificationType type, NotificationEntry entry, Action closeAction, TimeSpan? time = null,
+        Action? onClick = null, IMirelWindow? host = null, IList<OperateButtonEntry>? operateButtons = null, bool isButtonsInline = false)
     {
         var toast = new Toast(msg, type);
-        (host != null ? host.Toast : UiProperty.Toast).Show(toast, toast.Type, classes: ["Light"], onClick: () =>
+        (host != null ? host.Toast : UiProperty.Toast).Show(toast, toast.Type, entry, classes: new[] { "Light" }, onClick: () =>
             {
                 closeAction.Invoke();
                 onClick?.Invoke();
             }, showClose: false, touchClose: true,
-            expiration: time ?? TimeSpan.FromSeconds(3.0), operateButtons: operateButtons);
+            expiration: time ?? TimeSpan.FromSeconds(3.0), operateButtons: operateButtons, isButtonsInline: isButtonsInline);
     }
 
-    public static void NotificationCard(string msg, NotificationType type, string title, Action closeAction,
+    public static void NotificationCard(string msg, NotificationType type, string title, NotificationEntry entry, Action closeAction,
         TimeSpan? time = null,
-        Action? onClick = null, IMirelWindow? host = null, IList<OperateButtonEntry>? operateButtons = null)
+        Action? onClick = null, IMirelWindow? host = null, IList<OperateButtonEntry>? operateButtons = null, bool isButtonsInline = false)
     {
         var notification = new Notification(title, msg, type);
+        // WindowNotificationManager 是第三方库，无法直接传递 NotificationEntry
+        // 通知卡片模式下，关闭操作由 closeAction 处理
         (host != null ? host.Notification : UiProperty.Notification).Show(notification, notification.Type,
             showClose: false,
-            classes: ["Light"], onClick: () =>
+            classes: new[] { "Light" }, onClick: () =>
             {
                 closeAction.Invoke();
                 onClick?.Invoke();

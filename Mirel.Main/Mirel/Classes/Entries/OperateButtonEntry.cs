@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using System.Windows.Input;
-using Avalonia.LogicalTree;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using Mirel.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -15,21 +15,22 @@ public class OperateButtonEntry : ReactiveObject
     [Reactive] public object? Content { get; set; }
     [Reactive] public Action<object>? Action { get; set; }
     public bool OnUIThread { get; init; } = true;
-    public bool CloseOnClick { get; init; } = true;
+    public bool CloseOnClick { get; init; } = false;
 
     public ICommand Command { get; }
 
-    public OperateButtonEntry(string content, Action<object> action)
+    public OperateButtonEntry(string content, Action<object> action, bool closeOnClick = false)
     {
         Content = content;
         Action = action;
+        CloseOnClick = closeOnClick;
         Command = new SimpleCommand(ExecuteCommand);
     }
 
     public void ExecuteCommand(object parameter)
     {
         if (OnUIThread)
-            Dispatcher.UIThread.Invoke(() => 
+            Dispatcher.UIThread.Invoke(() =>
             {
                 Action?.Invoke(parameter);
                 if (CloseOnClick)
@@ -52,14 +53,21 @@ public class OperateButtonEntry : ReactiveObject
         // 尝试从参数中获取按钮实例
         if (parameter is Avalonia.Controls.Button button)
         {
-            // 通过 LogicalTree 查找按钮所在的 MirelMessageCard 实例
-            var messageCard = button.GetLogicalAncestors().OfType<MirelMessageCard>().FirstOrDefault();
+            // 通过 VisualTree 查找按钮所在的 MirelMessageCard 实例
+            var messageCard = button.GetVisualAncestors().OfType<MirelMessageCard>().FirstOrDefault();
             messageCard?.Close();
         }
     }
 
-    private class SimpleCommand(Action<object> execute) : ICommand
+    private class SimpleCommand : ICommand
     {
+        private readonly Action<object> _execute;
+
+        public SimpleCommand(Action<object> execute)
+        {
+            _execute = execute;
+        }
+
         public event EventHandler? CanExecuteChanged;
 
         public bool CanExecute(object? parameter)
@@ -69,7 +77,7 @@ public class OperateButtonEntry : ReactiveObject
 
         public void Execute(object? parameter)
         {
-            execute(parameter ?? new object());
+            _execute(parameter ?? new object());
         }
     }
 }

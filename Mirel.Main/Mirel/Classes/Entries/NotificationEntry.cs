@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Avalonia.Controls.Notifications;
 using Mirel.Const;
 using ReactiveUI;
@@ -8,20 +7,26 @@ using Notification = Ursa.Controls.Notification;
 
 namespace Mirel.Classes.Entries;
 
-public sealed class NotificationEntry(Notification Entry, NotificationType Type, DateTime Time, string Title = "Mirel")
-    : ReactiveObject
+public sealed class NotificationEntry : ReactiveObject
 {
-    public Notification Entry { get; set; } = Entry;
-    public NotificationType Type { get; } = Type;
-    public DateTime Time { get; } = Time;
-    public string Title { get; } = Title;
+    public Notification Entry { get; set; }
+    public NotificationType Type { get; }
+    public DateTime Time { get; }
+    public string Title { get; }
     [Reactive] public bool IsClosing { get; set; }
 
-    public async void Remove()
+    public NotificationEntry(Notification entry, NotificationType type, DateTime time, string title = "Mirel")
+    {
+        Entry = entry;
+        Type = type;
+        Time = time;
+        Title = title;
+    }
+
+    public void Remove()
     {
         UiProperty.Notifications.Remove(this);
     }
-
 
     public bool Equals(NotificationEntry? other)
     {

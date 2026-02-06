@@ -31,7 +31,7 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
     public MirelWindowToastManager(VisualLayerManager? visualLayerManager) : base(visualLayerManager)
     {
     }
-    
+
     public static bool TryGetToastManager(Visual? visual, out WindowToastManager? manager)
     {
         manager = visual?.FindDescendantOfType<WindowToastManager>();
@@ -40,7 +40,7 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
 
     public void Show(IToast content)
     {
-        Show(content, content.Type, content.Expiration,
+        Show(content, content.Type, null, content.Expiration,
             content.ShowIcon, content.ShowClose,
             true, content.OnClick, content.OnClose);
     }
@@ -49,7 +49,7 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
     {
         if (content is IToast toast)
         {
-            Show(toast, toast.Type, toast.Expiration,
+            Show(toast, toast.Type, null, toast.Expiration,
                 toast.ShowIcon, toast.ShowClose,
                 true, toast.OnClick, toast.OnClose);
         }
@@ -58,10 +58,11 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
             Show(content, NotificationType.Information);
         }
     }
-    
-    public new async void Show(
+
+    public async void Show(
         object content,
         NotificationType type,
+        NotificationEntry? notificationEntry = null,
         TimeSpan? expiration = null,
         bool showIcon = true,
         bool showClose = true,
@@ -69,7 +70,8 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
         Action? onClick = null,
         Action? onClose = null,
         string[]? classes = null,
-        IList<OperateButtonEntry>? operateButtons = null)
+        IList<OperateButtonEntry>? operateButtons = null,
+        bool isButtonsInline = false)
     {
         Dispatcher.UIThread.VerifyAccess();
 
@@ -79,7 +81,9 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
             NotificationType = type,
             ShowIcon = showIcon,
             ShowClose = showClose,
-            OperateButtons = operateButtons
+            OperateButtons = operateButtons,
+            IsButtonsInline = isButtonsInline,
+            NotificationEntry = notificationEntry
         };
 
         if (classes is not null)
@@ -99,7 +103,7 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
 
         toastControl.PointerPressed += (_, _) =>
         {
-            if(touchClose)
+            if (touchClose)
                 toastControl.Close();
             onClick?.Invoke();
         };
