@@ -55,9 +55,6 @@
                     <Style Selector="^ TextBlock#NotificationTitle">
                         <Setter Property="Text" Value="成功" />
                     </Style>
-                    <Style Selector="^ Button#CloseButton">
-                        <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
-                    </Style>
                     <Style Selector="^ PathIcon#NotificationIcon">
                         <Setter Property="IsVisible" Value="True" />
                         <Setter Property="Foreground" Value="{DynamicResource NotificationCardSuccessIconForeground}" />
@@ -70,9 +67,6 @@
                     <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightInformationBorderBrush}" />
                     <Style Selector="^ TextBlock#NotificationTitle">
                         <Setter Property="Text" Value="提示" />
-                    </Style>
-                    <Style Selector="^ Button#CloseButton">
-                        <Setter Property="Background" Value="{DynamicResource SemiColorInformationLight}" />
                     </Style>
                     <Style Selector="^ PathIcon#NotificationIcon">
                         <Setter Property="IsVisible" Value="True" />
@@ -87,9 +81,6 @@
                     <Style Selector="^ TextBlock#NotificationTitle">
                         <Setter Property="Text" Value="错误" />
                     </Style>
-                    <Style Selector="^ Button#CloseButton">
-                        <Setter Property="Background" Value="{DynamicResource SemiColorDangerLight}" />
-                    </Style>
                     <Style Selector="^ PathIcon#NotificationIcon">
                         <Setter Property="IsVisible" Value="True" />
                         <Setter Property="Foreground" Value="{DynamicResource NotificationCardErrorIconForeground}" />
@@ -102,9 +93,6 @@
                     <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightWarningBorderBrush}" />
                     <Style Selector="^ TextBlock#NotificationTitle">
                         <Setter Property="Text" Value="警告" />
-                    </Style>
-                    <Style Selector="^ Button#CloseButton">
-                        <Setter Property="Background" Value="{DynamicResource SemiColorWarningLight}" />
                     </Style>
                     <Style Selector="^ PathIcon#NotificationIcon">
                         <Setter Property="IsVisible" Value="True" />
@@ -174,25 +162,6 @@
                                         Text="{Binding Entry.Content}"
                                         TextWrapping="Wrap" />
                                 </DockPanel>
-                                <Button
-                                    Background="Transparent"
-                                    Classes="icon-button"
-                                    Command="{Binding Remove}"
-                                    Content="{DynamicResource Close}"
-                                    DockPanel.Dock="Right"
-                                    HorizontalAlignment="Right"
-                                    Margin="0,6,6,0"
-                                    MaxHeight="10"
-                                    MaxWidth="10"
-                                    MinHeight="10"
-                                    Name="CloseButton"
-                                    VerticalAlignment="Top">
-                                    <Button.Transitions>
-                                        <Transitions>
-                                            <DoubleTransition Duration="0:0:0.07" Property="Opacity" />
-                                        </Transitions>
-                                    </Button.Transitions>
-                                </Button>
                             </Grid>
                         </Border>
                     </DataTemplate>
