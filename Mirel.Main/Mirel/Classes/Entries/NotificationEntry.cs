@@ -31,6 +31,11 @@ public sealed class NotificationEntry : ReactiveObject
         UiProperty.Notifications.Remove(this);
     }
 
+    public void RemoveAndDelete()
+    {
+        UiProperty.Notifications.Remove(this);
+    }
+
     public bool Equals(NotificationEntry? other)
     {
         return Entry == other?.Entry && Type == other.Type && Time == other.Time && Title == other.Title;
