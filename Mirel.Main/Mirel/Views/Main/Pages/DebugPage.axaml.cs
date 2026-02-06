@@ -10,6 +10,7 @@ using Avalonia.Threading;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Module;
+using Mirel.Module.Ui;
 using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
 
@@ -52,7 +53,10 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
                 Module.Ui.Overlay.Notice("Info");
                 break;
             case "Success":
-                Module.Ui.Overlay.Notice("Success", NotificationType.Success, i);
+                Module.Ui.Overlay.Notice("Success", NotificationType.Success, new NoticeOptions
+                {
+                    Expiration = i
+                });
                 break;
             case "Warn":
                 Module.Ui.Overlay.Notice("Warn", NotificationType.Warning);
@@ -63,11 +67,17 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
             case "Long":
                 Module.Ui.Overlay.Notice(
                     "Avalonia 是一个基于 .NET 的跨平台 UI 框架，灵感来源于 WPF，可在 Windows、macOS、Linux、移动设备和 WebAssembly 上使用同一套 XAML 代码开发应用程序，适合桌面和移动端开发者探索跨平台解决方案。",
-                    NotificationType.Information, i);
+                    NotificationType.Information,
+                    new NoticeOptions
+                    {
+                        Expiration = i
+                    });
                 break;
             case "Click":
-                Module.Ui.Overlay.Notice("Avalonia",
-                    clickAction: () => { Logger.Debug("OnClick!"); });
+                Module.Ui.Overlay.Notice("Avalonia", NotificationType.Information, new NoticeOptions
+                {
+                    OnClick = () => { Logger.Debug("OnClick!"); }
+                });
                 break;
         }
     }
@@ -84,7 +94,11 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
 
         Module.Ui.Overlay.Notice(
             "这是一条带有操作按钮的通知",
-            operateButtons: buttons
+            NotificationType.Information,
+            new NoticeOptions
+            {
+                OperateButtons = buttons
+            }
         );
     }
 
@@ -101,9 +115,13 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
 
         Module.Ui.Overlay.Notice(
             "这是一条按钮在同一行的通知",
-            operateButtons: buttons,
-            isButtonsInline: true,
-            time: new TimeSpan(0, 2, 0, 0, 0)
+            NotificationType.Information,
+            new NoticeOptions
+            {
+                OperateButtons = buttons,
+                IsButtonsInline = true,
+                Expiration = new TimeSpan(0, 2, 0, 0, 0)
+            }
         );
     }
 

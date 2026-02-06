@@ -13,6 +13,7 @@ using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
+using Mirel.Module.Ui.Helper;
 using Mirel.Views.Main;
 using Ursa.Controls;
 using Notification = Ursa.Controls.Notification;
@@ -60,49 +61,45 @@ public abstract class Overlay
         return result;
     }
 
-    public static void Notice(string msg, NotificationType type = NotificationType.Information, TimeSpan? time = null,
-        Action? clickAction = null, Action? closeAction = null, IMirelWindow? host = null,
-        IList<OperateButtonEntry>? operateButtons = null, bool isButtonsInline = false)
+    public static void Notice(string msg, NotificationType type = NotificationType.Information, NoticeOptions? options = null)
     {
+        options ??= new NoticeOptions();
+        options.Type = type;
+
         var t = DateTime.Now;
         Logger.Info($"[Notice] [{type}] {msg}");
+
         var notification = new Notification("Mirel", msg, type);
-        var entry = new NotificationEntry(notification, notification.Type, t, operateButtons: operateButtons);
+        var entry = new NotificationEntry(notification, notification.Type, t, operateButtons: options.OperateButtons);
+
         UiProperty.Notifications.Insert(0, entry);
         UiProperty.HistoryNotifications.Insert(0, entry);
 
-        NotificationBubble(msg, type, entry, closeAction, time, clickAction, host, operateButtons, isButtonsInline);
+        ShowToast(msg, entry, options);
     }
 
-    public static void NotificationBubble(string msg, NotificationType type, NotificationEntry entry,
-        Action? closeAction = null, TimeSpan? time = null,
-        Action? clickAction = null, IMirelWindow? host = null, IList<OperateButtonEntry>? operateButtons = null,
-        bool isButtonsInline = false)
+    public static void ShowToast(string msg, NotificationEntry entry, NoticeOptions? options = null)
     {
-        var toast = new Toast(msg, type);
-        (host != null ? host.Toast : UiProperty.Toast).Show(toast, toast.Type, entry, classes: ["Light"],
-            onClick: clickAction, showClose: false, touchClose: true,
-            expiration: time ?? TimeSpan.FromSeconds(3.0), operateButtons: operateButtons,
-            isButtonsInline: isButtonsInline, onClose: closeAction, showIcon: true);
-    }
+        options ??= new NoticeOptions();
 
-    public static void NotificationCard(string msg, NotificationType type, string title, NotificationEntry entry,
-        Action closeAction,
-        TimeSpan? time = null,
-        Action? onClick = null, IMirelWindow? host = null, IList<OperateButtonEntry>? operateButtons = null,
-        bool isButtonsInline = false)
-    {
-        var notification = new Notification(title, msg, type);
-        // WindowNotificationManager 是第三方库，无法直接传递 NotificationEntry
-        // 通知卡片模式下，关闭操作由 closeAction 处理
-        (host != null ? host.Notification : UiProperty.Notification).Show(notification, notification.Type,
-            showClose: false,
-            classes: new[] { "Light" }, onClick: () =>
-            {
-                closeAction.Invoke();
-                onClick?.Invoke();
-            },
-            expiration: time ?? TimeSpan.FromSeconds(3.0));
+        var toast = new Toast(msg, options.Type);
+        var toastOptions = new ToastOptions
+        {
+            Type = options.Type,
+            NotificationEntry = entry,
+            Classes = ["Light"],
+            OnClick = options.OnClick,
+            ShowClose = false,
+            TouchClose = true,
+            Expiration = options.Expiration ?? TimeSpan.FromSeconds(3.0),
+            OperateButtons = options.OperateButtons,
+            IsButtonsInline = options.IsButtonsInline,
+            OnClose = options.OnClose,
+            ShowIcon = true
+        };
+
+        var toastManager = options.Host?.Toast ?? UiProperty.Toast;
+        toastManager.Show(toast, toastOptions);
     }
 
     public static async Task OpenFolder(string path)
@@ -122,7 +119,6 @@ public abstract class Overlay
             await launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(path));
         }
     }
-
 
     public static string GetHostId(Control sender)
     {

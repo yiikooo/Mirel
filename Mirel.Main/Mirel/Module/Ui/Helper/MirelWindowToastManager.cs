@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Notifications;
 using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
-using Mirel.Classes.Entries;
 using Mirel.Controls;
 using Mirel.Module.Service;
 using Ursa.Controls;
@@ -41,38 +38,37 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
 
     public void Show(IToast content)
     {
-        Show(content, content.Type, null, content.Expiration,
-            content.ShowIcon, content.ShowClose,
-            true, content.OnClick, content.OnClose);
+        var options = new ToastOptions
+        {
+            Type = content.Type,
+            Expiration = content.Expiration,
+            ShowIcon = content.ShowIcon,
+            ShowClose = content.ShowClose,
+            TouchClose = true,
+            OnClick = content.OnClick,
+            OnClose = content.OnClose
+        };
+        Show(content, options);
     }
 
     public override void Show(object content)
     {
         if (content is IToast toast)
         {
-            Show(toast, toast.Type, null, toast.Expiration,
-                toast.ShowIcon, toast.ShowClose,
-                true, toast.OnClick, toast.OnClose);
+            Show(toast);
         }
         else
         {
-            Show(content, NotificationType.Information);
+            Show(content, new ToastOptions());
         }
     }
 
-    public async void Show(
-        object content,
-        NotificationType type,
-        NotificationEntry? notificationEntry = null,
-        TimeSpan? expiration = null,
-        bool showIcon = true,
-        bool showClose = true,
-        bool touchClose = false,
-        Action? onClick = null,
-        Action? onClose = null,
-        string[]? classes = null,
-        IList<OperateButtonEntry>? operateButtons = null,
-        bool isButtonsInline = false)
+    /// <summary>
+    /// 显示 Toast 通知
+    /// </summary>
+    /// <param name="content">内容</param>
+    /// <param name="options">显示选项</param>
+    public async void Show(object content, ToastOptions options)
     {
         try
         {
@@ -81,17 +77,17 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
             var toastControl = new MirelToastCard
             {
                 Content = content,
-                NotificationType = type,
-                ShowIcon = showIcon,
-                ShowClose = showClose,
-                OperateButtons = operateButtons,
-                IsButtonsInline = isButtonsInline,
-                NotificationEntry = notificationEntry
+                NotificationType = options.Type,
+                ShowIcon = options.ShowIcon,
+                ShowClose = options.ShowClose,
+                OperateButtons = options.OperateButtons,
+                IsButtonsInline = options.IsButtonsInline,
+                NotificationEntry = options.NotificationEntry
             };
 
-            if (classes is not null)
+            if (options.Classes is not null)
             {
-                foreach (var @class in classes)
+                foreach (var @class in options.Classes)
                 {
                     toastControl.Classes.Add(@class);
                 }
@@ -99,15 +95,15 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
 
             toastControl.MessageClosed += (sender, _) =>
             {
-                onClose?.Invoke();
+                options.OnClose?.Invoke();
                 _items?.Remove(sender);
             };
 
             toastControl.PointerPressed += (_, _) =>
             {
-                if (touchClose)
+                if (options.TouchClose)
                     toastControl.Close();
-                onClick?.Invoke();
+                options.OnClick?.Invoke();
             };
 
             Dispatcher.UIThread.Post(() =>
@@ -120,12 +116,12 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
                 }
             });
 
-            if (expiration == TimeSpan.Zero)
+            if (options.Expiration == TimeSpan.Zero)
             {
                 return;
             }
 
-            await Task.Delay(expiration ?? TimeSpan.FromSeconds(3));
+            await Task.Delay(options.Expiration ?? TimeSpan.FromSeconds(3));
 
             toastControl.CloseWithoutRemovingFromList();
         }

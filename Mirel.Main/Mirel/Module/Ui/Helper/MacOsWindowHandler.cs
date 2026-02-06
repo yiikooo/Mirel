@@ -10,7 +10,7 @@ public static class MacOsWindowHandler {
         var selStandardWindowButton = sel_registerName("standardWindowButton:");
         var selSetHidden = sel_registerName("setHidden:");
 
-        var zoomButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, (IntPtr)2);
+        var zoomButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, 2);
         objc_msgSend_Bool(zoomButton, selSetHidden, true);
     }
 
@@ -22,9 +22,9 @@ public static class MacOsWindowHandler {
             throw new NullReferenceException();
         }
 
-        var closeButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, (IntPtr)0);
-        var minimizeButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, (IntPtr)1);
-        var zoomButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, (IntPtr)2);
+        var closeButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, 0);
+        var minimizeButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, 1);
+        var zoomButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, 2);
 
         // 调整按钮位置
         var macButtonX = 20;
