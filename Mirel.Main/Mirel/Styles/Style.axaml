@@ -64,8 +64,13 @@
             <Setter Property="Foreground" Value="{DynamicResource TextBlockDisabledForeground}" />
         </Style>
     </Style>
-
     <Style Selector="controls|MirelToastCard.Light /template/ ItemsControl#PART_NewLineButtons:not(:empty)">
         <Setter Property="Margin" Value="0,5,0,0" />
+    </Style>
+    <Style Selector="FlyoutPresenter /template/ Border#LayoutRoot">
+        <Setter Property="BoxShadow" Value="{DynamicResource PopupBoxShadow}" />
+    </Style>
+    <Style Selector="FlyoutPresenter.no-shadow /template/ Border#LayoutRoot">
+        <Setter Property="BoxShadow" Value="none" />
     </Style>
 </Styles>

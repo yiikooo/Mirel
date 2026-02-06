@@ -121,7 +121,7 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
                 return;
             }
 
-            await Task.Delay(options.Expiration ?? TimeSpan.FromSeconds(3));
+            await Task.Delay(options.Expiration ?? TimeSpan.FromSeconds(10));
 
             toastControl.CloseWithoutRemovingFromList();
         }

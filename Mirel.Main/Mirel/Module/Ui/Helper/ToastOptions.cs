@@ -21,7 +21,7 @@ public class ToastOptions
     public NotificationEntry? NotificationEntry { get; init; }
 
     /// <summary>
-    /// 显示时长，null 使用默认值 3 秒
+    /// 显示时长，null 使用默认值 10 秒
     /// </summary>
     public TimeSpan? Expiration { get; init; }
 

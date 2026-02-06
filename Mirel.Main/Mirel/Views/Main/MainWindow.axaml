@@ -96,7 +96,7 @@
                                                 </Style>
                                             </Button.Styles>
                                             <Button.Flyout>
-                                                <Flyout FlyoutPresenterClasses="nt">
+                                                <Flyout FlyoutPresenterClasses="nt no-shadow">
                                                     <Border
                                                         BorderThickness="1"
                                                         ClipToBounds="True"
