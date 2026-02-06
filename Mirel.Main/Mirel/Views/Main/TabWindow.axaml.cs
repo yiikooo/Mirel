@@ -44,7 +44,7 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
         Notification.Position = NotificationPosition.BottomRight;
         RootElement = Root;
         Window = this;
-        Toast.MaxItems = 2;
+        Toast.MaxItems = 4;
         DialogHost.HostId = $"DialogHost_{DateTime.Now}";
         DataContext = ViewModel;
         NewTabButton.DataContext = ViewModel;

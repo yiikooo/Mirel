@@ -52,7 +52,7 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
                 Module.Ui.Overlay.Notice("Info");
                 break;
             case "Success":
-                Module.Ui.Overlay.Notice("Success", NotificationType.Success);
+                Module.Ui.Overlay.Notice("Success", NotificationType.Success, i);
                 break;
             case "Warn":
                 Module.Ui.Overlay.Notice("Warn", NotificationType.Warning);
@@ -67,7 +67,7 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
                 break;
             case "Click":
                 Module.Ui.Overlay.Notice("Avalonia",
-                    onClick: () => { Logger.Debug("OnClick!"); });
+                    clickAction: () => { Logger.Debug("OnClick!"); });
                 break;
         }
     }
@@ -78,26 +78,13 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
         {
             new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
             new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, closeOnClick: true),
+            new("关闭并移除", _ => { Logger.Debug("关闭并移除按钮被点击"); }, closeOnClick: true,
+                removeOnCLoseClock: true),
         };
 
         Module.Ui.Overlay.Notice(
             "这是一条带有操作按钮的通知",
             operateButtons: buttons
-        );
-    }
-
-
-    private void NoticeWithButtonsNoClose(object? sender, RoutedEventArgs e)
-    {
-        var buttons = new List<OperateButtonEntry>
-        {
-            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
-            new("不关闭", _ => { Logger.Debug("不关闭按钮被点击"); }, closeOnClick: false)
-        };
-
-        Module.Ui.Overlay.Notice(
-            "这是一条点击按钮后不关闭的通知",
-            operateButtons: buttons, time: new TimeSpan(0, 2, 0, 0, 0)
         );
     }
 
@@ -108,6 +95,8 @@ public partial class DebugPage : PageMixModelBase, IMirelTabPage
         {
             new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
             new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, closeOnClick: true),
+            new("关闭并移除", _ => { Logger.Debug("关闭并移除按钮被点击"); }, closeOnClick: true,
+                removeOnCLoseClock: true),
         };
 
         Module.Ui.Overlay.Notice(

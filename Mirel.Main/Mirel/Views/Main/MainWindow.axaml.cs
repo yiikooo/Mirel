@@ -43,7 +43,7 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
         Toast = new MirelWindowToastManager(GetTopLevel(this));
         Notification.Position = NotificationPosition.BottomRight;
         RootElement = Root;
-        Toast.MaxItems = 2;
+        Toast.MaxItems = 4;
         DataContext = ViewModel;
         Window = this;
         TabDragDropService.RegisterWindow(this);

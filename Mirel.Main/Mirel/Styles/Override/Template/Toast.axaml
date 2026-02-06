@@ -56,9 +56,9 @@
                             CornerRadius="{TemplateBinding CornerRadius}"
                             MinHeight="{DynamicResource ToastCardMinHeight}"
                             Padding="{DynamicResource ToastCardPadding}"
-                            VerticalAlignment="Top"
+                            VerticalAlignment="Center"
                             x:Name="PART_RootBorder">
-                            <Grid>
+                            <Grid VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
@@ -130,11 +130,11 @@
                                 </DockPanel>
                                 <!--  新行按钮：显示在新的一行  -->
                                 <ItemsControl
+                                    Classes.with-button="{TemplateBinding OperateButtons}"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
                                     Grid.Row="1"
                                     ItemsSource="{TemplateBinding OperateButtons}"
-                                    Margin="0,5,0,0"
                                     x:Name="PART_NewLineButtons">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>

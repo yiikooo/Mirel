@@ -10,6 +10,7 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Mirel.Classes.Entries;
 using Mirel.Controls;
+using Mirel.Module.Service;
 using Ursa.Controls;
 
 namespace Mirel.Module.Ui.Helper;
@@ -73,58 +74,64 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
         IList<OperateButtonEntry>? operateButtons = null,
         bool isButtonsInline = false)
     {
-        Dispatcher.UIThread.VerifyAccess();
-
-        var toastControl = new MirelToastCard
+        try
         {
-            Content = content,
-            NotificationType = type,
-            ShowIcon = showIcon,
-            ShowClose = showClose,
-            OperateButtons = operateButtons,
-            IsButtonsInline = isButtonsInline,
-            NotificationEntry = notificationEntry
-        };
+            Dispatcher.UIThread.VerifyAccess();
 
-        if (classes is not null)
-        {
-            foreach (var @class in classes)
+            var toastControl = new MirelToastCard
             {
-                toastControl.Classes.Add(@class);
-            }
-        }
+                Content = content,
+                NotificationType = type,
+                ShowIcon = showIcon,
+                ShowClose = showClose,
+                OperateButtons = operateButtons,
+                IsButtonsInline = isButtonsInline,
+                NotificationEntry = notificationEntry
+            };
 
-        toastControl.MessageClosed += (sender, _) =>
-        {
-            onClose?.Invoke();
-
-            _items?.Remove(sender);
-        };
-
-        toastControl.PointerPressed += (_, _) =>
-        {
-            if (touchClose)
-                toastControl.Close();
-            onClick?.Invoke();
-        };
-
-        Dispatcher.UIThread.Post(() =>
-        {
-            _items?.Add(toastControl);
-
-            if (_items?.OfType<MirelToastCard>().Count(i => !i.IsClosing) > MaxItems)
+            if (classes is not null)
             {
-                _items.OfType<MirelToastCard>().First(i => !i.IsClosing).Close();
+                foreach (var @class in classes)
+                {
+                    toastControl.Classes.Add(@class);
+                }
             }
-        });
 
-        if (expiration == TimeSpan.Zero)
-        {
-            return;
+            toastControl.MessageClosed += (sender, _) =>
+            {
+                onClose?.Invoke();
+                _items?.Remove(sender);
+            };
+
+            toastControl.PointerPressed += (_, _) =>
+            {
+                if (touchClose)
+                    toastControl.Close();
+                onClick?.Invoke();
+            };
+
+            Dispatcher.UIThread.Post(() =>
+            {
+                _items?.Add(toastControl);
+
+                if (_items?.OfType<MirelToastCard>().Count(i => !i.IsClosing) > MaxItems)
+                {
+                    _items.OfType<MirelToastCard>().First(i => !i.IsClosing).Close();
+                }
+            });
+
+            if (expiration == TimeSpan.Zero)
+            {
+                return;
+            }
+
+            await Task.Delay(expiration ?? TimeSpan.FromSeconds(3));
+
+            toastControl.CloseWithoutRemovingFromList();
         }
-
-        await Task.Delay(expiration ?? TimeSpan.FromSeconds(3));
-
-        toastControl.Close();
+        catch (Exception e)
+        {
+            ExceptionService.HandleException(e);
+        }
     }
 }

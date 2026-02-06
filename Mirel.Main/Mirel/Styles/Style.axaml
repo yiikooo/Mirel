@@ -1,5 +1,6 @@
 <Styles
     xmlns="https://github.com/avaloniaui"
+    xmlns:controls="clr-namespace:Mirel.Controls"
     xmlns:u="https://irihi.tech/ursa"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith />
@@ -62,5 +63,9 @@
         <Style Selector="PathIcon:disabled">
             <Setter Property="Foreground" Value="{DynamicResource TextBlockDisabledForeground}" />
         </Style>
+    </Style>
+
+    <Style Selector="controls|MirelToastCard.Light /template/ ItemsControl#PART_NewLineButtons:not(:empty)">
+        <Setter Property="Margin" Value="0,5,0,0" />
     </Style>
 </Styles>

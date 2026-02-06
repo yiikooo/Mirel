@@ -159,7 +159,6 @@ public abstract class MirelMessageCard : ContentControl
         IsClosing = true;
         IsClosed = true;
 
-        // 从通知列表中移除
         NotificationEntry?.Remove();
     }
 
