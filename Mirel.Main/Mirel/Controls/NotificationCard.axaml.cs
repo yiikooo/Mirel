@@ -6,7 +6,7 @@ using Ursa.Controls;
 
 namespace Mirel.Controls;
 
-public partial class NotificationCard : PageModelBase
+public partial class NotificationCard : UserControl
 {
     public static readonly StyledProperty<bool> IsCloseButtonVisibleProperty =
         AvaloniaProperty.Register<NotificationCard, bool>(nameof(IsCloseButtonVisible), defaultValue: true);
@@ -16,19 +16,18 @@ public partial class NotificationCard : PageModelBase
         get => GetValue(IsCloseButtonVisibleProperty);
         set => SetValue(IsCloseButtonVisibleProperty, value);
     }
-    
-    public static readonly StyledProperty<NotificationEntry> NotificationEntryProperty =
-        AvaloniaProperty.Register<NotificationCard, NotificationEntry>(nameof(NotificationEntry));
 
-    public NotificationEntry NotificationEntry
+    public static readonly StyledProperty<NotificationEntry?> NotificationEntryProperty =
+        AvaloniaProperty.Register<NotificationCard, NotificationEntry?>(nameof(NotificationEntry));
+
+    public NotificationEntry? NotificationEntry
     {
         get => GetValue(NotificationEntryProperty);
         set => SetValue(NotificationEntryProperty, value);
     }
-    
+
     public NotificationCard()
     {
-        DataContext = this;
         InitializeComponent();
     }
 }

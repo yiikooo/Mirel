@@ -6,6 +6,7 @@ using Avalonia.Markup.Xaml;
 using FluentAvalonia.Core;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
+using Mirel.Const;
 using Mirel.Module.Events;
 using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
@@ -36,6 +37,15 @@ public partial class TabsPage : PageModelBase, IMirelPage
         AppEvents.TabSelectionChanged += e =>
         {
             ListBox.SelectedItem = e;
+        };
+        Loaded += (_, _) =>
+        {
+            if(UiProperty.ActiveWindow is not IMirelTabWindow tb) return;
+            ListBox.SelectedItem = new TabSEntry
+            {
+                Entry = tb.SelectedTab,
+                Window = tb
+            };
         };
     }
 

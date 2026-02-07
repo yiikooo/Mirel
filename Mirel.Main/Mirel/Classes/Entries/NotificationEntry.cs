@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Avalonia.Controls.Notifications;
 using Mirel.Const;
 using ReactiveUI;
@@ -8,17 +9,24 @@ using Notification = Ursa.Controls.Notification;
 
 namespace Mirel.Classes.Entries;
 
-public record NotificationEntry(
-    Notification entry,
-    NotificationType type,
-    DateTime time,
-    IList<OperateButtonEntry>? operateButtons = null)
+public class NotificationEntry : ReactiveObject
 {
-    public Notification Entry { get; set; } = entry;
-    public NotificationType Type { get; } = type;
-    public DateTime Time { get; } = time;
-    public IList<OperateButtonEntry>? OperateButtons { get; set; } = operateButtons;
-    public NotificationEntry Self => this;
+    public NotificationEntry(Notification Entry,
+        NotificationType Type,
+        DateTime Time,
+        ObservableCollection<OperateButtonEntry>? OperateButtons = null)
+    {
+        this.Entry = Entry;
+        this.Type = Type;
+        this.Time = Time;
+        this.OperateButtons = OperateButtons;
+    }
+
+    public ObservableCollection<OperateButtonEntry>? OperateButtons { get; set; }
+    public NotificationEntry Hi => this;
+    [Reactive] public Notification Entry { get; init; }
+    [Reactive] public NotificationType Type { get; init; }
+    [Reactive] public DateTime Time { get; init; }
 
     public void Remove()
     {

@@ -70,7 +70,7 @@ public abstract class Overlay
         Logger.Info($"[Notice] [{type}] {msg}");
 
         var notification = new Notification("Mirel", msg, type);
-        var entry = new NotificationEntry(notification, notification.Type, t, operateButtons: options.OperateButtons);
+        var entry = new NotificationEntry(notification, notification.Type, t, OperateButtons: options.OperateButtons);
 
         UiProperty.Notifications.Insert(0, entry);
         UiProperty.HistoryNotifications.Insert(0, entry);

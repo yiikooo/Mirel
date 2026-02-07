@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
@@ -84,7 +85,7 @@ public partial class DebugPage : PageModelBase, IMirelTabPage
 
     private void NoticeWithButtons(object? sender, RoutedEventArgs e)
     {
-        var buttons = new List<OperateButtonEntry>
+        var buttons = new ObservableCollection<OperateButtonEntry>
         {
             new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
             new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, closeOnClick: true),
@@ -105,7 +106,7 @@ public partial class DebugPage : PageModelBase, IMirelTabPage
 
     private void NoticeWithButtonsInline(object? sender, RoutedEventArgs e)
     {
-        var buttons = new List<OperateButtonEntry>
+        var buttons = new ObservableCollection<OperateButtonEntry>
         {
             new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
             new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, closeOnClick: true),

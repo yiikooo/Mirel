@@ -55,7 +55,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="entries:NotificationEntry">
-                        <controls:NotificationCard IsCloseButtonVisible="False" NotificationEntry="{Binding Self}" />
+                        <controls:NotificationCard IsCloseButtonVisible="False" NotificationEntry="{Binding Hi}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

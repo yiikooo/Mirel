@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Avalonia.Controls.Notifications;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
@@ -39,7 +40,7 @@ public class NoticeOptions(IMirelWindow? host = null, Action? onClose = null)
     /// <summary>
     /// 操作按钮
     /// </summary>
-    public IList<OperateButtonEntry>? OperateButtons { get; init; }
+    public ObservableCollection<OperateButtonEntry>? OperateButtons { get; init; }
 
     /// <summary>
     /// 按钮是否内联显示
