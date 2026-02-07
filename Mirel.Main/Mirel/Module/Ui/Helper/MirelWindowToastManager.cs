@@ -20,20 +20,11 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
 
     public MirelWindowToastManager(TopLevel? host) : this()
     {
-        if (host is not null)
-        {
-            InstallFromTopLevel(host);
-        }
+        if (host is not null) InstallFromTopLevel(host);
     }
 
     public MirelWindowToastManager(VisualLayerManager? visualLayerManager) : base(visualLayerManager)
     {
-    }
-
-    public static bool TryGetToastManager(Visual? visual, out WindowToastManager? manager)
-    {
-        manager = visual?.FindDescendantOfType<WindowToastManager>();
-        return manager is not null;
     }
 
     public void Show(IToast content)
@@ -51,20 +42,22 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
         Show(content, options);
     }
 
+    public static bool TryGetToastManager(Visual? visual, out WindowToastManager? manager)
+    {
+        manager = visual?.FindDescendantOfType<WindowToastManager>();
+        return manager is not null;
+    }
+
     public override void Show(object content)
     {
         if (content is IToast toast)
-        {
             Show(toast);
-        }
         else
-        {
             Show(content, new ToastOptions());
-        }
     }
 
     /// <summary>
-    /// 显示 Toast 通知
+    ///     显示 Toast 通知
     /// </summary>
     /// <param name="content">内容</param>
     /// <param name="options">显示选项</param>
@@ -86,12 +79,8 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
             };
 
             if (options.Classes is not null)
-            {
                 foreach (var @class in options.Classes)
-                {
                     toastControl.Classes.Add(@class);
-                }
-            }
 
             toastControl.MessageClosed += (sender, _) =>
             {
@@ -111,15 +100,10 @@ public class MirelWindowToastManager : WindowMessageManager, IToastManager
                 _items?.Add(toastControl);
 
                 if (_items?.OfType<MirelToastCard>().Count(i => !i.IsClosing) > MaxItems)
-                {
                     _items.OfType<MirelToastCard>().First(i => !i.IsClosing).Close();
-                }
             });
 
-            if (options.Expiration == TimeSpan.Zero)
-            {
-                return;
-            }
+            if (options.Expiration == TimeSpan.Zero) return;
 
             await Task.Delay(options.Expiration ?? TimeSpan.FromSeconds(10));
 

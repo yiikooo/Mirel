@@ -10,10 +10,9 @@ using Mirel.Module.Value;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-
 namespace Mirel.Const;
 
-public class Tasking : ReactiveObject , IDialogContext
+public class Tasking : ReactiveObject, IDialogContext
 {
     private static Tasking? _instance;
 
@@ -33,6 +32,13 @@ public class Tasking : ReactiveObject , IDialogContext
     }
 
     public static ObservableCollection<TaskEntry> Tasks { get; } = [];
+
+    public void Close()
+    {
+        RequestClose?.Invoke(this, null);
+    }
+
+    public event EventHandler<object?>? RequestClose;
 
     public static TaskEntry CreateTask(string name)
     {
@@ -72,11 +78,4 @@ public class Tasking : ReactiveObject , IDialogContext
         UpdateDisplay();
         HasTask = Tasks.Count > 0;
     }
-
-    public void Close()
-    {
-        RequestClose?.Invoke(this, null);
-    }
-
-    public event EventHandler<object?>? RequestClose;
 }

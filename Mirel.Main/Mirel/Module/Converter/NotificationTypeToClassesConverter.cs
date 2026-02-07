@@ -20,7 +20,6 @@ public class NotificationTypeToClassesConverter : IValueConverter
                 NotificationType.Error => "error",
                 _ => "info"
             }
-
         ];
         return classes;
     }

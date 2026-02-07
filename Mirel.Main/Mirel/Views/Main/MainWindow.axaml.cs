@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Avalonia;
@@ -8,12 +7,9 @@ using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using Avalonia.Styling;
-using Avalonia.VisualTree;
 using HotAvalonia;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
@@ -32,6 +28,10 @@ namespace Mirel.Views.Main;
 
 public partial class MainWindow : UrsaWindow, IMirelTabWindow
 {
+    private bool _isShiftKeyDown;
+    private DateTime _lastShiftPressTime;
+    private DateTime _shiftKeyDownTime;
+
     public MainWindow()
     {
 #if DEBUG
@@ -55,9 +55,6 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
 
     public MainViewModel ViewModel { get; } = new();
     public ObservableCollection<TabEntry> Tabs => ViewModel.Tabs;
-    private DateTime _lastShiftPressTime;
-    private DateTime _shiftKeyDownTime;
-    private bool _isShiftKeyDown;
     public TabEntry SelectedTab => ViewModel.SelectedTab;
     public string WindowId { get; init; } = "主窗口";
 
@@ -67,6 +64,11 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
         if (!Tabs.Contains(tab)) return;
         ViewModel.SelectedTab = tab;
     }
+
+    public WindowNotificationManager Notification { get; set; }
+    public MirelWindowToastManager Toast { get; set; }
+    public Control RootElement { get; set; }
+    public UrsaWindow Window { get; set; }
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
@@ -106,17 +108,17 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
 #endif
     private void InitTitleBar()
     {
-        var c = new Pages.MoreButtonMenu();
+        var c = new MoreButtonMenu();
         var menu = (MenuFlyout)c.MainControl!.Flyout;
         TitleRoot.ContextFlyout = menu;
         TitleRoot.DataContext = new MoreButtonMenuCommands();
         NewTabButton.Click += (_, _) => { CreateTab(new TabEntry(new NewTabPage())); };
-        NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 100 : 40), 0,
+        NavRoot.Margin = new Thickness(Data.DesktopType == DesktopType.MacOs ? 100 : 40, 0,
             TitleBarContainer.Bounds.Width + 40 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
         TitleRoot.PointerPressed += (_, e) => { TitleRoot.ContextFlyout.ShowAt(TitleRoot); };
         TitleBarContainer.SizeChanged += (_, _) =>
         {
-            NavRoot.Margin = new Thickness((Data.DesktopType == DesktopType.MacOs ? 100 : 40), 0,
+            NavRoot.Margin = new Thickness(Data.DesktopType == DesktopType.MacOs ? 100 : 40, 0,
                 TitleBarContainer.Bounds.Width + 40 + (Data.DesktopType == DesktopType.MacOs ? 20 : 85), 0);
         };
     }
@@ -126,24 +128,19 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
 #endif
     private void BindEvents()
     {
-        ViewModel.Tabs.CollectionChanged += (_, _) =>
-        {
-            TabService.UpdateTabs();
-        };
+        ViewModel.Tabs.CollectionChanged += (_, _) => { TabService.UpdateTabs(); };
         ViewModel.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(ViewModel.SelectedTab))
-            {
-                AppEvents.OnTabSelectionChanged(new TabSEntry()
+                AppEvents.OnTabSelectionChanged(new TabSEntry
                 {
                     Entry = SelectedTab,
                     Window = this
                 });
-            }
         };
         Activated += (_, _) =>
         {
-            AppEvents.OnTabSelectionChanged(new TabSEntry()
+            AppEvents.OnTabSelectionChanged(new TabSEntry
             {
                 Entry = SelectedTab,
                 Window = this
@@ -151,7 +148,6 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
         };
         Closing += OnMainWindowClosing;
         if (Data.DesktopType == DesktopType.MacOs)
-        {
             PropertyChanged += (_, e) =>
             {
                 var platform = TryGetPlatformHandle();
@@ -170,7 +166,6 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
                     Logger.Error(exception);
                 }
             };
-        }
 
         ASideButton.Click += (_, _) => { Data.SettingEntry.EnableAside = !Data.SettingEntry.EnableAside; };
         NavScrollViewer.ScrollChanged += (_, _) => { ViewModel.IsTabMaskVisible = NavScrollViewer.Offset.X > 0; };
@@ -209,7 +204,7 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
                 // Check if this is a double tap within 300ms
                 if (timeSinceLastTap < 300)
                 {
-                    var options = new DialogOptions()
+                    var options = new DialogOptions
                     {
                         ShowInTaskBar = false,
                         IsCloseButtonVisible = true,
@@ -293,11 +288,6 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
             ExceptionService.HandleException(e);
         }
     }
-
-    public WindowNotificationManager Notification { get; set; }
-    public MirelWindowToastManager Toast { get; set; }
-    public Control RootElement { get; set; }
-    public UrsaWindow Window { get; set; }
 
     [GeneratedRegex(@"https?://[^\s:]+")]
     private static partial Regex MyRegex();

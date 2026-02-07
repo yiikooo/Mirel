@@ -27,10 +27,9 @@ namespace Mirel.Views.Main;
 
 public partial class TabWindow : UrsaWindow, IMirelTabWindow
 {
+    private bool _isShiftKeyDown;
     private DateTime _lastShiftPressTime;
     private DateTime _shiftKeyDownTime;
-    private bool _isShiftKeyDown;
-    public string HostId => DialogHost.HostId;
 
     public TabWindow()
     {
@@ -53,6 +52,8 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
         Code.Text = $"{WindowId}";
     }
 
+    public string HostId => DialogHost.HostId;
+
     public TabWindowViewModel ViewModel { get; set; } = new();
     public ObservableCollection<TabEntry> Tabs => ViewModel.Tabs;
     public TabEntry SelectedTab => ViewModel.SelectedTab;
@@ -64,6 +65,11 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
         if (!Tabs.Contains(tab)) return;
         ViewModel.SelectedTab = tab;
     }
+
+    public WindowNotificationManager Notification { get; set; }
+    public MirelWindowToastManager Toast { get; set; }
+    public Control RootElement { get; set; }
+    public UrsaWindow Window { get; set; }
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
@@ -154,17 +160,15 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
         ViewModel.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(ViewModel.SelectedTab))
-            {
-                AppEvents.OnTabSelectionChanged(new TabSEntry()
+                AppEvents.OnTabSelectionChanged(new TabSEntry
                 {
                     Entry = SelectedTab,
                     Window = this
                 });
-            }
         };
         Activated += (_, _) =>
         {
-            AppEvents.OnTabSelectionChanged(new TabSEntry()
+            AppEvents.OnTabSelectionChanged(new TabSEntry
             {
                 Entry = SelectedTab,
                 Window = this
@@ -185,7 +189,6 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
         ViewModel.TabsEmptied += OnTabsEmptied;
         NavScrollViewer.ScrollChanged += (_, _) => { ViewModel.IsTabMaskVisible = NavScrollViewer.Offset.X > 0; };
         if (Data.DesktopType == DesktopType.MacOs)
-        {
             PropertyChanged += (_, e) =>
             {
                 var platform = TryGetPlatformHandle();
@@ -204,7 +207,6 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
                     Logger.Error(exception);
                 }
             };
-        }
 
         KeyDown += (_, e) =>
         {
@@ -234,7 +236,7 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
                 // Check if this is a double tap within 300ms
                 if (timeSinceLastTap < 300)
                 {
-                    var options = new DialogOptions()
+                    var options = new DialogOptions
                     {
                         ShowInTaskBar = false,
                         IsCloseButtonVisible = true,
@@ -301,9 +303,4 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
     {
         CreateTab(new TabEntry(new NewTabPage()));
     }
-
-    public WindowNotificationManager Notification { get; set; }
-    public MirelWindowToastManager Toast { get; set; }
-    public Control RootElement { get; set; }
-    public UrsaWindow Window { get; set; }
 }

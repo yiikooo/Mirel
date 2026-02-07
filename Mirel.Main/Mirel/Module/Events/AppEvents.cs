@@ -38,7 +38,7 @@ public class AppEvents
     {
         AppDragDrop?.Invoke(sender, e);
     }
-    
+
     public static event AppEventsHandler.TabSelectionChangedHandler? TabSelectionChanged;
 
     internal static void OnTabSelectionChanged(TabSEntry e)

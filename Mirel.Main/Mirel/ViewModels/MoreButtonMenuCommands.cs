@@ -1,24 +1,16 @@
-﻿using System.Linq;
-using Avalonia;
-using Avalonia.Styling;
-using Mirel.Classes.Entries;
+﻿using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using Mirel.Const;
 using Mirel.Module.Service;
 using Mirel.Views.Main;
 using Mirel.Views.Main.Pages;
-using Ursa.Controls;
 
 namespace Mirel.ViewModels;
-
 
 file readonly record struct ThemeResult(Setting.Theme Value);
 
 public class MoreButtonMenuCommands
 {
-    
-    
-    
     public void NewTab()
     {
         if (UiProperty.ActiveWindow is TabWindow tabWindow)
@@ -41,7 +33,7 @@ public class MoreButtonMenuCommands
         App.UiRoot.ViewModel.SelectedTab?.Close();
     }
 
-    
+
     public void ToggleTheme(string theme = null)
     {
         Data.SettingEntry.Theme = theme switch

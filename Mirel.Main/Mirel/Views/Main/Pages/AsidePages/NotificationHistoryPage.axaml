@@ -7,8 +7,6 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:asidePages="clr-namespace:Mirel.Views.Main.Pages.AsidePages"
     xmlns:controls="clr-namespace:Mirel.Controls"
-    xmlns:converter="clr-namespace:Mirel.Module.Converter"
-    xmlns:converters="clr-namespace:Avalonia.Markup.Xaml.Converters;assembly=Avalonia.Markup.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:entries="clr-namespace:Mirel.Classes.Entries"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"

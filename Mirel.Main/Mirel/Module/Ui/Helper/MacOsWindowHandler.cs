@@ -5,8 +5,10 @@ using System.Runtime.Versioning;
 namespace Mirel.Module.Ui.Helper;
 
 [SupportedOSPlatform("MacOS")]
-public static class MacOsWindowHandler {
-    public static void HideZoomButton(IntPtr nsWindow) {
+public static class MacOsWindowHandler
+{
+    public static void HideZoomButton(IntPtr nsWindow)
+    {
         var selStandardWindowButton = sel_registerName("standardWindowButton:");
         var selSetHidden = sel_registerName("setHidden:");
 
@@ -14,13 +16,13 @@ public static class MacOsWindowHandler {
         objc_msgSend_Bool(zoomButton, selSetHidden, true);
     }
 
-    public static void RefreshTitleBarButtonPosition(IntPtr nsWindow) {
+    public static void RefreshTitleBarButtonPosition(IntPtr nsWindow)
+    {
         var selStandardWindowButton = sel_registerName("standardWindowButton:");
         var selSetFrameOrigin = sel_registerName("setFrameOrigin:");
 
-        if (selStandardWindowButton == IntPtr.Zero || selSetFrameOrigin == IntPtr.Zero) {
+        if (selStandardWindowButton == IntPtr.Zero || selSetFrameOrigin == IntPtr.Zero)
             throw new NullReferenceException();
-        }
 
         var closeButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, 0);
         var minimizeButton = objc_msgSend_IntPtr_IntPtr(nsWindow, selStandardWindowButton, 1);
@@ -30,7 +32,7 @@ public static class MacOsWindowHandler {
         var macButtonX = 20;
         var macButtonY = -4;
         var buttonSpacing = 20;
-        
+
         var newCloseButtonPosition = new CGPoint(macButtonX, macButtonY);
         var newMinimizeButtonPosition = new CGPoint(macButtonX + buttonSpacing, macButtonY);
         var newZoomButtonPosition = new CGPoint(macButtonX + buttonSpacing * 2, macButtonY);
@@ -54,11 +56,13 @@ public static class MacOsWindowHandler {
 }
 
 [StructLayout(LayoutKind.Sequential)]
-public struct CGPoint {
+public struct CGPoint
+{
     public double X;
     public double Y;
 
-    public CGPoint(double x, double y) {
+    public CGPoint(double x, double y)
+    {
         X = x;
         Y = y;
     }

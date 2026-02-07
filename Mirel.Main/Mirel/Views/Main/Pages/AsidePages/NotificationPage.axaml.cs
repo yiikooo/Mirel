@@ -1,7 +1,5 @@
 using System.Collections.ObjectModel;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
@@ -12,8 +10,6 @@ namespace Mirel.Views.Main.Pages.AsidePages;
 
 public partial class NotificationPage : PageModelBase, IMirelPage
 {
-    public static ObservableCollection<NotificationEntry> Notifications => UiProperty.Notifications;
-
     public NotificationPage()
     {
         InitializeComponent();
@@ -21,7 +17,9 @@ public partial class NotificationPage : PageModelBase, IMirelPage
         DataContext = this;
     }
 
+    public static ObservableCollection<NotificationEntry> Notifications => UiProperty.Notifications;
+
     public string ShortInfo { get; set; }
-    public Control RootElement { get; init; }
     public PageLoadingAnimator InAnimator { get; set; }
+    public Control RootElement { get; init; }
 }

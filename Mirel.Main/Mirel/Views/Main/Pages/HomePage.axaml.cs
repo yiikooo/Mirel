@@ -1,14 +1,10 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using Avalonia.VisualTree;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
-using Mirel.Module.Ui;
 using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
-using Ursa.Controls;
 
 namespace Mirel.Views.Main.Pages;
 

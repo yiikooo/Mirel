@@ -9,9 +9,24 @@ using Mirel.ViewModels;
 
 namespace Mirel.Classes.Entries;
 
-public partial class TaskEntry : ViewModelBase
+public class TaskEntry : ViewModelBase
 {
     private readonly Timer _timer;
+    private string _bottomLeftInfoText;
+    private Action? _buttonAction;
+    private string _buttonText;
+    private Action? _destroyAction;
+    private bool _expanded = true;
+    private bool _isButtonEnable = true;
+    private bool _isCancelRequest;
+    private bool _isDestroyButtonVisible;
+
+    private string _name;
+    private bool _progressIsIndeterminate = true;
+    private double _progressValue;
+    private TaskState _taskState = TaskState.Waiting;
+    private TimeSpan _time = TimeSpan.Zero;
+    private string _topRightInfoText;
 
     public TaskEntry(string name)
     {
@@ -30,20 +45,6 @@ public partial class TaskEntry : ViewModelBase
         PropertyChanged += OnPropertyChanged;
     }
 
-     private string _name;
-     private TaskState _taskState = TaskState.Waiting;
-     private bool _progressIsIndeterminate = true;
-     private bool _isCancelRequest;
-     private bool _isButtonEnable = true;
-     private bool _expanded = true;
-     private double _progressValue;
-     private Action? _buttonAction;
-     private Action? _destroyAction;
-     private string _buttonText;
-     private string _topRightInfoText;
-     private string _bottomLeftInfoText;
-     private bool _isDestroyButtonVisible;
-     private TimeSpan _time = TimeSpan.Zero;
     public ObservableCollection<TaskEntry> SubTasks { get; set; } = [];
     public ObservableCollection<OperateButtonEntry> OperateButtons { get; set; } = [];
 
@@ -130,7 +131,6 @@ public partial class TaskEntry : ViewModelBase
         get => _time;
         set => SetField(ref _time, value);
     }
-
 
 
     public TaskEntry AddIn(TaskEntry entry)
@@ -233,7 +233,7 @@ public partial class TaskEntry : ViewModelBase
         ProgressValue = 70;
         ButtonAction = Destroy;
         foreach (var task in SubTasks)
-            if(task.TaskState == TaskState.Running)
+            if (task.TaskState == TaskState.Running)
                 task.FinishWithError();
     }
 
@@ -242,7 +242,7 @@ public partial class TaskEntry : ViewModelBase
         ProgressValue = 70;
         IsButtonEnable = true;
         IsDestroyButtonVisible = false;
-        ButtonText ="移除";
+        ButtonText = "移除";
         ProgressIsIndeterminate = false;
         ButtonAction = Destroy;
         TaskState = TaskState.Canceled;

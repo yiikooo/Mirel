@@ -12,7 +12,6 @@ namespace Mirel.Module.Service;
 
 public class TabService
 {
-    public static ObservableCollection<TabSEntry> AppTabs { get; } = [];
     private static readonly Func<IMirelTabWindow, bool> _windowFilter = w => w.Tabs != null;
 
     private static readonly Func<IMirelTabWindow, TabEntry, TabSEntry> _entryFactory = (w, t) =>
@@ -23,6 +22,8 @@ public class TabService
     static TabService()
     {
     }
+
+    public static ObservableCollection<TabSEntry> AppTabs { get; } = [];
 
     public static TabService Instance
     {

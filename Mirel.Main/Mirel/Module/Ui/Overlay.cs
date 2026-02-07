@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,7 +10,6 @@ using Avalonia.VisualTree;
 using FluentAvalonia.UI.Controls;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
-using Mirel.Classes.Interfaces;
 using Mirel.Const;
 using Mirel.Module.Ui.Helper;
 using Mirel.Views.Main;
@@ -61,7 +59,8 @@ public abstract class Overlay
         return result;
     }
 
-    public static void Notice(string msg, NotificationType type = NotificationType.Information, NoticeOptions? options = null)
+    public static void Notice(string msg, NotificationType type = NotificationType.Information,
+        NoticeOptions? options = null)
     {
         options ??= new NoticeOptions();
         options.Type = type;
@@ -70,7 +69,7 @@ public abstract class Overlay
         Logger.Info($"[Notice] [{type}] {msg}");
 
         var notification = new Notification("Mirel", msg, type);
-        var entry = new NotificationEntry(notification, notification.Type, t, OperateButtons: options.OperateButtons);
+        var entry = new NotificationEntry(notification, notification.Type, t, options.OperateButtons);
 
         UiProperty.Notifications.Insert(0, entry);
         UiProperty.HistoryNotifications.Insert(0, entry);

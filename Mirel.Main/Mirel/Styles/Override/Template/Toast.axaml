@@ -2,7 +2,6 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:classes="clr-namespace:Mirel.Classes.Entries"
     xmlns:controls="clr-namespace:Mirel.Controls"
-    xmlns:converters="clr-namespace:Avalonia.Markup.Xaml.Converters;assembly=Avalonia.Markup.Xaml"
     xmlns:helper="clr-namespace:Mirel.Module.Ui.Helper"
     xmlns:u="https://irihi.tech/ursa"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">

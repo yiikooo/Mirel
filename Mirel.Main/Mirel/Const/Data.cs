@@ -4,7 +4,6 @@ using Mirel.Module.Service;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-
 namespace Mirel.Const;
 
 public class Data : ReactiveObject

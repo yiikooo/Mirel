@@ -25,12 +25,6 @@ public partial class CrashWindow : UrsaWindow, IMirelWindow, INotifyPropertyChan
 {
     private string _exception;
 
-    public string Info
-    {
-        get => _exception;
-        set => SetField(ref _exception, value);
-    }
-
     public CrashWindow(string exception)
     {
         InitializeComponent();
@@ -53,6 +47,24 @@ public partial class CrashWindow : UrsaWindow, IMirelWindow, INotifyPropertyChan
         Init();
     }
 
+    public string Info
+    {
+        get => _exception;
+        set => SetField(ref _exception, value);
+    }
+
+    public WindowNotificationManager Notification { get; set; }
+    public MirelWindowToastManager Toast { get; set; }
+    public Control RootElement { get; set; }
+    public UrsaWindow Window { get; set; }
+
+    public sealed override void Show()
+    {
+        base.Show();
+    }
+
+    public new event PropertyChangedEventHandler? PropertyChanged;
+
 #if DEBUG
     [AvaloniaHotReload]
 #endif
@@ -71,11 +83,13 @@ public partial class CrashWindow : UrsaWindow, IMirelWindow, INotifyPropertyChan
         Loaded += (_, _) => { Setter.UpdateWindowStyle(this); };
         MoreInfo.Click += async (_, _) =>
         {
-            var q = 
+            var q =
                 string.Join("", _exception
-                    .Split(["\r\n", "\n", "\r"], StringSplitOptions.RemoveEmptyEntries)
-                    .Take(2))
-                    .Replace("System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.", "");
+                        .Split(["\r\n", "\n", "\r"], StringSplitOptions.RemoveEmptyEntries)
+                        .Take(2))
+                    .Replace(
+                        "System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.",
+                        "");
             var launcher = GetTopLevel(this)?.Launcher;
             await launcher.LaunchUriAsync(new Uri($"https://www.bing.com/search?q={q}"));
         };
@@ -86,16 +100,6 @@ public partial class CrashWindow : UrsaWindow, IMirelWindow, INotifyPropertyChan
         Window = this;
         Show();
         Activate();
-    }
-
-    public WindowNotificationManager Notification { get; set; }
-    public MirelWindowToastManager Toast { get; set; }
-    public Control RootElement { get; set; }
-    public UrsaWindow Window { get; set; }
-
-    public sealed override void Show()
-    {
-        base.Show();
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
@@ -131,7 +135,6 @@ public partial class CrashWindow : UrsaWindow, IMirelWindow, INotifyPropertyChan
         }
 
         if (Data.DesktopType == DesktopType.MacOs)
-        {
             PropertyChanged += (_, _) =>
             {
                 var platform = TryGetPlatformHandle();
@@ -150,10 +153,7 @@ public partial class CrashWindow : UrsaWindow, IMirelWindow, INotifyPropertyChan
                     Console.WriteLine(exception);
                 }
             };
-        }
     }
-
-    public new event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

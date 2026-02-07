@@ -1,5 +1,4 @@
 using System;
-using Mirel.Views.Main;
 using MoreButtonMenu = Mirel.Views.Main.Pages.MoreButtonMenu;
 
 namespace Mirel.Module.Events;

@@ -66,7 +66,7 @@ public class Converter
         var base64String = Convert.ToBase64String(imageBytes);
         return base64String;
     }
-    
+
     public static Color TaskStateToColor(TaskState state)
     {
         return state switch

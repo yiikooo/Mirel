@@ -1,16 +1,11 @@
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Notifications;
 using Avalonia.Media;
-using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
 using DynamicData;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
-using Mirel.Module.IO.Local;
 using Mirel.Module.Service;
 using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
@@ -20,8 +15,6 @@ namespace Mirel.Views.Main.Pages;
 
 public partial class NewTabPage : PageModelBase, IMirelTabPage
 {
-    public string ShortInfo { get; set; }
-    public ObservableCollection<AggregateSearchEntry> Items { get; set; } = [];
     private bool _fl = true;
 
     public NewTabPage()
@@ -45,10 +38,7 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage
         SearchBox.GotFocus += (_, _) => Filter();
         ListBox.SelectionChanged += (_, _) =>
         {
-            if (ListBox.SelectedItem is AggregateSearchEntry entry)
-            {
-                AggregateSearchService.HandleSelection(entry, this);
-            }
+            if (ListBox.SelectedItem is AggregateSearchEntry entry) AggregateSearchService.HandleSelection(entry, this);
             ListBox.SelectedItem = null;
         };
         SizeChanged += (_, _) =>
@@ -80,6 +70,9 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage
         };
     }
 
+    public string ShortInfo { get; set; }
+    public ObservableCollection<AggregateSearchEntry> Items { get; set; } = [];
+
     public string SearchFilter
     {
         get;
@@ -90,11 +83,15 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage
         }
     } = "";
 
-    private void Filter()
+
+    public static MirelStaticPageInfo StaticPageInfo { get; } = new()
     {
-        Items.Clear();
-        Items.AddRange(AggregateSearchService.Search(SearchFilter));
-    }
+        Icon = StreamGeometry.Parse(
+            "F1 M 12.670898 5.825195 L 15 6.796875 L 15.97168 9.125977 C 16.025391 9.228516 16.132812 9.296875 16.25 9.296875 C 16.367188 9.296875 16.474609 9.228516 16.52832 9.125977 L 17.5 6.796875 L 19.829102 5.825195 C 19.931641 5.771484 20 5.664062 20 5.546875 C 20 5.429688 19.931641 5.322266 19.829102 5.268555 L 17.5 4.296875 L 16.52832 1.967773 C 16.474609 1.865234 16.367188 1.796875 16.25 1.796875 C 16.132812 1.796875 16.025391 1.865234 15.97168 1.967773 L 15 4.296875 L 12.670898 5.268555 C 12.568359 5.322266 12.5 5.429688 12.5 5.546875 C 12.5 5.664062 12.568359 5.771484 12.670898 5.825195 Z M 19.829102 17.768555 L 17.5 16.796875 L 16.52832 14.467773 C 16.474609 14.365234 16.367188 14.296875 16.25 14.296875 C 16.132812 14.296875 16.025391 14.365234 15.97168 14.467773 L 15 16.796875 L 12.670898 17.768555 C 12.568359 17.822266 12.5 17.929688 12.5 18.046875 C 12.5 18.164062 12.568359 18.271484 12.670898 18.325195 L 15 19.296875 L 15.97168 21.625977 C 16.025391 21.728516 16.132812 21.796875 16.25 21.796875 C 16.367188 21.796875 16.474609 21.728516 16.52832 21.625977 L 17.5 19.296875 L 19.829102 18.325195 C 19.931641 18.271484 20 18.164062 20 18.046875 C 20 17.929688 19.931641 17.822266 19.829102 17.768555 Z M 15 11.782227 C 15 11.547852 14.868164 11.328125 14.65332 11.220703 L 10.258789 9.018555 L 8.056641 4.614258 C 7.84668 4.189453 7.15332 4.189453 6.943359 4.614258 L 4.741211 9.018555 L 0.34668 11.220703 C 0.131836 11.328125 0 11.547852 0 11.782227 C 0 12.021484 0.131836 12.236328 0.34668 12.34375 L 4.741211 14.545898 L 6.943359 18.950195 C 7.045898 19.160156 7.265587 19.296875 7.5 19.296875 C 7.734337 19.296875 7.954102 19.160156 8.056641 18.950195 L 10.258789 14.545898 L 14.65332 12.34375 C 14.868164 12.236328 15 12.021484 15 11.782227 Z"),
+        Title = "新标签页",
+        NeedPath = false,
+        AutoCreate = true
+    };
 
 
     public Control RootElement { get; init; }
@@ -104,6 +101,12 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage
 
     public void OnClose()
     {
+    }
+
+    private void Filter()
+    {
+        Items.Clear();
+        Items.AddRange(AggregateSearchService.Search(SearchFilter));
     }
 
     public void OpenNewPageCommand()
@@ -120,7 +123,7 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage
 
     public void AggSearchCommand()
     {
-        var options = new DialogOptions()
+        var options = new DialogOptions
         {
             ShowInTaskBar = false,
             IsCloseButtonVisible = true,
@@ -136,16 +139,6 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage
     {
         HostTab.MoveTabToNewWindow();
     }
-
-
-    public static MirelStaticPageInfo StaticPageInfo { get; } = new()
-    {
-        Icon = StreamGeometry.Parse(
-            "F1 M 12.670898 5.825195 L 15 6.796875 L 15.97168 9.125977 C 16.025391 9.228516 16.132812 9.296875 16.25 9.296875 C 16.367188 9.296875 16.474609 9.228516 16.52832 9.125977 L 17.5 6.796875 L 19.829102 5.825195 C 19.931641 5.771484 20 5.664062 20 5.546875 C 20 5.429688 19.931641 5.322266 19.829102 5.268555 L 17.5 4.296875 L 16.52832 1.967773 C 16.474609 1.865234 16.367188 1.796875 16.25 1.796875 C 16.132812 1.796875 16.025391 1.865234 15.97168 1.967773 L 15 4.296875 L 12.670898 5.268555 C 12.568359 5.322266 12.5 5.429688 12.5 5.546875 C 12.5 5.664062 12.568359 5.771484 12.670898 5.825195 Z M 19.829102 17.768555 L 17.5 16.796875 L 16.52832 14.467773 C 16.474609 14.365234 16.367188 14.296875 16.25 14.296875 C 16.132812 14.296875 16.025391 14.365234 15.97168 14.467773 L 15 16.796875 L 12.670898 17.768555 C 12.568359 17.822266 12.5 17.929688 12.5 18.046875 C 12.5 18.164062 12.568359 18.271484 12.670898 18.325195 L 15 19.296875 L 15.97168 21.625977 C 16.025391 21.728516 16.132812 21.796875 16.25 21.796875 C 16.367188 21.796875 16.474609 21.728516 16.52832 21.625977 L 17.5 19.296875 L 19.829102 18.325195 C 19.931641 18.271484 20 18.164062 20 18.046875 C 20 17.929688 19.931641 17.822266 19.829102 17.768555 Z M 15 11.782227 C 15 11.547852 14.868164 11.328125 14.65332 11.220703 L 10.258789 9.018555 L 8.056641 4.614258 C 7.84668 4.189453 7.15332 4.189453 6.943359 4.614258 L 4.741211 9.018555 L 0.34668 11.220703 C 0.131836 11.328125 0 11.547852 0 11.782227 C 0 12.021484 0.131836 12.236328 0.34668 12.34375 L 4.741211 14.545898 L 6.943359 18.950195 C 7.045898 19.160156 7.265587 19.296875 7.5 19.296875 C 7.734337 19.296875 7.954102 19.160156 8.056641 18.950195 L 10.258789 14.545898 L 14.65332 12.34375 C 14.868164 12.236328 15 12.021484 15 11.782227 Z"),
-        Title = "新标签页",
-        NeedPath = false,
-        AutoCreate = true
-    };
 
     public static IMirelNavPage Create((object sender, object? param) t)
     {

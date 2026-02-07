@@ -21,6 +21,42 @@ public abstract class MirelMessageCard : ContentControl
     public const string PC_Warning = ":warning";
     public const string PC_Error = ":error";
 
+    public static readonly DirectProperty<MirelMessageCard, bool> IsClosingProperty =
+        AvaloniaProperty.RegisterDirect<MirelMessageCard, bool>(nameof(IsClosing), o => o.IsClosing);
+
+    public static readonly StyledProperty<bool> IsClosedProperty =
+        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(IsClosed));
+
+    public static readonly StyledProperty<NotificationType> NotificationTypeProperty =
+        AvaloniaProperty.Register<MirelMessageCard, NotificationType>(nameof(NotificationType));
+
+    public static readonly StyledProperty<bool> ShowIconProperty =
+        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(ShowIcon), true);
+
+    public static readonly StyledProperty<bool> ShowCloseProperty =
+        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(ShowClose), true);
+
+    public static readonly StyledProperty<IList<OperateButtonEntry>?> OperateButtonsProperty =
+        AvaloniaProperty.Register<MirelMessageCard, IList<OperateButtonEntry>?>(nameof(OperateButtons));
+
+    public static readonly StyledProperty<bool> IsButtonsInlineProperty =
+        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(IsButtonsInline));
+
+    public static readonly StyledProperty<NotificationEntry?> NotificationEntryProperty =
+        AvaloniaProperty.Register<MirelMessageCard, NotificationEntry?>(nameof(NotificationEntry));
+
+    public static readonly StyledProperty<bool> ShowCollapseButtonProperty =
+        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(ShowCollapseButton), true);
+
+    public static readonly StyledProperty<bool> ShowRemoveButtonProperty =
+        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(ShowRemoveButton), true);
+
+    public static readonly RoutedEvent<RoutedEventArgs> MessageClosedEvent =
+        RoutedEvent.Register<MirelMessageCard, RoutedEventArgs>(nameof(MessageClosed), RoutingStrategies.Bubble);
+
+    public static readonly AttachedProperty<bool> CloseOnClickProperty =
+        AvaloniaProperty.RegisterAttached<MirelMessageCard, Button, bool>("CloseOnClick");
+
     private bool _isClosing;
 
     static MirelMessageCard()
@@ -33,35 +69,83 @@ public abstract class MirelMessageCard : ContentControl
         UpdateNotificationType();
     }
 
+    public bool IsClosing
+    {
+        get => _isClosing;
+        private set => SetAndRaise(IsClosingProperty, ref _isClosing, value);
+    }
+
+    public bool IsClosed
+    {
+        get => GetValue(IsClosedProperty);
+        set => SetValue(IsClosedProperty, value);
+    }
+
+    public NotificationType NotificationType
+    {
+        get => GetValue(NotificationTypeProperty);
+        set => SetValue(NotificationTypeProperty, value);
+    }
+
+    public bool ShowIcon
+    {
+        get => GetValue(ShowIconProperty);
+        set => SetValue(ShowIconProperty, value);
+    }
+
+    public bool ShowClose
+    {
+        get => GetValue(ShowCloseProperty);
+        set => SetValue(ShowCloseProperty, value);
+    }
+
+    public IList<OperateButtonEntry>? OperateButtons
+    {
+        get => GetValue(OperateButtonsProperty);
+        set => SetValue(OperateButtonsProperty, value);
+    }
+
+    public bool IsButtonsInline
+    {
+        get => GetValue(IsButtonsInlineProperty);
+        set => SetValue(IsButtonsInlineProperty, value);
+    }
+
+    public NotificationEntry? NotificationEntry
+    {
+        get => GetValue(NotificationEntryProperty);
+        set => SetValue(NotificationEntryProperty, value);
+    }
+
+    public bool ShowCollapseButton
+    {
+        get => GetValue(ShowCollapseButtonProperty);
+        set => SetValue(ShowCollapseButtonProperty, value);
+    }
+
+    public bool ShowRemoveButton
+    {
+        get => GetValue(ShowRemoveButtonProperty);
+        set => SetValue(ShowRemoveButtonProperty, value);
+    }
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
 
         // 处理内联模式的按钮
         var collapseButton = e.NameScope.Find<Button>("PART_CollapseButton");
-        if (collapseButton != null)
-        {
-            collapseButton.Click += OnCollapseButtonClick;
-        }
+        if (collapseButton != null) collapseButton.Click += OnCollapseButtonClick;
 
         var removeButton = e.NameScope.Find<Button>("PART_RemoveButton");
-        if (removeButton != null)
-        {
-            removeButton.Click += OnRemoveButtonClick;
-        }
+        if (removeButton != null) removeButton.Click += OnRemoveButtonClick;
 
         // 处理非内联模式的按钮
         var collapseButton2 = e.NameScope.Find<Button>("PART_CollapseButton2");
-        if (collapseButton2 != null)
-        {
-            collapseButton2.Click += OnCollapseButtonClick;
-        }
+        if (collapseButton2 != null) collapseButton2.Click += OnCollapseButtonClick;
 
         var removeButton2 = e.NameScope.Find<Button>("PART_RemoveButton2");
-        if (removeButton2 != null)
-        {
-            removeButton2.Click += OnRemoveButtonClick;
-        }
+        if (removeButton2 != null) removeButton2.Click += OnRemoveButtonClick;
     }
 
     private void OnCollapseButtonClick(object? sender, RoutedEventArgs e)
@@ -73,99 +157,6 @@ public abstract class MirelMessageCard : ContentControl
     {
         RemoveAndDelete();
     }
-
-    public bool IsClosing
-    {
-        get => _isClosing;
-        private set => SetAndRaise(IsClosingProperty, ref _isClosing, value);
-    }
-
-    public static readonly DirectProperty<MirelMessageCard, bool> IsClosingProperty =
-        AvaloniaProperty.RegisterDirect<MirelMessageCard, bool>(nameof(IsClosing), o => o.IsClosing);
-
-    public bool IsClosed
-    {
-        get => GetValue(IsClosedProperty);
-        set => SetValue(IsClosedProperty, value);
-    }
-
-    public static readonly StyledProperty<bool> IsClosedProperty =
-        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(IsClosed));
-
-    public NotificationType NotificationType
-    {
-        get => GetValue(NotificationTypeProperty);
-        set => SetValue(NotificationTypeProperty, value);
-    }
-
-    public static readonly StyledProperty<NotificationType> NotificationTypeProperty =
-        AvaloniaProperty.Register<MirelMessageCard, NotificationType>(nameof(NotificationType));
-
-    public bool ShowIcon
-    {
-        get => GetValue(ShowIconProperty);
-        set => SetValue(ShowIconProperty, value);
-    }
-
-    public static readonly StyledProperty<bool> ShowIconProperty =
-        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(ShowIcon), true);
-
-    public bool ShowClose
-    {
-        get => GetValue(ShowCloseProperty);
-        set => SetValue(ShowCloseProperty, value);
-    }
-
-    public static readonly StyledProperty<bool> ShowCloseProperty =
-        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(ShowClose), true);
-
-    public IList<OperateButtonEntry>? OperateButtons
-    {
-        get => GetValue(OperateButtonsProperty);
-        set => SetValue(OperateButtonsProperty, value);
-    }
-
-    public static readonly StyledProperty<IList<OperateButtonEntry>?> OperateButtonsProperty =
-        AvaloniaProperty.Register<MirelMessageCard, IList<OperateButtonEntry>?>(nameof(OperateButtons));
-
-    public bool IsButtonsInline
-    {
-        get => GetValue(IsButtonsInlineProperty);
-        set => SetValue(IsButtonsInlineProperty, value);
-    }
-
-    public static readonly StyledProperty<bool> IsButtonsInlineProperty =
-        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(IsButtonsInline), false);
-
-    public NotificationEntry? NotificationEntry
-    {
-        get => GetValue(NotificationEntryProperty);
-        set => SetValue(NotificationEntryProperty, value);
-    }
-
-    public static readonly StyledProperty<NotificationEntry?> NotificationEntryProperty =
-        AvaloniaProperty.Register<MirelMessageCard, NotificationEntry?>(nameof(NotificationEntry));
-
-    public bool ShowCollapseButton
-    {
-        get => GetValue(ShowCollapseButtonProperty);
-        set => SetValue(ShowCollapseButtonProperty, value);
-    }
-
-    public static readonly StyledProperty<bool> ShowCollapseButtonProperty =
-        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(ShowCollapseButton), true);
-
-    public bool ShowRemoveButton
-    {
-        get => GetValue(ShowRemoveButtonProperty);
-        set => SetValue(ShowRemoveButtonProperty, value);
-    }
-
-    public static readonly StyledProperty<bool> ShowRemoveButtonProperty =
-        AvaloniaProperty.Register<MirelMessageCard, bool>(nameof(ShowRemoveButton), true);
-
-    public static readonly RoutedEvent<RoutedEventArgs> MessageClosedEvent =
-        RoutedEvent.Register<MirelMessageCard, RoutedEventArgs>(nameof(MessageClosed), RoutingStrategies.Bubble);
 
     public event EventHandler<RoutedEventArgs>? MessageClosed
     {
@@ -185,21 +176,14 @@ public abstract class MirelMessageCard : ContentControl
         obj.SetValue(CloseOnClickProperty, value);
     }
 
-    public static readonly AttachedProperty<bool> CloseOnClickProperty =
-        AvaloniaProperty.RegisterAttached<MirelMessageCard, Button, bool>("CloseOnClick", defaultValue: false);
-
     private static void OnCloseOnClickPropertyChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
     {
         var button = (Button)d;
         var value = (bool)e.NewValue!;
         if (value)
-        {
             button.Click += Button_Click;
-        }
         else
-        {
             button.Click -= Button_Click;
-        }
     }
 
     private static void Button_Click(object? sender, RoutedEventArgs e)
@@ -211,10 +195,7 @@ public abstract class MirelMessageCard : ContentControl
 
     public void Close()
     {
-        if (IsClosing)
-        {
-            return;
-        }
+        if (IsClosing) return;
 
         IsClosing = true;
         IsClosed = true;
@@ -223,14 +204,11 @@ public abstract class MirelMessageCard : ContentControl
     }
 
     /// <summary>
-    /// 关闭 Toast 卡片但不从通知列表中移除
+    ///     关闭 Toast 卡片但不从通知列表中移除
     /// </summary>
     public void CloseWithoutRemovingFromList()
     {
-        if (IsClosing)
-        {
-            return;
-        }
+        if (IsClosing) return;
 
         IsClosing = true;
         IsClosed = true;
@@ -238,14 +216,11 @@ public abstract class MirelMessageCard : ContentControl
     }
 
     /// <summary>
-    /// 移除通知（从列表中移除并删除）
+    ///     移除通知（从列表中移除并删除）
     /// </summary>
     public void RemoveAndDelete()
     {
-        if (IsClosing)
-        {
-            return;
-        }
+        if (IsClosing) return;
 
         IsClosing = true;
         IsClosed = true;
@@ -258,21 +233,13 @@ public abstract class MirelMessageCard : ContentControl
         base.OnPropertyChanged(e);
 
         if (e.Property == ContentProperty && e.NewValue is IMessage message)
-        {
             SetValue(NotificationTypeProperty, message.Type);
-        }
 
-        if (e.Property == NotificationTypeProperty)
-        {
-            UpdateNotificationType();
-        }
+        if (e.Property == NotificationTypeProperty) UpdateNotificationType();
 
         if (e.Property == IsClosedProperty)
         {
-            if (!IsClosing && !IsClosed)
-            {
-                return;
-            }
+            if (!IsClosing && !IsClosed) return;
 
             RaiseEvent(new RoutedEventArgs(MessageClosedEvent));
         }

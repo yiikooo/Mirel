@@ -2,7 +2,6 @@
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-
 namespace Mirel.Classes.Entries;
 
 public class PageInfoEntry : ReactiveObject

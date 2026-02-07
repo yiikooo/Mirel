@@ -56,7 +56,7 @@ public class Update
         };
         if (file.IsNullOrWhiteSpace()) return;
 
-        var downloadOpt = new DownloadConfiguration()
+        var downloadOpt = new DownloadConfiguration
         {
             ChunkCount = 5,
             ParallelDownload = true
@@ -65,7 +65,7 @@ public class Update
         var downloader = new DownloadService(downloadOpt);
         var cts = new CancellationTokenSource();
 
-        var task = Tasking.CreateTask($"更新 App");
+        var task = Tasking.CreateTask("更新 App");
         new TaskEntry($"下载: {file}") { TaskState = TaskState.Running }.AddIn(task);
         new TaskEntry($"开始安装: {file}").AddIn(task);
         task.ProgressIsIndeterminate = false;
@@ -118,12 +118,12 @@ public class Update
                     {
                         Logger.Error(args.Error);
                         task.FinishWithError();
-                        Ui.Overlay.Notice($"下载失败: {args.Error.Message}");
+                        Overlay.Notice($"下载失败: {args.Error.Message}");
                     }
                     else
                     {
                         task.FinishWithSuccess();
-                        Ui.Overlay.Notice($"下载完成: {file}", NotificationType.Success);
+                        Overlay.Notice($"下载完成: {file}", NotificationType.Success);
                         task.NextSubTask();
 
                         if (!await AppEvents.OnAppExiting()) return;
@@ -149,10 +149,10 @@ public class Update
 
     public static async Task Download(string file, string path, Control sender)
     {
-        var downloadOpt = new DownloadConfiguration()
+        var downloadOpt = new DownloadConfiguration
         {
             ChunkCount = 5,
-            ParallelDownload = true,
+            ParallelDownload = true
             // RequestConfiguration =
             // {
             //     Accept = "*/*",
@@ -222,12 +222,12 @@ public class Update
                     {
                         Logger.Error(args.Error);
                         task.FinishWithError();
-                        Ui.Overlay.Notice($"下载失败: {args.Error.Message}");
+                        Overlay.Notice($"下载失败: {args.Error.Message}");
                     }
                     else
                     {
                         task.FinishWithSuccess();
-                        Ui.Overlay.Notice($"下载完成: {file}", NotificationType.Success);
+                        Overlay.Notice($"下载完成: {file}", NotificationType.Success);
                     }
                 }
             });

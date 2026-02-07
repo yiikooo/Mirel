@@ -17,7 +17,7 @@ public class PageModelBase : UserControl, INotifyPropertyChanged, INotifyPropert
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-    
+
 
     private void OnPropertyChanging([CallerMemberName] string? propertyName = null)
     {

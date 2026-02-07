@@ -1,7 +1,7 @@
 ﻿using Mirel.Const;
 using Mirel.Module.App.Init.Config;
-using Mirel.Module.App.Services;
 using Mirel.Module.Events;
+using Mirel.Module.IO.Local;
 using Update = Mirel.Module.App.Init.Config.Update;
 
 namespace Mirel.Module.App.Init;
@@ -12,7 +12,7 @@ public abstract class BeforeLoadXaml
     {
         Sundry.DetectPlatform();
         Create.Main();
-        IO.Local.Setter.TryClearFolder(ConfigPath.PluginUnzipFolderPath);
+        Setter.TryClearFolder(ConfigPath.PluginUnzipFolderPath);
         InitEvents.OnBeforeReadSettings();
         Reader.Main();
         Update.Main();

@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.VisualTree;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
@@ -11,7 +10,7 @@ using Ursa.Controls;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class SettingTabPage: PageModelBase, IMirelTabPage, IMirelNavPage
+public partial class SettingTabPage : PageModelBase, IMirelTabPage, IMirelNavPage
 {
     private SelectionListItem _selectedItem;
     public int DefaultNav = 0;
@@ -28,7 +27,7 @@ public partial class SettingTabPage: PageModelBase, IMirelTabPage, IMirelNavPage
             Title = "设置"
         };
     }
-    
+
 
     public string ShortInfo
     {
@@ -36,19 +35,10 @@ public partial class SettingTabPage: PageModelBase, IMirelTabPage, IMirelNavPage
         set => SetField(ref field, value);
     } = "";
 
-    public Control RootElement { get; init; }
-    public PageLoadingAnimator InAnimator { get; set; }
-
     public SelectionListItem? SelectedItem
     {
         get => _selectedItem;
         set => SetField(ref _selectedItem, value);
-    }
-
-    public TabEntry HostTab { get; set; }
-    public PageInfoEntry PageInfo { get; }
-    public void OnClose()
-    {
     }
 
     public static IMirelNavPage Create((object sender, object? param) t)
@@ -59,6 +49,18 @@ public partial class SettingTabPage: PageModelBase, IMirelTabPage, IMirelNavPage
             tabWindow.TogglePage("setting", new SettingTabPage());
             return null;
         }
+
         App.UiRoot.TogglePage("setting", new SettingTabPage());
-        return null;    }
+        return null;
+    }
+
+    public Control RootElement { get; init; }
+    public PageLoadingAnimator InAnimator { get; set; }
+
+    public TabEntry HostTab { get; set; }
+    public PageInfoEntry PageInfo { get; }
+
+    public void OnClose()
+    {
+    }
 }

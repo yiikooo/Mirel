@@ -14,6 +14,8 @@ namespace Mirel.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
+    private DateTime _time = DateTime.Now;
+
     public MainViewModel()
     {
         InitEvents.AfterUiLoaded += (_, _) =>
@@ -56,8 +58,6 @@ public class MainViewModel : ViewModelBase
         set => SetField(ref field, value);
     }
 
-    private DateTime _time = DateTime.Now;
-
     public DateTime Time
     {
         get => _time;
@@ -73,7 +73,7 @@ public class MainViewModel : ViewModelBase
 
     private DockPanel CeateDockPanel()
     {
-        DockPanel rootDockPanel = new DockPanel
+        var rootDockPanel = new DockPanel
         {
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
@@ -136,7 +136,7 @@ public class MainViewModel : ViewModelBase
                     FontSize = 14,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(-1, 0, 0, 0),
+                    Margin = new Thickness(-1, 0, 0, 0)
                 }
             }
         };

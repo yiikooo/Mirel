@@ -54,7 +54,7 @@ public static class Logger
 
             // 清理旧日志文件，保持备份数量不超过上限
             CleanupOldLogFiles(logDirectory);
-            
+
             const string resourceName = "Mirel.Public.Version.txt";
             var _assembly = Assembly.GetExecutingAssembly();
             var stream = _assembly.GetManifestResourceStream(resourceName);

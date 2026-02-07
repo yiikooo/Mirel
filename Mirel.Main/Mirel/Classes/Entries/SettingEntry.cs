@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Avalonia.Media;
+using Mirel.Classes.Enums;
 using Mirel.Module.App;
 using Mirel.Module.Ui;
 using Mirel.Views.Main.Pages;
@@ -16,12 +17,10 @@ public class SettingEntry : ReactiveObject
         PropertyChanged += OnPropertyChanged;
     }
 
-    [Reactive] [JsonProperty] public Enums.Setting.NoticeWay NoticeWay { get; set; } = Enums.Setting.NoticeWay.Bubble;
-    [Reactive] [JsonProperty] public Enums.Setting.Theme Theme { get; set; } = Enums.Setting.Theme.Dark;
+    [Reactive] [JsonProperty] public Setting.NoticeWay NoticeWay { get; set; } = Setting.NoticeWay.Bubble;
+    [Reactive] [JsonProperty] public Setting.Theme Theme { get; set; } = Setting.Theme.Dark;
 
-    [Reactive]
-    [JsonProperty]
-    public Enums.Setting.BackGround BackGround { get; set; } = Enums.Setting.BackGround.Default;
+    [Reactive] [JsonProperty] public Setting.BackGround BackGround { get; set; } = Setting.BackGround.Default;
 
     [Reactive]
     [JsonProperty]
@@ -43,13 +42,8 @@ public class SettingEntry : ReactiveObject
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(Theme))
-        {
             Setter.ToggleTheme(Theme);
-        }
-        else if (e.PropertyName == nameof(ThemeColor))
-        {
-            Setter.SetAccentColor(ThemeColor);
-        }
+        else if (e.PropertyName == nameof(ThemeColor)) Setter.SetAccentColor(ThemeColor);
 
         AppMethod.SaveSetting();
     }

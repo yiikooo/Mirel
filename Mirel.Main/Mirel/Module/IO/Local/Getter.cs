@@ -29,7 +29,7 @@ public class Getter
         memoryStream.Position = 0;
         return Bitmap.DecodeToWidth(memoryStream, width);
     }
-    
+
     public static List<string> GetAllFilesByExtension(string folderPath, string fileExtension)
     {
         List<string> files = [];
@@ -57,10 +57,7 @@ public class Getter
 
             // 递归获取子目录中的文件
             var subDirs = dirInfo.GetDirectories();
-            foreach (var subDir in subDirs)
-            {
-                files.AddRange(GetFilesRecursive(subDir, fileExtension));
-            }
+            foreach (var subDir in subDirs) files.AddRange(GetFilesRecursive(subDir, fileExtension));
 
             return files;
         }

@@ -14,6 +14,8 @@ public class TabWindowViewModel : ViewModelBase
     private TabEntry? _selectedTab;
     private Vector _tabScrollOffset;
 
+    private DateTime _time = DateTime.Now;
+
     public TabWindowViewModel()
     {
         PropertyChanged += (s, e) =>
@@ -28,12 +30,10 @@ public class TabWindowViewModel : ViewModelBase
         timer.Tick += (_, _) => Time = DateTime.Now;
         timer.Start();
     }
-    
-    private DateTime _time = DateTime.Now;
 
     public DateTime Time
     {
-        get => _time; 
+        get => _time;
         set => SetField(ref _time, value);
     }
 

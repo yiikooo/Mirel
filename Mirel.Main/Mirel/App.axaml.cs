@@ -1,22 +1,20 @@
 using System;
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
 using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using FluentAvalonia.Core;
 using Mirel.Module;
 using Mirel.Module.App.Init;
-using Mirel.ViewModels;
 using Mirel.Views;
 using Mirel.Views.Main;
 
 namespace Mirel;
 
-public partial class App : Application
+public class App : Application
 {
     public delegate void UiLoadedEventHandler(MainWindow ui);
 

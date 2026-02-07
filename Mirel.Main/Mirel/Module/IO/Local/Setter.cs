@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
 using FluentAvalonia.UI.Controls;
+using Mirel.Module.Ui;
 
 namespace Mirel.Module.IO.Local;
 
@@ -50,7 +51,7 @@ public abstract class Setter
         var path = target;
         if (File.Exists(target))
         {
-            var cr = await Ui.Overlay.ShowDialogAsync($"冲突: {Path.GetFileName(source)}", "文件冲突",
+            var cr = await Overlay.ShowDialogAsync($"冲突: {Path.GetFileName(source)}", "文件冲突",
                 b_primary: "覆盖",
                 b_secondary: "重命名", b_cancel: "取消");
             if (cr == ContentDialogResult.Primary)
@@ -69,7 +70,7 @@ public abstract class Setter
                     FontFamily = (FontFamily)Application.Current.Resources["Font"], TextWrapping = TextWrapping.Wrap,
                     Text = Path.GetFileName(target), HorizontalAlignment = HorizontalAlignment.Stretch, Width = 500
                 };
-                var cr1 = await Ui.Overlay.ShowDialogAsync("重命名", p_content: textBox, b_cancel:"取消",
+                var cr1 = await Overlay.ShowDialogAsync("重命名", p_content: textBox, b_cancel: "取消",
                     b_primary: "确定");
                 if (cr1 != ContentDialogResult.Primary) return false;
                 path = Path.Combine(Path.GetDirectoryName(target)!, textBox.Text);

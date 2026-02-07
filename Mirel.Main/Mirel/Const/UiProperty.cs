@@ -7,7 +7,6 @@ using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Module.Ui.Helper;
 using ReactiveUI;
-using Ursa.Controls;
 
 namespace Mirel.Const;
 

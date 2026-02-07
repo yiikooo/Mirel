@@ -24,7 +24,7 @@ public class Calculator
         // 创建一个新的颜色（保持Alpha通道不变）  
         return Color.FromArgb(color.A, (byte)r, (byte)g, (byte)b);
     }
-    
+
     public static string FormatUsedTime(DateTime input, string longFormat = "yyyy-MM-dd")
     {
         if (input == DateTime.MinValue) return "从未使用";

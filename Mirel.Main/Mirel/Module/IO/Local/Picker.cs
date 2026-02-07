@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using FluentAvalonia.UI.Controls;
 using Mirel.Const;
+using Mirel.Module.Ui;
 
 namespace Mirel.Module.IO.Local;
 
@@ -18,7 +19,7 @@ public static class Picker
             if (Data.SettingEntry.UseFilePicker)
             {
                 var res = await StorageProvider.OpenFolderPickerAsync(options);
-                return res.Select(x  =>
+                return res.Select(x =>
                 {
                     try
                     {
@@ -30,8 +31,9 @@ public static class Picker
                     }
                 }).ToList();
             }
+
             var text = new TextBox { Watermark = "输入文件夹路径", Text = string.Empty };
-            return await Ui.Overlay.ShowDialogAsync(options.Title ?? "Mirel", null, text, "确定", "取消",
+            return await Overlay.ShowDialogAsync(options.Title ?? "Mirel", null, text, "确定", "取消",
                     sender: sender) ==
                 ContentDialogResult.Primary && !text.Text.IsNullOrWhiteSpace()
                     ? [text.Text]!
@@ -44,7 +46,7 @@ public static class Picker
             if (Data.SettingEntry.UseFilePicker)
                 return (await StorageProvider.OpenFilePickerAsync(options)).Select(x => x.Path.LocalPath).ToList();
             var text = new TextBox { Watermark = "输入文件路径", Text = string.Empty };
-            return await  Ui.Overlay.ShowDialogAsync(options.Title ?? "Mirel", null, text, "确定", "取消",
+            return await Overlay.ShowDialogAsync(options.Title ?? "Mirel", null, text, "确定", "取消",
                     sender: sender) ==
                 ContentDialogResult.Primary && !text.Text.IsNullOrWhiteSpace()
                     ? [text.Text]!
@@ -61,7 +63,7 @@ public static class Picker
             }
 
             var text = new TextBox { Watermark = "输入文件路径", Text = string.Empty };
-            return await  Ui.Overlay.ShowDialogAsync(options.Title ?? "Mirel", null, text, "确定", "取消",
+            return await Overlay.ShowDialogAsync(options.Title ?? "Mirel", null, text, "确定", "取消",
                     sender: sender) ==
                 ContentDialogResult.Primary && !text.Text.IsNullOrWhiteSpace()
                     ? text.Text

@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using Avalonia.Threading;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Module;
@@ -87,10 +84,10 @@ public partial class DebugPage : PageModelBase, IMirelTabPage
     {
         var buttons = new ObservableCollection<OperateButtonEntry>
         {
-            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
-            new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, closeOnClick: true),
-            new("关闭并移除", _ => { Logger.Debug("关闭并移除按钮被点击"); }, closeOnClick: true,
-                removeOnCLoseClock: true),
+            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, false),
+            new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, true),
+            new("关闭并移除", _ => { Logger.Debug("关闭并移除按钮被点击"); }, true,
+                true)
         };
 
         Overlay.Notice(
@@ -108,10 +105,10 @@ public partial class DebugPage : PageModelBase, IMirelTabPage
     {
         var buttons = new ObservableCollection<OperateButtonEntry>
         {
-            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, closeOnClick: false),
-            new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, closeOnClick: true),
-            new("关闭并移除", _ => { Logger.Debug("关闭并移除按钮被点击"); }, closeOnClick: true,
-                removeOnCLoseClock: true),
+            new("查看详情", _ => { Logger.Debug("查看详情按钮被点击"); }, false),
+            new("关闭", _ => { Logger.Debug("关闭按钮被点击"); }, true),
+            new("关闭并移除", _ => { Logger.Debug("关闭并移除按钮被点击"); }, true,
+                true)
         };
 
         Overlay.Notice(

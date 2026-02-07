@@ -2,13 +2,6 @@
 
 public class Setting
 {
-    public enum LaunchPage
-    {
-        NewTab,
-        MinecraftInstance,
-        Setting
-    }
-
     public enum BackGround
     {
         Default,
@@ -17,6 +10,13 @@ public class Setting
         Transparent,
         ColorBlock,
         Mica
+    }
+
+    public enum LaunchPage
+    {
+        NewTab,
+        MinecraftInstance,
+        Setting
     }
 
     public enum NoticeWay

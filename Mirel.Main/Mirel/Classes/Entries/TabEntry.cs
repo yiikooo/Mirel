@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using Mirel.Views.Main.Pages;
 using Avalonia.Controls;
-using Avalonia.Data;
 using Avalonia.Media;
 using Avalonia.Rendering;
 using Avalonia.VisualTree;
@@ -64,7 +62,7 @@ public partial class TabEntry : ViewModelBase
         get => _minWidth;
         set => SetField(ref _minWidth, value);
     }
-    
+
     public bool IsUseHeaderContent => HeaderContent != null;
 
     public string Tag

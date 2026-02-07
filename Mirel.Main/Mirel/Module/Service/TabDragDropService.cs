@@ -354,7 +354,7 @@ public static class TabDragDropService
     // across different windows simultaneously
 
     /// <summary>
-    /// Moves a tab to a new TabWindow. This is a general-purpose method that can be called programmatically.
+    ///     Moves a tab to a new TabWindow. This is a general-purpose method that can be called programmatically.
     /// </summary>
     /// <param name="tabEntry">The tab to move to a new window</param>
     /// <param name="screenPosition">Optional screen position for the new window. If null, uses default positioning.</param>
@@ -390,7 +390,8 @@ public static class TabDragDropService
                 if (screenPosition.HasValue)
                 {
                     // Use provided screen position, but ensure it's on screen
-                    var targetX = Math.Max(0, (int)screenPosition.Value.X - 400); // Center the window around the position
+                    var targetX =
+                        Math.Max(0, (int)screenPosition.Value.X - 400); // Center the window around the position
                     var targetY = Math.Max(0, (int)screenPosition.Value.Y - 50);
 
                     // Get screen bounds to ensure window stays on screen
@@ -447,7 +448,7 @@ public static class TabDragDropService
     }
 
     /// <summary>
-    /// Finds the window that contains the specified tab entry.
+    ///     Finds the window that contains the specified tab entry.
     /// </summary>
     /// <param name="tabEntry">The tab entry to search for</param>
     /// <returns>The window containing the tab, or null if not found</returns>
@@ -459,10 +460,7 @@ public static class TabDragDropService
         foreach (var window in _registeredWindows.Where(w => w.IsVisible))
         {
             var tabs = GetTabsCollection(window);
-            if (tabs != null && tabs.Contains(tabEntry))
-            {
-                return window;
-            }
+            if (tabs != null && tabs.Contains(tabEntry)) return window;
         }
 
         return null;

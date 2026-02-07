@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
-    xmlns:ui="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="50">

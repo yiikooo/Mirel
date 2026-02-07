@@ -16,7 +16,7 @@ public class AggregateSearchService
 
     public static void HandleSelection(AggregateSearchEntry entry, Control sender)
     {
-        if(entry.Type == AggregateSearchType.All) return;
+        if (entry.Type == AggregateSearchType.All) return;
 
         if (entry.Type == AggregateSearchType.Tab)
         {
@@ -40,17 +40,11 @@ public class AggregateSearchService
     {
         items ??= GetAggregateItems();
 
-        if (string.IsNullOrEmpty(query))
-        {
-            return items;
-        }
+        if (string.IsNullOrEmpty(query)) return items;
 
         var filtered = items.AsEnumerable();
 
-        if (type != AggregateSearchType.All)
-        {
-            filtered = filtered.Where(e => e.Type == type);
-        }
+        if (type != AggregateSearchType.All) filtered = filtered.Where(e => e.Type == type);
 
         filtered = filtered.Where(e => e.Title != null && e.Title.Contains(query, _searchComparison));
 
@@ -62,10 +56,7 @@ public class AggregateSearchService
         List<AggregateSearchEntry> items = [];
         var lifetime = Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
 
-        if (lifetime?.Windows == null)
-        {
-            return order ? items.OrderBy(e => e.Type).ThenBy(e => e.Title).ToList() : items;
-        }
+        if (lifetime?.Windows == null) return order ? items.OrderBy(e => e.Type).ThenBy(e => e.Title).ToList() : items;
 
         var windows = lifetime.Windows
             .OfType<IMirelTabWindow>()
@@ -82,10 +73,7 @@ public class AggregateSearchService
             }));
         }
 
-        if (order)
-        {
-            items = items.OrderBy(e => e.Type).ThenBy(e => e.Title).ToList();
-        }
+        if (order) items = items.OrderBy(e => e.Type).ThenBy(e => e.Title).ToList();
 
         return items;
     }

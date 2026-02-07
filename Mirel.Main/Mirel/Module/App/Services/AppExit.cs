@@ -27,26 +27,19 @@ public class AppExit
                      .Where(x => x.Content is IMirelRequestableClosePage))
         {
             var close = await (tabEntry.Content as IMirelRequestableClosePage).RequestClose(Mirel.App.UiRoot);
-            if (!close)
-            {
-                return false;
-            }
+            if (!close) return false;
         }
 
         var ws = (Application.Current!.ApplicationLifetime as
             IClassicDesktopStyleApplicationLifetime).Windows.OfType<TabWindow>();
         foreach (var tabWindow in ws)
+        foreach (var tabEntry in tabWindow.Tabs
+                     .Where(x => x.Content is IMirelRequestableClosePage))
         {
-            foreach (var tabEntry in tabWindow.Tabs
-                         .Where(x => x.Content is IMirelRequestableClosePage))
-            {
-                var close = await (tabEntry.Content as IMirelRequestableClosePage).RequestClose(Mirel.App.UiRoot);
-                if (!close)
-                {
-                    return false;
-                }
-            }
+            var close = await (tabEntry.Content as IMirelRequestableClosePage).RequestClose(Mirel.App.UiRoot);
+            if (!close) return false;
         }
+
         return true;
     }
 }

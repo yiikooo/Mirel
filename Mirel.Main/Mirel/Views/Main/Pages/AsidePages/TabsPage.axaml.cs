@@ -2,13 +2,10 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Markup.Xaml;
-using FluentAvalonia.Core;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
 using Mirel.Module.Events;
-using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
 
 namespace Mirel.Views.Main.Pages.AsidePages;
@@ -34,13 +31,10 @@ public partial class TabsPage : PageModelBase, IMirelPage
                 break;
             }
         };
-        AppEvents.TabSelectionChanged += e =>
-        {
-            ListBox.SelectedItem = e;
-        };
+        AppEvents.TabSelectionChanged += e => { ListBox.SelectedItem = e; };
         Loaded += (_, _) =>
         {
-            if(UiProperty.ActiveWindow is not IMirelTabWindow tb) return;
+            if (UiProperty.ActiveWindow is not IMirelTabWindow tb) return;
             ListBox.SelectedItem = new TabSEntry
             {
                 Entry = tb.SelectedTab,
