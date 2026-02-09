@@ -52,15 +52,11 @@
                             Placement="BottomEdgeAlignedLeft">
                             <LayoutTransformControl Name="PART_LayoutTransform" RenderTransformOrigin="50%, 0%">
                                 <Grid Margin="-12,0,0,0">
-                                    <Border
-                                        BoxShadow="{DynamicResource PopupBoxShadow}"
-                                        CornerRadius="6"
-                                        Margin="16,8,8,8" />
+                                    <Border CornerRadius="6" Margin="16,8,8,8" />
                                     <Border
                                         Background="{DynamicResource PanelBackgroundColor}"
                                         BorderBrush="{DynamicResource SukiMenuBorderBrush}"
                                         BorderThickness="1"
-                                        BoxShadow="{DynamicResource PopupBoxShadow}"
                                         ClipToBounds="True"
                                         CornerRadius="6"
                                         Margin="16,8,8,8"

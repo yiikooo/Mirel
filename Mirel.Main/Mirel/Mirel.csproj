@@ -69,16 +69,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Views\Main\Pages\MoreButtonMenu.axaml.cs">
-            <DependentUpon>MoreButtonMenu.axaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
         <Compile Update="Views\Main\Pages\AsidePages\NotificationHistoryPage.axaml.cs">
             <DependentUpon>NotificationHistoryPage.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
         <Compile Update="Views\Main\Pages\AsidePages\NavPage.axaml.cs">
             <DependentUpon>NavPage.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Views\Main\Components\MoreButtonMenu.axaml.cs">
+            <DependentUpon>MoreButtonMenu.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
     </ItemGroup>

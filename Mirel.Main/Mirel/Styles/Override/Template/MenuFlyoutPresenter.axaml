@@ -31,7 +31,6 @@
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    BoxShadow="{DynamicResource PopupBoxShadow}"
                     CornerRadius="{TemplateBinding CornerRadius}"
                     Margin="4"
                     Name="LayoutRoot"

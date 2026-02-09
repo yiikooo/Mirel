@@ -26,7 +26,6 @@
                 Color="#eaedf0"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PopupBorderBrush" />
-            <BoxShadows x:Key="PopupBoxShadow">1 1 8 0 #eaedf0</BoxShadows>
 
             <SolidColorBrush
                 Color="#dadddf"

@@ -149,15 +149,11 @@
                             VerticalOffset="-1">
                             <LayoutTransformControl Name="PART_LayoutTransform" RenderTransformOrigin="0%, 0%">
                                 <Panel Margin="0,-8,0,0">
-                                    <Border
-                                        BoxShadow="{DynamicResource PopupBoxShadow}"
-                                        CornerRadius="{DynamicResource CardCornerRadius}"
-                                        Margin="16,8,8,8" />
+                                    <Border CornerRadius="{DynamicResource CardCornerRadius}" Margin="16,8,8,8" />
 
                                     <Border
                                         Background="{DynamicResource PopupBackgroundColor}"
                                         BorderThickness="1"
-                                        BoxShadow="{DynamicResource PopupBoxShadow}"
                                         ClipToBounds="True"
                                         CornerRadius="{DynamicResource CardCornerRadius}"
                                         Margin="16,8,8,8"

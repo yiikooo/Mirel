@@ -119,7 +119,6 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        BoxShadow="{DynamicResource PopupBoxShadow}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Name="PART_LayoutRoot"
                         Padding="{TemplateBinding Padding}">
@@ -198,7 +197,6 @@
                             Background="{DynamicResource PanelBackgroundColor}"
                             BorderBrush="{DynamicResource MenuFlyoutBorderBrush}"
                             BorderThickness="{DynamicResource MenuFlyoutBorderThickness}"
-                            BoxShadow="{DynamicResource PopupBoxShadow}"
                             CornerRadius="{DynamicResource CardCornerRadius}"
                             HorizontalAlignment="Stretch"
                             Margin="8"
@@ -337,7 +335,6 @@
                                 Background="{DynamicResource PanelBackgroundColor}"
                                 BorderBrush="{DynamicResource MenuFlyoutBorderBrush}"
                                 BorderThickness="{DynamicResource MenuFlyoutBorderThickness}"
-                                BoxShadow="{DynamicResource PopupBoxShadow}"
                                 CornerRadius="{DynamicResource CardCornerRadius}"
                                 HorizontalAlignment="Stretch"
                                 Margin="8"
