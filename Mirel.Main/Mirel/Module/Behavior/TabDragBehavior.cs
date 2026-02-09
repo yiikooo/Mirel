@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.VisualTree;
 using Mirel.Classes.Entries;
+using Mirel.Controls;
 using Mirel.Module.Service;
 
 namespace Mirel.Module.Behavior;
@@ -54,6 +55,7 @@ public class TabDragBehavior
     private class TabDragHandler
     {
         private readonly Control _control;
+        private TabDragAdornerWindow? _dragAdornerWindow;
         private bool _isDragging;
         private Point _startPoint;
         private TabEntry? _tabEntry;
@@ -75,6 +77,9 @@ public class TabDragBehavior
             _control.PointerPressed -= OnPointerPressed;
             _control.PointerMoved -= OnPointerMoved;
             _control.PointerReleased -= OnPointerReleased;
+
+            // Clean up adorner if it exists
+            HideDragAdorner();
         }
 
         private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -112,12 +117,20 @@ public class TabDragBehavior
 
                         // Add minimal visual feedback - only opacity change
                         _control.Opacity = 0.6;
+
+                        // Show drag adorner
+                        ShowDragAdorner(e);
                     }
                 }
 
                 if (_isDragging && e.Pointer.Captured == _control)
+                {
+                    // Update adorner position
+                    UpdateDragAdornerPosition(e);
+
                     // Handle drag feedback and detection of drop zones
                     HandleDragMove(e);
+                }
             }
         }
 
@@ -129,6 +142,9 @@ public class TabDragBehavior
                 _isDragging = false;
                 _control.Opacity = 1.0;
                 e.Pointer.Capture(null);
+
+                // Hide drag adorner
+                HideDragAdorner();
             }
             else if (_tabEntry != null)
             {
@@ -189,6 +205,47 @@ public class TabDragBehavior
             {
                 // Drop outside all windows - create new window
                 TabDragDropService.HandleDetachToNewWindow(screenPoint);
+            }
+        }
+
+        private void ShowDragAdorner(PointerEventArgs e)
+        {
+            if (_tabEntry == null) return;
+
+            var window = _control.FindAncestorOfType<Window>();
+            if (window == null) return;
+
+            // Create adorner window
+            _dragAdornerWindow = new TabDragAdornerWindow(_tabEntry);
+
+            // Show the window
+            _dragAdornerWindow.Show();
+
+            // Update initial position
+            UpdateDragAdornerPosition(e);
+        }
+
+        private void UpdateDragAdornerPosition(PointerEventArgs e)
+        {
+            if (_dragAdornerWindow == null) return;
+
+            var window = _control.FindAncestorOfType<Window>();
+            if (window == null) return;
+
+            // Get pointer position relative to window, then convert to screen coordinates
+            var pointerPos = e.GetPosition(window);
+            var screenPos = window.PointToScreen(pointerPos);
+
+            // Update adorner window position
+            _dragAdornerWindow.UpdatePosition(screenPos);
+        }
+
+        private void HideDragAdorner()
+        {
+            if (_dragAdornerWindow != null)
+            {
+                _dragAdornerWindow.Close();
+                _dragAdornerWindow = null;
             }
         }
     }

@@ -1,0 +1,54 @@
+<Window
+    Background="Transparent"
+    CanResize="False"
+    ShowInTaskbar="False"
+    SizeToContent="WidthAndHeight"
+    SystemDecorations="None"
+    Topmost="True"
+    TransparencyLevelHint="Transparent"
+    d:DesignHeight="40"
+    d:DesignWidth="200"
+    mc:Ignorable="d"
+    x:Class="Mirel.Controls.TabDragAdornerWindow"
+    x:DataType="entries:TabEntry"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:converter="clr-namespace:Mirel.Module.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:entries="clr-namespace:Mirel.Classes.Entries"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Window.Resources>
+        <converter:BoolReversalConverter x:Key="BoolReversalConverter" />
+    </Window.Resources>
+    <Border
+        Background="{DynamicResource SelectedTabBackgroundColor}"
+        BorderBrush="{DynamicResource PopupBorderBrush}"
+        BorderThickness="1"
+        CornerRadius="{DynamicResource CardCornerRadius}"
+        Height="30"
+        MinWidth="{Binding MinWidth}"
+        Name="ItemRoot"
+        Tag="{Binding}">
+        <DockPanel Margin="8,-1,10,0" VerticalAlignment="Center">
+            <PathIcon
+                Data="{Binding Icon}"
+                Foreground="{DynamicResource SelectedTabTextColor}"
+                Height="15"
+                IsVisible="{Binding IconIsVisible}"
+                Margin="0,0,4,0"
+                Width="15" />
+            <Grid>
+                <ContentControl
+                    Content="{Binding HeaderContent}"
+                    Foreground="{DynamicResource ForegroundColor}"
+                    IsVisible="{Binding IsUseHeaderContent}" />
+                <TextBlock
+                    Classes="tab"
+                    Foreground="{DynamicResource SelectedTabTextColor}"
+                    IsVisible="{Binding IsUseHeaderContent, Converter={StaticResource BoolReversalConverter}}"
+                    Margin="2,0,0,0"
+                    Text="{Binding Title}" />
+            </Grid>
+        </DockPanel>
+    </Border>
+</Window>
