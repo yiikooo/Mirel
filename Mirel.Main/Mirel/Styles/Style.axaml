@@ -73,4 +73,68 @@
     <Style Selector="FlyoutPresenter.no-shadow /template/ Border#LayoutRoot">
         <Setter Property="BoxShadow" Value="none" />
     </Style>
+
+    <Style Selector="Border#NotificationCardBorderBorder.succes">
+        <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightSuccessBorderBrush}" />
+        <Style Selector="^ TextBlock#NotificationTitle">
+            <Setter Property="Text" Value="成功" />
+        </Style>
+        <Style Selector="^ Button#CloseButton">
+            <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
+        </Style>
+        <Style Selector="^ PathIcon#NotificationIcon">
+            <Setter Property="IsVisible" Value="True" />
+            <Setter Property="Foreground" Value="{DynamicResource NotificationCardSuccessIconForeground}" />
+            <Setter Property="Data" Value="{DynamicResource NotificationCardSuccessIconPathData}" />
+        </Style>
+    </Style>
+
+    <Style Selector="Border#NotificationCardBorder.info">
+        <Setter Property="Background" Value="{DynamicResource SemiColorInformationLight}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightInformationBorderBrush}" />
+        <Style Selector="^ TextBlock#NotificationTitle">
+            <Setter Property="Text" Value="提示" />
+        </Style>
+        <Style Selector="^ Button#CloseButton">
+            <Setter Property="Background" Value="{DynamicResource SemiColorInformationLight}" />
+        </Style>
+        <Style Selector="^ PathIcon#NotificationIcon">
+            <Setter Property="IsVisible" Value="True" />
+            <Setter Property="Foreground" Value="{DynamicResource NotificationCardInformationIconForeground}" />
+            <Setter Property="Data" Value="{DynamicResource NotificationCardInformationIconPathData}" />
+        </Style>
+    </Style>
+
+    <Style Selector="Border#NotificationCardBorder.error">
+        <Setter Property="Background" Value="{DynamicResource SemiColorDangerLight}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightErrorBorderBrush}" />
+        <Style Selector="^ TextBlock#NotificationTitle">
+            <Setter Property="Text" Value="错误" />
+        </Style>
+        <Style Selector="^ Button#CloseButton">
+            <Setter Property="Background" Value="{DynamicResource SemiColorDangerLight}" />
+        </Style>
+        <Style Selector="^ PathIcon#NotificationIcon">
+            <Setter Property="IsVisible" Value="True" />
+            <Setter Property="Foreground" Value="{DynamicResource NotificationCardErrorIconForeground}" />
+            <Setter Property="Data" Value="{DynamicResource NotificationCardErrorIconPathData}" />
+        </Style>
+    </Style>
+
+    <Style Selector="Border#NotificationCardBorder.warn">
+        <Setter Property="Background" Value="{DynamicResource SemiColorWarningLight}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightWarningBorderBrush}" />
+        <Style Selector="^ TextBlock#NotificationTitle">
+            <Setter Property="Text" Value="警告" />
+        </Style>
+        <Style Selector="^ Button#CloseButton">
+            <Setter Property="Background" Value="{DynamicResource SemiColorWarningLight}" />
+        </Style>
+        <Style Selector="^ PathIcon#NotificationIcon">
+            <Setter Property="IsVisible" Value="True" />
+            <Setter Property="Foreground" Value="{DynamicResource NotificationCardWarningIconForeground}" />
+            <Setter Property="Data" Value="{DynamicResource NotificationCardWarningIconPathData}" />
+        </Style>
+    </Style>
 </Styles>

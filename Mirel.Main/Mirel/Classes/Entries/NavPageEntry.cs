@@ -1,9 +1,11 @@
-using System;
+using Newtonsoft.Json;
 
 namespace Mirel.Classes.Entries;
 
-public class NavPageEntry(MirelStaticPageInfo staticPageInfo, Func<(object sender, object? args), object>? action)
+public class NavPageEntry
 {
-    public readonly Func<(object sender, object? args), object>? Create = action;
-    public MirelStaticPageInfo StaticPageInfo { get; set; } = staticPageInfo;
+    [JsonProperty] public string Identifier { get; set; }
+
+
+    public
 }

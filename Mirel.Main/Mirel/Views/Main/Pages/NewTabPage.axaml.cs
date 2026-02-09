@@ -13,7 +13,7 @@ using Ursa.Controls;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class NewTabPage : PageModelBase, IMirelTabPage
+public partial class NewTabPage : PageModelBase, IMirelTabPage, IMirelNavPage
 {
     private bool _fl = true;
 
@@ -93,6 +93,11 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage
         AutoCreate = true
     };
 
+    public static IMirelPage Create(object sender, object? param = null)
+    {
+        return new NewTabPage();
+    }
+
 
     public Control RootElement { get; init; }
     public PageLoadingAnimator InAnimator { get; set; }
@@ -138,18 +143,5 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage
     public void OpenInNewWindowCommand()
     {
         HostTab.MoveTabToNewWindow();
-    }
-
-    public static IMirelNavPage Create((object sender, object? param) t)
-    {
-        var root = ((Control)t.sender).GetVisualRoot();
-        if (root is TabWindow tabWindow)
-        {
-            tabWindow.CreateTab(new TabEntry(new NewTabPage()));
-            return null;
-        }
-
-        App.UiRoot.CreateTab(new TabEntry(new NewTabPage()));
-        return null;
     }
 }

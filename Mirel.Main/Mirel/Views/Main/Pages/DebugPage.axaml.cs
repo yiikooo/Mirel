@@ -14,7 +14,7 @@ using Mirel.ViewModels;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class DebugPage : PageModelBase, IMirelTabPage
+public partial class DebugPage : PageModelBase, IMirelTabPage, IMirelNavPage
 {
     public DebugPage()
     {
@@ -31,6 +31,12 @@ public partial class DebugPage : PageModelBase, IMirelTabPage
     }
 
     public string ShortInfo { get; set; }
+
+    public static IMirelPage Create(object sender, object? param = null)
+    {
+        return new DebugPage();
+    }
+
     public Control RootElement { get; init; }
     public PageLoadingAnimator InAnimator { get; set; }
 

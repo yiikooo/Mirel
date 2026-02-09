@@ -13,5 +13,6 @@ public class NavEntry(string title, IMirelPage page, string icon) : ReactiveObje
     [Reactive] public double IconWidth { get; set; } = 14;
     [Reactive] public double IconHeight { get; set; } = 14;
     [Reactive] public bool Dot { get; set; }
+    [Reactive] public string Tag { get; set; }
     [Reactive] public Thickness IconMargin { get; set; } = new(0);
 }

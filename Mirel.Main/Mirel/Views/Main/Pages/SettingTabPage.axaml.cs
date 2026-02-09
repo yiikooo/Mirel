@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.VisualTree;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Module.Ui;
@@ -41,18 +40,11 @@ public partial class SettingTabPage : PageModelBase, IMirelTabPage, IMirelNavPag
         set => SetField(ref _selectedItem, value);
     }
 
-    public static IMirelNavPage Create((object sender, object? param) t)
+    public static IMirelPage Create(object sender, object? param = null)
     {
-        var root = ((Control)t.sender).GetVisualRoot();
-        if (root is TabWindow tabWindow)
-        {
-            tabWindow.TogglePage("setting", new SettingTabPage());
-            return null;
-        }
-
-        App.UiRoot.TogglePage("setting", new SettingTabPage());
-        return null;
+        return new SettingTabPage();
     }
+
 
     public Control RootElement { get; init; }
     public PageLoadingAnimator InAnimator { get; set; }

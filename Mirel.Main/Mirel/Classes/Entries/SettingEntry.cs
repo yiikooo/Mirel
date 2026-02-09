@@ -3,7 +3,6 @@ using Avalonia.Media;
 using Mirel.Classes.Enums;
 using Mirel.Module.App;
 using Mirel.Module.Ui;
-using Mirel.Views.Main.Pages;
 using Newtonsoft.Json;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -17,18 +16,13 @@ public class SettingEntry : ReactiveObject
         PropertyChanged += OnPropertyChanged;
     }
 
-    [Reactive] [JsonProperty] public Setting.NoticeWay NoticeWay { get; set; } = Setting.NoticeWay.Bubble;
     [Reactive] [JsonProperty] public Setting.Theme Theme { get; set; } = Setting.Theme.Dark;
-
-    [Reactive] [JsonProperty] public Setting.BackGround BackGround { get; set; } = Setting.BackGround.Default;
 
     [Reactive]
     [JsonProperty]
-    public LaunchPageEntry LaunchPage { get; set; } = new()
+    public NavPageEntry LaunchPage { get; set; } = new()
     {
-        Id = "NewTab",
-        Header = "新标签页",
-        Page = new NewTabPage()
+        Identifier = "NewTab",
     };
 
     [Reactive] [JsonProperty] public Color ThemeColor { get; set; } = Color.Parse("#1BD76A");
