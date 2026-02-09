@@ -8,7 +8,7 @@ using Mirel.ViewModels;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class HomePage : PageModelBase, IMirelTabPage, IMirelNavPage
+public partial class HomePage : PageModelBase, IMirelTabPage, IMirelNavPage, IMirelSingletonTabPage
 {
     public HomePage()
     {

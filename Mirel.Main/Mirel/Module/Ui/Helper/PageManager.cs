@@ -5,7 +5,7 @@ using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
 
-namespace Mirel.Module;
+namespace Mirel.Module.Ui.Helper;
 
 public static class PageManager
 {

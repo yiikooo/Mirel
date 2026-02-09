@@ -6,10 +6,14 @@
     x:DataType="asidePages:NavPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:asidePages="clr-namespace:Mirel.Views.Main.Pages.AsidePages"
+    xmlns:converter="clr-namespace:Mirel.Module.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:entries="clr-namespace:Mirel.Classes.Entries"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <converter:IsSingletonPageConverter x:Key="IsSingletonPageConverter" />
+    </UserControl.Resources>
     <UserControl.Styles>
         <Style Selector="ListBoxItem">
             <Setter Property="Margin" Value="5,1" />
@@ -17,17 +21,17 @@
     </UserControl.Styles>
     <Border Name="Root">
         <ScrollViewer Margin="0,5,0,0">
-            <ListBox ItemsSource="{Binding Data.TabService.AppTabs}" Name="ListBox">
+            <ListBox ItemsSource="{Binding Pages}" Name="ListBox">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
-                    <DataTemplate DataType="entries:TabSEntry">
+                    <DataTemplate DataType="entries:PageRegistration">
                         <DockPanel VerticalAlignment="Center">
                             <PathIcon
-                                Data="{Binding Entry.Icon}"
+                                Data="{Binding StaticPageInfo.Icon}"
                                 DockPanel.Dock="Left"
                                 Height="14"
                                 Margin="0,0,10,0"
@@ -35,17 +39,18 @@
                                 Width="14" />
                             <TextBlock
                                 DockPanel.Dock="Left"
-                                Text="{Binding Entry.Title}"
+                                Text="{Binding StaticPageInfo.Title}"
                                 VerticalAlignment="Center" />
                             <Border
                                 Background="{DynamicResource PopupBackgroundColor}"
                                 CornerRadius="{DynamicResource CardCornerRadius}"
                                 DockPanel.Dock="Right"
                                 HorizontalAlignment="Right"
+                                IsVisible="{Binding Converter={StaticResource IsSingletonPageConverter}}"
                                 Margin="0,1,0,0"
                                 Padding="6,4,6,3"
                                 VerticalAlignment="Center">
-                                <TextBlock FontSize="11" Text="{Binding Window.WindowId}" />
+                                <TextBlock FontSize="11" Text="单例" />
                             </Border>
                         </DockPanel>
                     </DataTemplate>

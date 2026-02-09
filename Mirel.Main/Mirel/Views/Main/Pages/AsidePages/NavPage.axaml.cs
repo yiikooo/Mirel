@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
+using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
 
 namespace Mirel.Views.Main.Pages.AsidePages;
@@ -21,14 +22,22 @@ public partial class NavPage : PageModelBase, IMirelPage
             if (ListBox.SelectedItem is not PageRegistration pageReg) return;
             var page = pageReg.CreateInstance(this, null);
             if (page is not IMirelTabPage tabPage) return;
-            var tab = new TabEntry(tabPage);
-            if (UiProperty.ActiveWindow is TabWindow tabWindow)
+
+            if (tabPage is IMirelSingletonTabPage)
             {
-                tabWindow.CreateTab(tab);
+                SingletonTabManager.CreateOrActivateSingletonTab(tabPage);
             }
             else
             {
-                App.UiRoot.CreateTab(tab);
+                var tab = new TabEntry(tabPage);
+                if (UiProperty.ActiveWindow is TabWindow tabWindow)
+                {
+                    tabWindow.CreateTab(tab);
+                }
+                else
+                {
+                    App.UiRoot.CreateTab(tab);
+                }
             }
 
             ListBox.SelectedItem = null;
@@ -41,7 +50,7 @@ public partial class NavPage : PageModelBase, IMirelPage
         };
     }
 
-    public ObservableCollection<PageRegistration> Pages { get; set; } = [];
+    public ObservableCollection<PageRegistration> Pages { get; set; } = new();
 
     public Control RootElement { get; init; }
 

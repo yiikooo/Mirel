@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
-using Mirel.Module;
+using Mirel.Module.Ui.Helper;
 using Mirel.Views.Main.Pages;
 
 namespace Mirel.Views.Main;
