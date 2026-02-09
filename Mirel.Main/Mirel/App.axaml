@@ -46,7 +46,7 @@
             <Color x:Key="SystemAccentColorDark1">#1BD76A</Color>
             <Color x:Key="SystemAccentColorDark2">#1BD76A</Color>
             <Color x:Key="SystemAccentColorDark3">#1BD76A</Color>
-            <system:Double x:Key="BackGroundOpacity">0.5</system:Double>
+            <system:Double x:Key="BackGroundOpacity">1</system:Double>
             <FontFamily x:Key="MiSans">avares://Mirel/Public#MiSans</FontFamily>
             <FontWeight x:Key="FontWeight">350</FontWeight>
             <CornerRadius x:Key="CardCornerRadius">10</CornerRadius>

@@ -77,5 +77,9 @@
             <DependentUpon>NotificationHistoryPage.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Compile Update="Views\Main\Pages\AsidePages\NavPage.axaml.cs">
+            <DependentUpon>NavPage.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@ using Mirel.Const;
 using Mirel.Module.App.Services;
 using Mirel.Module.Events;
 using Mirel.Module.Ui;
+using Mirel.Views.Main;
 
 namespace Mirel.Module.App.Init;
 
@@ -11,6 +12,7 @@ public abstract class AfterUiLoaded
 {
     public static void Main()
     {
+        PageNav.Initialize();
         File.WriteAllText(ConfigPath.AppPathDataPath,
             Process.GetCurrentProcess().MainModule.FileName);
         BindingAppEvents.Main();
@@ -18,8 +20,6 @@ public abstract class AfterUiLoaded
         Setter.SetAccentColor(Data.SettingEntry.ThemeColor);
         Setter.ToggleTheme(Data.SettingEntry.Theme);
         LoopGC.BeginLoop();
-        // if (Data.SettingEntry.AutoCheckUpdate && Data.Instance.Version != "vDebug")
-        //     _ = MirelPage.ShowUpdateDialogIfNeed(); //TODO: update
         AppExit.Main();
         InitEvents.OnAfterUiLoaded();
     }
