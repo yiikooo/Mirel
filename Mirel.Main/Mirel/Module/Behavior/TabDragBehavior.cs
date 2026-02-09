@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.VisualTree;
 using Mirel.Classes.Entries;
+using Mirel.Classes.Enums;
 using Mirel.Controls;
 using Mirel.Module.Service;
 
@@ -163,16 +164,57 @@ public class TabDragBehavior
             var screenPoint = window.PointToScreen(e.GetPosition(window)).ToPoint(1.0);
             var targetWindow = TabDragDropService.FindWindowAtPoint(screenPoint);
 
-            // Minimal visual feedback - only opacity changes
+            TabDragState dragState;
+
             if (TabDragDropService.IsPointOutsideAllWindows(screenPoint))
-                // Visual feedback for detachment (creating new window)
+            {
+                // 在窗口外拖动 - 打开新窗口
+                dragState = TabDragState.DetachToNewWindow;
                 _control.Opacity = 0.4;
+            }
             else if (targetWindow != null && targetWindow != window)
-                // Visual feedback for transfer to another window
+            {
+                // 在另一个窗口拖动 - 并入另一窗口
+                dragState = TabDragState.TransferToAnotherWindow;
                 _control.Opacity = 0.5;
+            }
+            else if (targetWindow == window)
+            {
+                // 检查是否在标签页容器内
+                var navRoot = window.FindControl<Control>("NavRoot");
+                if (navRoot != null)
+                {
+                    var localPoint = e.GetPosition(window);
+                    var navBounds = navRoot.Bounds;
+                    if (navBounds.Contains(localPoint))
+                    {
+                        // 在当前窗口的标签页容器内 - 重新排序
+                        dragState = TabDragState.ReorderInCurrentWindow;
+                        _control.Opacity = 0.6;
+                    }
+                    else
+                    {
+                        // 在当前窗口的其他区域 - 不执行操作
+                        dragState = TabDragState.NoOperation;
+                        _control.Opacity = 0.7;
+                    }
+                }
+                else
+                {
+                    // 默认为重新排序
+                    dragState = TabDragState.ReorderInCurrentWindow;
+                    _control.Opacity = 0.6;
+                }
+            }
             else
-                // Visual feedback for reordering within same window
-                _control.Opacity = 0.6;
+            {
+                // 默认状态
+                dragState = TabDragState.NoOperation;
+                _control.Opacity = 0.7;
+            }
+
+            // 更新拖动装饰窗口的状态
+            _dragAdornerWindow?.UpdateDragState(dragState);
         }
 
         private void HandleDrop(PointerReleasedEventArgs e)
