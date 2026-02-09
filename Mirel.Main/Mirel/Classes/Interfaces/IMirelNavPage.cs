@@ -4,6 +4,6 @@ namespace Mirel.Classes.Interfaces;
 
 public interface IMirelNavPage
 {
-    static MirelStaticPageInfo StaticPageInfo { get; }
-    static abstract IMirelPage Create(object sender, object? param = null);
+    public static abstract MirelStaticPageInfo StaticPageInfo { get; }
+    public static abstract IMirelPage Create(object sender, object? param = null);
 }

@@ -22,7 +22,7 @@ public class SettingEntry : ReactiveObject
     [JsonProperty]
     public NavPageEntry LaunchPage { get; set; } = new()
     {
-        Identifier = "NewTab",
+        Identifier = PageIdentifier.NewTab,
     };
 
     [Reactive] [JsonProperty] public Color ThemeColor { get; set; } = Color.Parse("#1BD76A");

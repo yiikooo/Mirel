@@ -40,6 +40,12 @@ public partial class SettingTabPage : PageModelBase, IMirelTabPage, IMirelNavPag
         set => SetField(ref _selectedItem, value);
     }
 
+    public static MirelStaticPageInfo StaticPageInfo { get; } = new()
+    {
+        Title = "设置",
+        Icon = Icons.Setting
+    };
+
     public static IMirelPage Create(object sender, object? param = null)
     {
         return new SettingTabPage();
