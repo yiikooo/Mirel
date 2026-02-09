@@ -71,11 +71,12 @@ public class TabDragAdornerViewModel : ReactiveObject
         TabDragState.ReorderInCurrentWindow => TabDragIcons.ReorderInCurrentWindow,
         TabDragState.TransferToAnotherWindow => TabDragIcons.TransferToAnotherWindow,
         TabDragState.DetachToNewWindow => TabDragIcons.DetachToNewWindow,
+        TabDragState.NoOperation => TabDragIcons.NoOperation,
         _ => string.Empty
     };
 
     /// <summary>
-    /// 是否显示状态图标（NoOperation 状态不显示）
+    /// 是否显示状态图标（所有状态都显示图标）
     /// </summary>
-    public bool ShowStateIcon => DragState != TabDragState.NoOperation && !string.IsNullOrEmpty(StateIcon);
+    public bool ShowStateIcon => !string.IsNullOrEmpty(StateIcon);
 }

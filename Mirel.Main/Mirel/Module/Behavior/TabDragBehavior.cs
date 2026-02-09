@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.VisualTree;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
+using Mirel.Classes.Interfaces;
 using Mirel.Controls;
 using Mirel.Module.Service;
 
@@ -166,21 +167,34 @@ public class TabDragBehavior
 
             TabDragState dragState;
 
-            if (TabDragDropService.IsPointOutsideAllWindows(screenPoint))
+            // 获取源窗口和目标窗口的 ID（用于调试和精确判断）
+            var sourceWindowId = (window as IMirelTabWindow)?.WindowId ?? "Unknown";
+            var targetWindowId = (targetWindow as IMirelTabWindow)?.WindowId ?? "Unknown";
+
+            // 判断逻辑优化：
+            // 1. 先判断是否找到目标窗口
+            // 2. 如果没找到窗口 -> 在窗口外 -> 打开新窗口
+            // 3. 如果找到窗口且 WindowId 不同 -> 在另一窗口 -> 并入窗口
+            // 4. 如果找到窗口且 WindowId 相同 -> 检查是否在标签区域
+
+            if (targetWindow == null)
             {
-                // 在窗口外拖动 - 打开新窗口
+                // 没有找到任何窗口 - 在窗口外拖动 - 打开新窗口
                 dragState = TabDragState.DetachToNewWindow;
                 _control.Opacity = 0.4;
             }
-            else if (targetWindow != null && targetWindow != window)
+            else if (targetWindow is IMirelTabWindow targetTabWindow &&
+                     window is IMirelTabWindow sourceTabWindow &&
+                     targetTabWindow.WindowId != sourceTabWindow.WindowId)
             {
-                // 在另一个窗口拖动 - 并入另一窗口
+                // 找到窗口且 WindowId 不同 - 在另一个窗口拖动 - 并入另一窗口
                 dragState = TabDragState.TransferToAnotherWindow;
                 _control.Opacity = 0.5;
             }
-            else if (targetWindow == window)
+            else if (targetWindow == window ||
+                     (targetWindow is IMirelTabWindow tw && window is IMirelTabWindow sw && tw.WindowId == sw.WindowId))
             {
-                // 检查是否在标签页容器内
+                // 找到窗口且是同一窗口（通过引用或 WindowId 判断）- 检查是否在标签页容器内
                 var navRoot = window.FindControl<Control>("NavRoot");
                 if (navRoot != null)
                 {
@@ -201,14 +215,14 @@ public class TabDragBehavior
                 }
                 else
                 {
-                    // 默认为重新排序
+                    // 找不到 NavRoot，默认为重新排序
                     dragState = TabDragState.ReorderInCurrentWindow;
                     _control.Opacity = 0.6;
                 }
             }
             else
             {
-                // 默认状态
+                // 其他情况，默认为不执行操作
                 dragState = TabDragState.NoOperation;
                 _control.Opacity = 0.7;
             }
