@@ -374,7 +374,12 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
                 var noWindowItem = new MenuItem
                 {
                     Header = "没有其他窗口",
-                    IsEnabled = false
+                    IsEnabled = false, Icon = new PathIcon
+                    {
+                        Data = Geometry.Parse(
+                            "F1 M512,512z M0,0z M502.6,278.6C515.1,266.1,515.1,245.8,502.6,233.3L342.6,73.3C330.1,60.8 309.8,60.8 297.3,73.3 284.8,85.8 284.8,106.1 297.3,118.6L402.7,224 32,224C14.3,224 0,238.3 0,256 0,273.7 14.3,288 32,288L402.7,288 297.3,393.4C284.8,405.9 284.8,426.2 297.3,438.7 309.8,451.2 330.1,451.2 342.6,438.7L502.6,278.7z"),
+                        Width = 14, Margin = new Thickness(8, -1, 0, 0)
+                    },
                 };
                 moveToWindowMenuItem.Items.Add(noWindowItem);
             }
@@ -389,7 +394,7 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
                         {
                             Data = Geometry.Parse(
                                 "F1 M512,512z M0,0z M502.6,278.6C515.1,266.1,515.1,245.8,502.6,233.3L342.6,73.3C330.1,60.8 309.8,60.8 297.3,73.3 284.8,85.8 284.8,106.1 297.3,118.6L402.7,224 32,224C14.3,224 0,238.3 0,256 0,273.7 14.3,288 32,288L402.7,288 297.3,393.4C284.8,405.9 284.8,426.2 297.3,438.7 309.8,451.2 330.1,451.2 342.6,438.7L502.6,278.7z"),
-                            Width = 17
+                            Width = 14, Margin = new Thickness(8, -1, 0, 0)
                         },
                         Command = new RelayCommand(() =>
                         {
