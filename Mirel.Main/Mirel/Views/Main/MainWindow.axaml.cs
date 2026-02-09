@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -333,17 +334,13 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
             closeTabMenuItem.IsEnabled = tabEntry.CanClose;
         }
 
-        // Setup Open in New Window command
+        // Setup Open in New Window command - use the drag service method
         if (openInNewWindowMenuItem != null)
         {
             openInNewWindowMenuItem.Command = new RelayCommand(() =>
             {
-                var newWindow = new TabWindow();
-                ViewModel.Tabs.Remove(tabEntry);
-                tabEntry.RefreshContent();
-                newWindow.CreateTab(tabEntry);
-                newWindow.Show();
-                newWindow.Activate();
+                // Use the MoveTabToNewWindow extension method from TabDragDropService
+                tabEntry.MoveTabToNewWindow();
             });
         }
 
@@ -352,10 +349,14 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
         {
             moveToWindowMenuItem.Items.Clear();
 
-            var windows = (Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)
-                ?.Windows.OfType<TabWindow>().ToArray() ?? Array.Empty<TabWindow>();
+            // Get all tab windows (both MainWindow and TabWindow)
+            var allWindows = (Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)
+                ?.Windows.OfType<IMirelTabWindow>().ToList() ?? new List<IMirelTabWindow>();
 
-            if (windows.Length == 0)
+            // Exclude current window
+            var otherWindows = allWindows.Where(w => w != this).ToList();
+
+            if (otherWindows.Count == 0)
             {
                 var noWindowItem = new MenuItem
                 {
@@ -366,17 +367,21 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
             }
             else
             {
-                foreach (var window in windows)
+                foreach (var window in otherWindows)
                 {
                     var menuItem = new MenuItem
                     {
                         Header = window.WindowId,
+                        Icon = new PathIcon
+                        {
+                            Data = Geometry.Parse(
+                                "F1 M512,512z M0,0z M502.6,278.6C515.1,266.1,515.1,245.8,502.6,233.3L342.6,73.3C330.1,60.8 309.8,60.8 297.3,73.3 284.8,85.8 284.8,106.1 297.3,118.6L402.7,224 32,224C14.3,224 0,238.3 0,256 0,273.7 14.3,288 32,288L402.7,288 297.3,393.4C284.8,405.9 284.8,426.2 297.3,438.7 309.8,451.2 330.1,451.2 342.6,438.7L502.6,278.7z"),
+                            Width = 17
+                        },
                         Command = new RelayCommand(() =>
                         {
-                            ViewModel.Tabs.Remove(tabEntry);
-                            tabEntry.RefreshContent();
-                            window.CreateTab(tabEntry);
-                            window.Activate();
+                            // Use the MoveTabToWindow extension method from TabDragDropService
+                            tabEntry.MoveTabToWindow(window as Window);
                         })
                     };
                     moveToWindowMenuItem.Items.Add(menuItem);

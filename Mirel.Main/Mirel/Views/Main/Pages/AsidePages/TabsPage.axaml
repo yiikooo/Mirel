@@ -25,7 +25,7 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="entries:TabSEntry">
-                        <DockPanel VerticalAlignment="Center">
+                        <DockPanel Background="Transparent" VerticalAlignment="Center">
                             <DockPanel.ContextFlyout>
                                 <MenuFlyout Opening="TabContextMenu_Opening">
                                     <MenuItem

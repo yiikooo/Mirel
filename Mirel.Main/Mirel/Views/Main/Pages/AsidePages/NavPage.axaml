@@ -29,7 +29,7 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="entries:PageRegistration">
-                        <DockPanel VerticalAlignment="Center">
+                        <DockPanel Background="Transparent" VerticalAlignment="Center">
                             <PathIcon
                                 Data="{Binding StaticPageInfo.Icon}"
                                 DockPanel.Dock="Left"

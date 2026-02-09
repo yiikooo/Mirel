@@ -354,6 +354,58 @@ public static class TabDragDropService
     // across different windows simultaneously
 
     /// <summary>
+    ///     Moves a tab to another existing window. This is a general-purpose method that can be called programmatically.
+    /// </summary>
+    /// <param name="tabEntry">The tab to move to another window</param>
+    /// <param name="targetWindow">The target window to move the tab to</param>
+    public static void MoveTabToWindow(this TabEntry tabEntry, Window targetWindow)
+    {
+        if (tabEntry == null || targetWindow == null) return;
+
+        // Find the source window containing this tab
+        var sourceWindow = FindWindowContainingTab(tabEntry);
+        if (sourceWindow == null) return;
+
+        // Don't move if already in target window
+        if (sourceWindow == targetWindow) return;
+
+        // Use async operation to avoid layout manager conflicts
+        Dispatcher.UIThread.Post(async () =>
+        {
+            try
+            {
+                // Remove from source window
+                RemoveTabFromWindow(tabEntry, sourceWindow);
+
+                // Reduced delay for better responsiveness
+                await Task.Delay(25);
+
+                // Refresh content to avoid layout conflicts
+                tabEntry.RefreshContent();
+
+                // Add to target window
+                AddTabToWindow(tabEntry, targetWindow);
+
+                // Bring target window to front
+                targetWindow.Activate();
+                targetWindow.BringIntoView();
+
+                // Close source window if it's a TabWindow with no tabs
+                if (sourceWindow is TabWindow sourceTabWindow && !sourceTabWindow.ViewModel.HasTabs)
+                {
+                    await Task.Delay(100);
+                    sourceTabWindow.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error but don't crash the application
+                Debug.WriteLine($"Error moving tab to window: {ex.Message}");
+            }
+        });
+    }
+
+    /// <summary>
     ///     Moves a tab to a new TabWindow. This is a general-purpose method that can be called programmatically.
     /// </summary>
     /// <param name="tabEntry">The tab to move to a new window</param>

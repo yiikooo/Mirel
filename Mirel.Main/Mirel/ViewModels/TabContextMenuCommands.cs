@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
+using Mirel.Module.Service;
 using Mirel.Views.Main;
 
 namespace Mirel.ViewModels;
@@ -41,28 +43,8 @@ public class TabContextMenuCommands : ViewModelBase
     {
         if (TargetTab == null) return;
 
-        // Create new TabWindow
-        var newWindow = new TabWindow();
-
-        // Remove from current window
-        if (SourceWindow is TabWindow tabWindow)
-        {
-            tabWindow.RemoveTab(TargetTab);
-        }
-        else if (App.UiRoot != null)
-        {
-            App.UiRoot.ViewModel.Tabs.Remove(TargetTab);
-        }
-
-        // Refresh content to avoid layout conflicts
-        TargetTab.RefreshContent();
-
-        // Add to new window
-        newWindow.CreateTab(TargetTab);
-
-        // Show and activate new window
-        newWindow.Show();
-        newWindow.Activate();
+        // Use the MoveTabToNewWindow extension method from TabDragDropService
+        TargetTab.MoveTabToNewWindow();
     }
 
     public void MoveToWindow(IMirelTabWindow targetWindow)
@@ -70,27 +52,11 @@ public class TabContextMenuCommands : ViewModelBase
         if (TargetTab == null || targetWindow == null) return;
         if (SourceWindow == targetWindow) return; // Already in target window
 
-        // Remove from source window
-        if (SourceWindow is TabWindow sourceTabWindow)
+        // Use the MoveTabToWindow extension method from TabDragDropService
+        if (targetWindow is Window window)
         {
-            sourceTabWindow.RemoveTab(TargetTab);
+            TargetTab.MoveTabToWindow(window);
         }
-        else if (App.UiRoot != null)
-        {
-            App.UiRoot.ViewModel.Tabs.Remove(TargetTab);
-        }
-
-        // Refresh content to avoid layout conflicts
-        TargetTab.RefreshContent();
-
-        // Add to target window
-        if (targetWindow is TabWindow targetTabWindow)
-        {
-            targetTabWindow.CreateTab(TargetTab);
-        }
-
-        // Activate target window
-        targetWindow.Activate();
     }
 
     public static IMirelTabWindow[] GetAllTabWindows()
