@@ -33,6 +33,7 @@
                     <Button
                         Classes="title-bar-button"
                         Content="{DynamicResource Minimize}"
+                        Cursor="Hand"
                         HorizontalAlignment="Right"
                         IsVisible="{Binding IsMinBtnShow}"
                         Name="MinimizeButton"
@@ -41,6 +42,7 @@
                     <Button
                         Classes="title-bar-button"
                         Content="{DynamicResource Maximize}"
+                        Cursor="Hand"
                         HorizontalAlignment="Right"
                         IsVisible="{Binding IsMaxBtnShow}"
                         Name="MaximizeButton"
@@ -48,6 +50,7 @@
                     <Button
                         Classes="title-bar-button close-button"
                         Content="{DynamicResource Close}"
+                        Cursor="Hand"
                         HorizontalAlignment="Right"
                         IsVisible="{Binding IsCloseBtnShow}"
                         Name="CloseButton"

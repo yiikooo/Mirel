@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -11,23 +15,15 @@ namespace Mirel.Controls;
 
 public partial class TitleBar : PageModelBase
 {
+    private readonly List<Action> _disposeActions = new();
     private bool _isCloseBtnExitApp;
     private bool _isCloseBtnHideWindow;
     private bool _isCloseBtnShow = true;
     private bool _isMaxBtnShow = true;
     private bool _isMinBtnShow = true;
-
     private object _leftContent;
-    // public static readonly StyledProperty<string> DataSourceProperty =
-    //     AvaloniaProperty.Register<TitleBar, string>(nameof(DataSource));
-
-    // public string DataSource
-    // {
-    //     get => GetValue(DataSourceProperty);
-    //     set => SetValue(DataSourceProperty, value);
-    // }
-
     private string _title;
+    private Win32Properties.CustomWndProcHookCallback? _wndProcHookCallback;
 
     public TitleBar()
     {
@@ -37,6 +33,16 @@ public partial class TitleBar : PageModelBase
         MaximizeButton.Click += MaximizeButton_Click;
         MinimizeButton.Click += MinimizeButton_Click;
         MoveDragArea.PointerPressed += MoveDragArea_PointerPressed;
+
+        // Enable Windows Snap Layout for maximize button
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            AttachedToVisualTree += (s, e) =>
+            {
+                Debug.WriteLine("TitleBar: AttachedToVisualTree event fired");
+                EnableWindowsSnapLayout(MaximizeButton);
+            };
+        }
     }
 
     public new Data Data => Data.Instance;
@@ -142,10 +148,27 @@ public partial class TitleBar : PageModelBase
             }
             else
             {
+                // Cleanup event handlers
                 CloseButton.Click -= CloseButton_Click;
                 MaximizeButton.Click -= MaximizeButton_Click;
                 MinimizeButton.Click -= MinimizeButton_Click;
                 MoveDragArea.PointerPressed -= MoveDragArea_PointerPressed;
+
+                // Execute disposal actions (including Win32 hook cleanup)
+                foreach (var disposeAction in _disposeActions)
+                {
+                    try
+                    {
+                        disposeAction.Invoke();
+                    }
+                    catch
+                    {
+                        // Ignore disposal errors
+                    }
+                }
+
+                _disposeActions.Clear();
+
                 window.Close();
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
@@ -153,4 +176,129 @@ public partial class TitleBar : PageModelBase
             }
         }
     }
+
+    #region Windows Snap Layout Support
+
+    [DllImport("user32.dll")]
+    private static extern short GetAsyncKeyState(int vKey);
+
+    private static bool IsMouseDown()
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            return false;
+
+        const int VK_LBUTTON = 1;
+        return (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
+    }
+
+    private void EnableWindowsSnapLayout(Button maximizeButton)
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            return;
+
+        const int HTCLIENT = 1;
+        const int HTMAXBUTTON = 9;
+        const uint WM_NCHITTEST = 0x0084;
+
+        var pointerOnButton = false;
+        var pointerOverSetter = typeof(Button).GetProperty(nameof(IsPointerOver));
+        if (pointerOverSetter is null)
+        {
+            Debug.WriteLine("TitleBar: IsPointerOver property not found");
+            return;
+        }
+
+        var window = this.GetVisualRoot() as Window;
+        if (window == null)
+        {
+            Debug.WriteLine("TitleBar: Window not found");
+            return;
+        }
+
+        Debug.WriteLine($"TitleBar: Enabling Snap Layout for button");
+
+        nint ProcHookCallback(nint hWnd, uint msg, nint wParam, nint lParam, ref bool handled)
+        {
+            if (msg == WM_NCHITTEST)
+            {
+                if (!maximizeButton.IsVisible)
+                    return 0;
+
+                var point = new PixelPoint(
+                    (short)(ToInt32(lParam) & 0xffff),
+                    (short)(ToInt32(lParam) >> 16)
+                );
+
+                var buttonSize = maximizeButton.DesiredSize;
+                var buttonLeftTop = maximizeButton.PointToScreen(new Point(0, 0));
+
+                var scaling = window.RenderScaling;
+                var x = (point.X - buttonLeftTop.X) / scaling;
+                var y = (point.Y - buttonLeftTop.Y) / scaling;
+
+                var isInButton = new Rect(default, buttonSize).Contains(new Point(x, y));
+
+                if (isInButton)
+                {
+                    handled = true;
+
+                    if (!pointerOnButton)
+                    {
+                        pointerOnButton = true;
+                        pointerOverSetter.SetValue(maximizeButton, true);
+                        Debug.WriteLine("TitleBar: Pointer entered maximize button");
+                    }
+
+                    var result = IsMouseDown() ? HTCLIENT : HTMAXBUTTON;
+                    Debug.WriteLine($"TitleBar: Returning {(result == HTMAXBUTTON ? "HTMAXBUTTON" : "HTCLIENT")}");
+                    return result;
+                }
+                else
+                {
+                    if (pointerOnButton)
+                    {
+                        pointerOnButton = false;
+                        pointerOverSetter.SetValue(maximizeButton, false);
+                        Debug.WriteLine("TitleBar: Pointer left maximize button");
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        static int ToInt32(IntPtr ptr) =>
+            IntPtr.Size == 4 ? ptr.ToInt32() : (int)(ptr.ToInt64() & 0xffffffff);
+
+        try
+        {
+            _wndProcHookCallback = new Win32Properties.CustomWndProcHookCallback(ProcHookCallback);
+            Win32Properties.AddWndProcHookCallback(window, _wndProcHookCallback);
+
+            Debug.WriteLine("TitleBar: Win32 hook successfully registered");
+
+            _disposeActions.Add(() =>
+            {
+                try
+                {
+                    if (_wndProcHookCallback != null)
+                    {
+                        Win32Properties.RemoveWndProcHookCallback(window, _wndProcHookCallback);
+                        Debug.WriteLine("TitleBar: Win32 hook removed");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"TitleBar: Error removing hook: {ex.Message}");
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"TitleBar: Failed to enable Windows Snap Layout: {ex.Message}");
+            Debug.WriteLine($"TitleBar: Stack trace: {ex.StackTrace}");
+        }
+    }
+
+    #endregion
 }
