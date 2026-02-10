@@ -21,6 +21,6 @@ public abstract class AfterUiLoaded
         Setter.ToggleTheme(Data.SettingEntry.Theme);
         LoopGC.BeginLoop();
         AppExit.Main();
-        InitEvents.OnAfterUiLoaded();
+        InitializationEvents.RaiseAfterUiLoaded();
     }
 }

@@ -133,7 +133,7 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
         ViewModel.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(ViewModel.SelectedTab))
-                AppEvents.OnTabSelectionChanged(new TabSEntry
+                ApplicationEvents.RaiseTabSelectionChanged(new TabSEntry
                 {
                     Entry = SelectedTab,
                     Window = this
@@ -141,7 +141,7 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
         };
         Activated += (_, _) =>
         {
-            AppEvents.OnTabSelectionChanged(new TabSEntry
+            ApplicationEvents.RaiseTabSelectionChanged(new TabSEntry
             {
                 Entry = SelectedTab,
                 Window = this
@@ -281,7 +281,7 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
     {
         try
         {
-            if (!await AppEvents.OnAppExiting()) return;
+            if (!await ApplicationEvents.RaiseAppExiting()) return;
             Environment.Exit(0);
         }
         catch (Exception e)

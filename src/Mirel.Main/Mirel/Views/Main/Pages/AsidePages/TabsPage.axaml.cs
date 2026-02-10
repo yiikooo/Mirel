@@ -33,7 +33,7 @@ public partial class TabsPage : PageModelBase, IMirelPage
                 break;
             }
         };
-        AppEvents.TabSelectionChanged += e => { ListBox.SelectedItem = e; };
+        ApplicationEvents.TabSelectionChanged += tab => { ListBox.SelectedItem = tab; };
         Loaded += (_, _) =>
         {
             if (UiProperty.ActiveWindow is not IMirelTabWindow tb) return;

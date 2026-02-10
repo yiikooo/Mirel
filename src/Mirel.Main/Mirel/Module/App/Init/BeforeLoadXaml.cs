@@ -13,9 +13,9 @@ public abstract class BeforeLoadXaml
         Sundry.DetectPlatform();
         Create.Main();
         Setter.TryClearFolder(ConfigPath.PluginUnzipFolderPath);
-        InitEvents.OnBeforeReadSettings();
+        InitializationEvents.RaiseBeforeReadSettings();
         Reader.Main();
         Update.Main();
-        InitEvents.OnBeforeUiLoaded();
+        InitializationEvents.RaiseBeforeUiLoaded();
     }
 }

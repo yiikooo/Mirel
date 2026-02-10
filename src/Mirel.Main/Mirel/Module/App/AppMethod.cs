@@ -12,7 +12,7 @@ public class AppMethod
     private static readonly Debouncer _debouncer = new(() =>
     {
         if (Data.SettingEntry is null) return;
-        AppEvents.OnSaveSettings();
+        ApplicationEvents.RaiseSaveSettings();
         File.WriteAllText(ConfigPath.SettingDataPath,
             JsonConvert.SerializeObject(Data.SettingEntry, Formatting.Indented));
     }, 300);
@@ -24,7 +24,7 @@ public class AppMethod
 
     public static async void RestartApp(bool isAdmin = false)
     {
-        if (!await AppEvents.OnAppExiting()) return;
+        if (!await ApplicationEvents.RaiseAppExiting()) return;
         var startInfo = new ProcessStartInfo
         {
             UseShellExecute = true,
@@ -38,7 +38,7 @@ public class AppMethod
 
     public static async void TryExitApp()
     {
-        if (!await AppEvents.OnAppExiting()) return;
+        if (!await ApplicationEvents.RaiseAppExiting()) return;
         Environment.Exit(0);
     }
 }

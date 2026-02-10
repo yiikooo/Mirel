@@ -12,7 +12,7 @@ public class AppExit
 {
     public static void Main()
     {
-        AppEvents.AppExiting += AppEventsOnAppExiting;
+        ApplicationEvents.AppExiting += AppEventsOnAppExiting;
     }
 
     private static async Task<bool> AppEventsOnAppExiting()

@@ -126,7 +126,7 @@ public class Update
                         Overlay.Notice($"下载完成: {file}", NotificationType.Success);
                         task.NextSubTask();
 
-                        if (!await AppEvents.OnAppExiting()) return;
+                        if (!await ApplicationEvents.RaiseAppExiting()) return;
                         var startInfo = new ProcessStartInfo
                         {
                             UseShellExecute = true,

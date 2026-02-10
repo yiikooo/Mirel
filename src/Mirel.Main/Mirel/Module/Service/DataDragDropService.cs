@@ -8,6 +8,6 @@ public class DataDragDropService
 {
     public static void HandleData(IMirelWindow sender, DragEventArgs e)
     {
-        AppEvents.OnAppDragDrop(sender, e);
+        ApplicationEvents.RaiseAppDragDrop(sender, e);
     }
 }

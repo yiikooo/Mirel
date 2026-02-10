@@ -18,7 +18,7 @@ public class MainViewModel : ViewModelBase
 
     public MainViewModel()
     {
-        InitEvents.AfterUiLoaded += (_, _) =>
+        InitializationEvents.AfterUiLoaded += () =>
         {
             Tabs.Add(new TabEntry(new HomePage(), headerContent: CeateDockPanel(), minWidth: 65));
             Tabs.Add(new TabEntry(new NewTabPage()));
