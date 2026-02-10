@@ -8,8 +8,8 @@
     <!--  Add Styles Here  -->
     <Style Selector="Button.title-bar-button">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="Height" Value="25" />
         <Setter Property="Width" Value="25" />
         <Setter Property="Template">
