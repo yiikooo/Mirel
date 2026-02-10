@@ -66,7 +66,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: linux-appimage-${{ matrix.arch }}
-          path: Mirel.Main/Mirel.Desktop/Deploy/OUT/*
+          path: src/Mirel.Main/Mirel.Desktop/Deploy/OUT/*
           retention-days: 1
 
   linux-macos:
@@ -95,7 +95,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: linux-macos-artifacts
-          path: Mirel.Main/Mirel.Desktop/bin/Release/net8.0/Mirel.Desktop.osx.mac.x64.app.zip
+          path: src/Mirel.Main/Mirel.Desktop/bin/Release/net8.0/Mirel.Desktop.osx.mac.x64.app.zip
           retention-days: 1
 
   linux-windows:
@@ -123,7 +123,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: linux-windows-artifacts
-          path: Mirel.Main/Mirel.Desktop/bin/Release/net8.0/*.exe
+          path: src/Mirel.Main/Mirel.Desktop/bin/Release/net8.0/*.exe
           retention-days: 1
 
   win:
