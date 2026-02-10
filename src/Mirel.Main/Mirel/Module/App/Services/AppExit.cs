@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Mirel.Classes.Interfaces;
-using Mirel.Module.Events;
+using Mirel.Module.Event;
 using Mirel.Views.Main;
 
 namespace Mirel.Module.App.Services;

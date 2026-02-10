@@ -1,6 +1,6 @@
 using Avalonia.Input;
 using Mirel.Classes.Interfaces;
-using Mirel.Module.Events;
+using Mirel.Module.Event;
 
 namespace Mirel.Module.Service;
 

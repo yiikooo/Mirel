@@ -7,7 +7,7 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using Mirel.Classes.Entries;
 using Mirel.Const;
-using Mirel.Module.Events;
+using Mirel.Module.Event;
 using Mirel.Views.Main.Pages;
 
 namespace Mirel.ViewModels;

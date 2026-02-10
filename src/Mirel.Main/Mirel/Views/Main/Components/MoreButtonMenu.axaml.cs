@@ -2,7 +2,7 @@
 using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Input;
-using Mirel.Module.Events;
+using Mirel.Module.Event;
 using Mirel.ViewModels;
 
 namespace Mirel.Views.Main.Components;

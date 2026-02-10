@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Avalonia.Input;
 using Mirel.Classes.Entries;
 
-namespace Mirel.Module.Events;
+namespace Mirel.Module.Event;
 
 public class AppEvents
 {

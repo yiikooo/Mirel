@@ -12,7 +12,7 @@ using Flurl.Http;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Enums;
 using Mirel.Const;
-using Mirel.Module.Events;
+using Mirel.Module.Event;
 using Mirel.Module.IO.Http;
 using Mirel.Module.Ui;
 using Newtonsoft.Json.Linq;

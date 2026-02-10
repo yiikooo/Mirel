@@ -2,7 +2,7 @@
 using System.IO;
 using Mirel.Const;
 using Mirel.Module.App.Services;
-using Mirel.Module.Events;
+using Mirel.Module.Event;
 using Mirel.Module.Ui;
 using Mirel.Views.Main.Components;
 

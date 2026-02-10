@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using Mirel.Const;
-using Mirel.Module.Events;
+using Mirel.Module.Event;
 using Newtonsoft.Json;
 
 namespace Mirel.Module.App;

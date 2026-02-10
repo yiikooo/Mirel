@@ -1,6 +1,6 @@
 ﻿using Mirel.Const;
 using Mirel.Module.App.Init.Config;
-using Mirel.Module.Events;
+using Mirel.Module.Event;
 using Mirel.Module.IO.Local;
 using Update = Mirel.Module.App.Init.Config.Update;
 

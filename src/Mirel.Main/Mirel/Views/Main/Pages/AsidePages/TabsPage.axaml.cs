@@ -1,16 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Media;
-using CommunityToolkit.Mvvm.Input;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
-using Mirel.Module.Events;
-using Mirel.Module.Service;
+using Mirel.Module.Event;
 using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
 
