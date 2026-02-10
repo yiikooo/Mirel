@@ -52,7 +52,7 @@ jobs:
         with:
           dotnet-version: "8.0.x"
       - name: Write Version
-        run: echo "${{ needs.time.outputs.v }}" > ./Mirel.Main/Mirel/Public/Version.txt
+        run: echo "${{ needs.time.outputs.v }}" > ./src/Mirel.Main/Mirel/Public/Version.txt
       - name: Install Dependencies
         run: |
           dotnet tool install -g KuiperZone.PupNet --version 1.8.0
@@ -60,7 +60,7 @@ jobs:
           sudo apt-get install -y fuse
       - name: Build AppImage (${{ matrix.arch }})
         run: |
-          cd ./Mirel.Main/Mirel.Desktop
+          cd ./src/Mirel.Main/Mirel.Desktop
           ~/.dotnet/tools/pupnet --runtime linux-${{ matrix.arch }} --kind appimage -o Mirel.Desktop.linux.${{ matrix.arch }}.AppImage -y --app-version ${{ needs.time.outputs.y }}.${{ needs.time.outputs.md }}.${{ needs.time.outputs.hm }}
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -82,10 +82,10 @@ jobs:
         with:
           dotnet-version: "8.0.x"
       - name: Write Version
-        run: echo "${{ needs.time.outputs.v }}" > ./Mirel.Main/Mirel/Public/Version.txt
+        run: echo "${{ needs.time.outputs.v }}" > ./src/Mirel.Main/Mirel/Public/Version.txt
       - name: Build macOS App (x64)
         run: |
-          cd ./Mirel.Main/Mirel.Desktop
+          cd ./src/Mirel.Main/Mirel.Desktop
           dotnet restore -r osx-x64
           dotnet msbuild -t:BundleApp -p:RuntimeIdentifier=osx-x64 -property:Configuration=Release -p:SelfContained=true -p:Version=${{ needs.time.outputs.sv }}
           cp ./Icon.icns "./bin/Release/net8.0/osx-x64/publish/Mirel.app/Contents/Resources/Icon.icns"
@@ -111,10 +111,10 @@ jobs:
         with:
           dotnet-version: "8.0.x"
       - name: Write Version
-        run: echo "${{ needs.time.outputs.v }}" > ./Mirel.Main/Mirel/Public/Version.txt
+        run: echo "${{ needs.time.outputs.v }}" > ./src/Mirel.Main/Mirel/Public/Version.txt
       - name: Build Windows Executables
         run: |
-          cd ./Mirel.Main/Mirel.Desktop
+          cd ./src/Mirel.Main/Mirel.Desktop
           for arch in win-x86 win-x64 win-arm64; do
             dotnet publish -c Release -r $arch /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:SelfContained=false /p:Version=${{ needs.time.outputs.sv }}
             mv ./bin/Release/net8.0/$arch/publish/Mirel.Desktop.exe ./bin/Release/net8.0/Mirel.win.${arch#win-}.portable.exe
@@ -148,17 +148,17 @@ jobs:
       - name: Install PupNet
         run: dotnet tool install -g KuiperZone.PupNet --version 1.8.0
       - name: Write Version
-        run: echo "${{ needs.time.outputs.v }}" > ./Mirel.Main/Mirel/Public/Version.txt
+        run: echo "${{ needs.time.outputs.v }}" > ./src/Mirel.Main/Mirel/Public/Version.txt
         shell: bash
       - name: Build Installer (${{ matrix.arch }})
         run: |
-          cd ./Mirel.Main/Mirel.Desktop
+          cd ./src/Mirel.Main/Mirel.Desktop
           pupnet -r win-${{ matrix.arch }} -k setup -y -o Mirel.Desktop.win.${{ matrix.arch }}.installer.exe --app-version ${{ needs.time.outputs.y }}.${{ needs.time.outputs.md }}.${{ needs.time.outputs.hm }}
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: win-artifacts-${{ matrix.arch }}
-          path: ./Mirel.Main/Mirel.Desktop/Deploy/OUT/*
+          path: ./src/Mirel.Main/Mirel.Desktop/Deploy/OUT/*
           retention-days: 1
 
   mac:
