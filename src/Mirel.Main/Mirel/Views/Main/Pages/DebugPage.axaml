@@ -10,32 +10,40 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <UserControl.Styles>
         <Style Selector="Button">
-            <Setter Property="Margin" Value="0,0,5,5" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style Selector="WrapPanel">
+            <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
     </UserControl.Styles>
-    <WrapPanel Margin="7,0,5,5">
-        <Button
-            Click="Notice"
-            Content="Notice Info"
-            Tag="Info" />
-        <Button
-            Click="Notice"
-            Content="Notice Warn"
-            Tag="Warn" />
-        <Button
-            Click="Notice"
-            Content="Notice Error"
-            Tag="Error" />
-        <Button
-            Click="Notice"
-            Content="Notice Success"
-            Tag="Success" />
-        <Button
-            Click="Notice"
-            Content="Notice Long Time"
-            Tag="Long" />
-        <Button Click="NoticeWithButtons" Content="Notice With Buttons" />
-        <Button Click="NoticeWithButtonsInline" Content="Notice With Buttons (Inline)" />
-        <Button Click="Crush" Content="Crush" />
-    </WrapPanel>
+    <StackPanel Margin="7,0,5,5">
+        <WrapPanel>
+            <Button
+                Click="Notice"
+                Content="Notice Info"
+                Tag="Info" />
+            <Button
+                Click="Notice"
+                Content="Notice Warn"
+                Tag="Warn" />
+            <Button
+                Click="Notice"
+                Content="Notice Error"
+                Tag="Error" />
+            <Button
+                Click="Notice"
+                Content="Notice Success"
+                Tag="Success" />
+            <Button
+                Click="Notice"
+                Content="Notice Long Time"
+                Tag="Long" />
+            <Button Click="NoticeWithButtons" Content="Notice With Buttons" />
+            <Button Click="NoticeWithButtonsInline" Content="Notice With Buttons (Inline)" />
+        </WrapPanel>
+        <Separator />
+        <WrapPanel>
+            <Button Click="Crush" Content="Crush" />
+        </WrapPanel>
+    </StackPanel>
 </UserControl>
