@@ -5,6 +5,7 @@
     x:Class="Mirel.Views.Main.Pages.NewTabPage"
     x:DataType="pages:NewTabPage"
     xmlns="https://github.com/avaloniaui"
+    xmlns:converter="clr-namespace:Mirel.Module.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:entries="clr-namespace:Mirel.Classes.Entries"
     xmlns:helper="clr-namespace:Mirel.Module.Ui.Helper"
@@ -13,12 +14,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <UserControl.Resources>
         <helper:SukiEaseOutBack BounceIntensity="Soft" x:Key="Easing" />
+        <converter:NavScrollOpacityMaskConverter x:Key="NavScrollOpacityMaskConverter" />
     </UserControl.Resources>
     <UserControl.Styles>
         <Style Selector="Border.search">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Margin" Value="20,50,20,0" />
+            <Setter Property="Margin" Value="{Binding SearchMargin}" />
             <Style Selector="^ ScrollViewer.search">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
@@ -26,7 +28,7 @@
         <Style Selector="Border.search:focus-within">
             <Setter Property="Background" Value="{DynamicResource PanelBackgroundColor}" />
             <Setter Property="Padding" Value="15" />
-            <Setter Property="Margin" Value="20,35,20,0" />
+            <Setter Property="Margin" Value="{Binding SearchMarginExpand}" />
             <Style Selector="^ ScrollViewer.search">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
@@ -43,6 +45,18 @@
             Margin="0,145,0,0"
             Name="TitleRoot"
             VerticalAlignment="Center">
+            <DockPanel.Transitions>
+                <Transitions>
+                    <DoubleTransition
+                        Duration="0:0:0.25"
+                        Easing="{StaticResource Easing}"
+                        Property="Opacity" />
+                    <ThicknessTransition
+                        Duration="0:0:0.25"
+                        Easing="{StaticResource Easing}"
+                        Property="Margin" />
+                </Transitions>
+            </DockPanel.Transitions>
             <Image
                 Height="140"
                 Margin="0,0,0,0"
@@ -78,7 +92,7 @@
             Classes="search"
             CornerRadius="{DynamicResource CardCornerRadius}"
             DockPanel.Dock="Top"
-            MaxWidth="600"
+            MaxWidth="730"
             VerticalAlignment="Top">
             <Border.Transitions>
                 <Transitions>
@@ -99,7 +113,18 @@
                     DockPanel.Dock="Top"
                     Name="SearchBox"
                     Text="{Binding SearchFilter}"
-                    Watermark="搜索">
+                    Watermark="搜索...">
+                    <TextBox.InnerLeftContent>
+                        <Border
+                            Background="{DynamicResource PopupBackgroundColor}"
+                            CornerRadius="{DynamicResource CardCornerRadius}"
+                            IsVisible="{Binding IsSearchTypeVisible}"
+                            Margin="-3,0,-2,0"
+                            Padding="6,4,6,3"
+                            VerticalAlignment="Center">
+                            <TextBlock FontSize="11" Text="{Binding SearchTypeLabel}" />
+                        </Border>
+                    </TextBox.InnerLeftContent>
                     <TextBox.InnerRightContent>
                         <PathIcon
                             Data="{StaticResource SemiIconSearchStroked}"
@@ -110,9 +135,55 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
                 <ScrollViewer
+                    AllowAutoHide="True"
+                    Classes="flat-scroll search"
+                    DockPanel.Dock="Top"
+                    HorizontalScrollBarVisibility="Auto"
+                    Margin="0,10,0,0"
+                    Name="NavScrollViewer"
+                    Offset="{Binding TabScrollOffset}"
+                    OpacityMask="{Binding IsTabMaskVisible, Converter={StaticResource NavScrollOpacityMaskConverter}}"
+                    PointerWheelChanged="NavScrollViewer_PointerWheelChanged"
+                    VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding AllTypes}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel
+                                    Margin="10,0,0,0"
+                                    Orientation="Horizontal"
+                                    Spacing="5" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="entries:AggregateSearchTypeInfo">
+                                <Border
+                                    CornerRadius="{DynamicResource CardCornerRadius}"
+                                    Cursor="hand"
+                                    DockPanel.Dock="Right"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,1,0,0"
+                                    Padding="6,4,6,3"
+                                    VerticalAlignment="Center">
+                                    <TextBlock FontSize="11" Text="{Binding DisplayName}" />
+                                    <Border.Styles>
+                                        <Style Selector="Border">
+                                            <Setter Property="Background"
+                                                    Value="{DynamicResource PopupBackgroundColor}" />
+                                        </Style>
+                                        <Style Selector="Border:pointerover">
+                                            <Setter Property="Background"
+                                                    Value="{DynamicResource SelectedTabBackgroundColor}" />
+                                        </Style>
+                                    </Border.Styles>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <ScrollViewer
                     Classes="search"
                     DockPanel.Dock="Bottom"
-                    Margin="0,10,0,0">
+                    Margin="0,5,0,0">
                     <ListBox ItemsSource="{Binding Items}" Name="ListBox">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>

@@ -1,9 +1,11 @@
+using System;
 using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
-using DynamicData;
 using Mirel.Classes.Entries;
+using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
 using Mirel.Module.Service;
 using Mirel.Module.Ui.Helper;
@@ -40,6 +42,17 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage, IMirelNavPage
         };
         SizeChanged += (_, _) =>
         {
+            if (Bounds.Width > 625)
+            {
+                SearchMargin = new Thickness(90, 50, 90, 0);
+                SearchMarginExpand = new Thickness(90, 35, 90, 0);
+            }
+            else
+            {
+                SearchMargin = new Thickness(20, 50, 20, 0);
+                SearchMarginExpand = new Thickness(20, 35, 20, 0);
+            }
+
             int t;
             var h = Bounds.Height;
             if (h > 480)
@@ -69,15 +82,79 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage, IMirelNavPage
 
     public ObservableCollection<AggregateSearchEntry> Items { get; set; } = new();
 
-    public string SearchFilter
+    public Thickness SearchMargin
     {
-        get => field;
+        get;
         set
         {
-            SetField(ref field, value);
+            if (field == value) return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public Thickness SearchMarginExpand
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string SearchFilter
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            OnPropertyChanged();
+            ParseSearchQuery();
             Filter();
         }
     } = "";
+
+    public AggregateSearchType CurrentSearchType
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(SearchTypeLabel));
+        }
+    } = AggregateSearchType.All;
+
+    public string SearchTypeLabel => AggregateSearchTypeInfo.GetDisplayName(CurrentSearchType);
+
+    public bool IsSearchTypeVisible
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsTabMaskVisible
+    {
+        get;
+        set => SetField(ref field, value);
+    }
+
+    public Vector TabScrollOffset
+    {
+        get;
+        set => SetField(ref field, value);
+    }
+
+    public static AggregateSearchTypeInfo[] AllTypes => AggregateSearchTypeInfo.AllTypes;
 
 
     public static MirelStaticPageInfo StaticPageInfo { get; } = new()
@@ -104,9 +181,65 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage, IMirelNavPage
     {
     }
 
+    private void ParseSearchQuery()
+    {
+        var query = SearchFilter.Trim();
+
+        if (query.StartsWith('#'))
+        {
+            var parts = query[1..].Split([' '], 2, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length > 0)
+            {
+                var keyword = parts[0];
+                var searchType = AggregateSearchTypeInfo.FindTypeByKeyword(keyword);
+
+                if (searchType.HasValue)
+                {
+                    CurrentSearchType = searchType.Value;
+                    IsSearchTypeVisible = true;
+                    return;
+                }
+            }
+        }
+
+        CurrentSearchType = AggregateSearchType.All;
+        IsSearchTypeVisible = false;
+    }
+
+    private string GetActualSearchQuery()
+    {
+        var query = SearchFilter.Trim();
+
+        if (!query.StartsWith('#')) return query;
+        var parts = query[1..].Split([' '], 2, StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length > 1 ? parts[1] : "";
+    }
+
     private void Filter()
     {
-        Items.Clear();
-        Items.AddRange(AggregateSearchService.Search(SearchFilter));
+        try
+        {
+            Items.Clear();
+
+            var actualQuery = GetActualSearchQuery();
+
+            var searchResults = AggregateSearchService.Search(actualQuery, CurrentSearchType);
+
+            foreach (var item in searchResults) Items.Add(item);
+        }
+        catch
+        {
+            // 忽略错误
+        }
+    }
+
+    private void NavScrollViewer_PointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (sender is not ScrollViewer scrollViewer) return;
+        scrollViewer.Offset = new Vector(
+            scrollViewer.Offset.X + e.Delta.Y * -20, // 调整乘数以控制滚动速度
+            scrollViewer.Offset.Y
+        );
+        e.Handled = true;
     }
 }

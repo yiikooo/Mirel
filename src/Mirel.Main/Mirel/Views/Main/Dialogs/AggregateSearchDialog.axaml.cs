@@ -13,10 +13,6 @@ namespace Mirel.Views.Main.Dialogs;
 
 public sealed partial class AggregateSearchDialog : UserControl, INotifyPropertyChanged
 {
-    private AggregateSearchType _currentSearchType = AggregateSearchType.All;
-    private bool _isSearchTypeVisible;
-    private string _searchFilter = "";
-
     public AggregateSearchDialog()
     {
         InitializeComponent();
@@ -26,42 +22,42 @@ public sealed partial class AggregateSearchDialog : UserControl, INotifyProperty
         Init();
     }
 
-    public ObservableCollection<AggregateSearchEntry> FilteredItems { get; } = new();
+    public ObservableCollection<AggregateSearchEntry> FilteredItems { get; } = [];
 
     public string SearchFilter
     {
-        get => _searchFilter;
+        get;
         set
         {
-            if (_searchFilter == value) return;
-            _searchFilter = value;
+            if (field == value) return;
+            field = value;
             OnPropertyChanged();
             ParseSearchQuery();
             Filter();
         }
-    }
+    } = "";
 
     public AggregateSearchType CurrentSearchType
     {
-        get => _currentSearchType;
+        get;
         set
         {
-            if (_currentSearchType == value) return;
-            _currentSearchType = value;
+            if (field == value) return;
+            field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(SearchTypeLabel));
         }
-    }
+    } = AggregateSearchType.All;
 
     public string SearchTypeLabel => AggregateSearchTypeInfo.GetDisplayName(CurrentSearchType);
 
     public bool IsSearchTypeVisible
     {
-        get => _isSearchTypeVisible;
+        get;
         set
         {
-            if (_isSearchTypeVisible == value) return;
-            _isSearchTypeVisible = value;
+            if (field == value) return;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -83,9 +79,6 @@ public sealed partial class AggregateSearchDialog : UserControl, INotifyProperty
             CloseDialog();
         };
 
-        // 处理删除键清除搜索类型
-        AggregateSearchBox.KeyDown += OnSearchBoxKeyDown;
-
         // 关闭按钮点击事件
         CloseButton.Click += (_, _) => { CloseDialog(); };
 
@@ -97,20 +90,6 @@ public sealed partial class AggregateSearchDialog : UserControl, INotifyProperty
 
         // 初始过滤
         Filter();
-    }
-
-    private void OnSearchBoxKeyDown(object? sender, KeyEventArgs e)
-    {
-        // 当搜索框为空且按下删除键或退格键时，清除搜索类型
-        if ((e.Key == Key.Back || e.Key == Key.Delete) &&
-            string.IsNullOrEmpty(GetActualSearchQuery()) &&
-            IsSearchTypeVisible)
-        {
-            CurrentSearchType = AggregateSearchType.All;
-            IsSearchTypeVisible = false;
-            SearchFilter = "";
-            e.Handled = true;
-        }
     }
 
     private void OnTopDockPanelPointerPressed(object? sender, PointerPressedEventArgs e)

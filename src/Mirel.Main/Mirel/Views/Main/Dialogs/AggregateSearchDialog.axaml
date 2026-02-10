@@ -36,13 +36,13 @@
                     Margin="15,15,0,10"
                     Name="AggregateSearchBox"
                     Text="{Binding SearchFilter}"
-                    Watermark="搜索标签页... (使用 # 指定类型，如 #标签页)">
+                    Watermark="搜索...">
                     <TextBox.InnerLeftContent>
                         <Border
                             Background="{DynamicResource PopupBackgroundColor}"
                             CornerRadius="{DynamicResource CardCornerRadius}"
                             IsVisible="{Binding IsSearchTypeVisible}"
-                            Margin="3,0,6,0"
+                            Margin="-3,0,-2,0"
                             Padding="6,4,6,3"
                             VerticalAlignment="Center">
                             <TextBlock FontSize="11" Text="{Binding SearchTypeLabel}" />
