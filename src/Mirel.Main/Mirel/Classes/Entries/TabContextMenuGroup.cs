@@ -20,7 +20,7 @@ public class TabContextMenuGroup
     /// <summary>
     /// 该分组下的菜单项
     /// </summary>
-    public List<TabContextMenuEntry> Items { get; set; } = new();
+    public List<TabContextMenuEntry> Items { get; set; } = [];
 
     /// <summary>
     /// 是否在分组后添加分隔符

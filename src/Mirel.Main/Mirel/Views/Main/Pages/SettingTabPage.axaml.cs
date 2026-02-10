@@ -9,7 +9,7 @@ using Ursa.Controls;
 
 namespace Mirel.Views.Main.Pages;
 
-public partial class SettingTabPage : PageModelBase, IMirelTabPage, IMirelNavPage, IMirelSingletonTabPage
+public partial class SettingTabPage : PageModelBase, IMirelNavPage, IMirelSingletonTabPage
 {
     private SelectionListItem _selectedItem;
     public int DefaultNav = 0;
@@ -20,11 +20,6 @@ public partial class SettingTabPage : PageModelBase, IMirelTabPage, IMirelNavPag
         DataContext = this;
         RootElement = Root;
         InAnimator = new PageLoadingAnimator(Root, new Thickness(0, 60, 0, 0), (0, 1));
-        PageInfo = new PageInfoEntry
-        {
-            Icon = Icons.Setting,
-            Title = "设置"
-        };
     }
 
 
@@ -40,7 +35,7 @@ public partial class SettingTabPage : PageModelBase, IMirelTabPage, IMirelNavPag
         set => SetField(ref _selectedItem, value);
     }
 
-    public static MirelStaticPageInfo StaticPageInfo { get; } = new()
+    public static PageInfoEntry StaticPageInfo { get; } = new()
     {
         Title = "设置",
         Icon = Icons.Setting
@@ -56,7 +51,7 @@ public partial class SettingTabPage : PageModelBase, IMirelTabPage, IMirelNavPag
     public PageLoadingAnimator InAnimator { get; set; }
 
     public TabEntry HostTab { get; set; }
-    public PageInfoEntry PageInfo { get; }
+    public PageInfoEntry PageInfo => StaticPageInfo;
 
     public void OnClose()
     {

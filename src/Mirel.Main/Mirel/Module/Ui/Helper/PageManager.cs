@@ -9,9 +9,9 @@ namespace Mirel.Module.Ui.Helper;
 
 public static class PageManager
 {
-    private static readonly List<PageRegistration> RegisteredPages = new();
+    private static readonly List<PageRegistration> RegisteredPages = [];
 
-    public static void RegisterPage(PageIdentifier identifier, Type pageType, MirelStaticPageInfo staticPageInfo)
+    public static void RegisterPage(PageIdentifier identifier, Type pageType, PageInfoEntry staticPageInfo)
     {
         if (pageType == null)
             throw new ArgumentNullException(nameof(pageType));
@@ -26,7 +26,7 @@ public static class PageManager
         RegisteredPages.Add(registration);
     }
 
-    public static void RegisterPage<TPage>(PageIdentifier identifier, MirelStaticPageInfo staticPageInfo)
+    public static void RegisterPage<TPage>(PageIdentifier identifier, PageInfoEntry staticPageInfo)
         where TPage : IMirelNavPage
     {
         RegisterPage(identifier, typeof(TPage), staticPageInfo);

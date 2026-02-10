@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -59,7 +58,7 @@ public class TabContextMenuCommands : ViewModelBase
     public static IMirelTabWindow[] GetAllTabWindows()
     {
         var lifetime = Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
-        if (lifetime?.Windows == null) return Array.Empty<IMirelTabWindow>();
+        if (lifetime?.Windows == null) return [];
 
         return lifetime.Windows
             .OfType<IMirelTabWindow>()

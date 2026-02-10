@@ -29,7 +29,7 @@ public static class PageNav
         return PageManager.GetPageInstance(identifier, sender, param);
     }
 
-    public static MirelStaticPageInfo? GetPageInfo(PageIdentifier identifier)
+    public static PageInfoEntry? GetPageInfo(PageIdentifier identifier)
     {
         return PageManager.GetPageRegistration(identifier)?.StaticPageInfo;
     }

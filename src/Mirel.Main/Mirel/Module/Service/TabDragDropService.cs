@@ -18,7 +18,7 @@ public static class TabDragDropService
 {
     private static Window? _sourceWindow;
     private static Point _dragStartPoint;
-    private static readonly List<Window> _registeredWindows = new();
+    private static readonly List<Window> _registeredWindows = [];
 
     public static bool IsDragging { get; private set; }
 

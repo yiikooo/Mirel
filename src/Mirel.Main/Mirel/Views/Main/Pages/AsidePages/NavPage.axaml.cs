@@ -51,7 +51,7 @@ public partial class NavPage : PageModelBase, IMirelPage
         };
     }
 
-    public ObservableCollection<PageRegistration> Pages { get; set; } = new();
+    public ObservableCollection<PageRegistration> Pages { get; set; } = [];
 
     public Control RootElement { get; init; }
 

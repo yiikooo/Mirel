@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
@@ -62,7 +61,8 @@ public static class TabContextMenuBuilder
             InputGesture = KeyGesture.Parse("Ctrl + W"),
             Icon = new PathIcon
             {
-                Data = Geometry.Parse("M7.46,11.88L8.88,10.46L11,12.59L13.12,10.46L14.54,11.88L12.41,14L14.54,16.12L13.12,17.54L11,15.41L8.88,17.54L7.46,16.12L9.59,14L7.46,11.88M3,3H21A2,2 0 0,1 23,5V19A2,2 0 0,1 21,21H3A2,2 0 0,1 1,19V5A2,2 0 0,1 3,3M3,5V19H21V9H13V5H3Z"),
+                Data = Geometry.Parse(
+                    "M7.46,11.88L8.88,10.46L11,12.59L13.12,10.46L14.54,11.88L12.41,14L14.54,16.12L13.12,17.54L11,15.41L8.88,17.54L7.46,16.12L9.59,14L7.46,11.88M3,3H21A2,2 0 0,1 23,5V19A2,2 0 0,1 21,21H3A2,2 0 0,1 1,19V5A2,2 0 0,1 3,3M3,5V19H21V9H13V5H3Z"),
                 Width = 17
             },
             Command = new RelayCommand(() =>
@@ -92,7 +92,8 @@ public static class TabContextMenuBuilder
             Header = "在新窗口中打开",
             Icon = new PathIcon
             {
-                Data = Geometry.Parse("M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"),
+                Data = Geometry.Parse(
+                    "M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"),
                 Width = 17
             },
             Command = new RelayCommand(() => { tabEntry.MoveTabToNewWindow(); })
@@ -105,14 +106,15 @@ public static class TabContextMenuBuilder
             Header = "移动到窗口",
             Icon = new PathIcon
             {
-                Data = Geometry.Parse("M14,14H16L12,10L8,14H10V18H14M20,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6A2,2 0 0,0 20,4M20,18H4V6H20V18Z"),
+                Data = Geometry.Parse(
+                    "M14,14H16L12,10L8,14H10V18H14M20,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6A2,2 0 0,0 20,4M20,18H4V6H20V18Z"),
                 Width = 17
             }
         };
 
         // 获取所有窗口
         var allWindows = (Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)
-            ?.Windows.OfType<IMirelTabWindow>().ToList() ?? new List<IMirelTabWindow>();
+            ?.Windows.OfType<IMirelTabWindow>().ToList() ?? [];
 
         var otherWindows = allWindows.Where(w => w != sourceWindow).ToList();
 
@@ -124,7 +126,8 @@ public static class TabContextMenuBuilder
                 IsEnabled = false,
                 Icon = new PathIcon
                 {
-                    Data = Geometry.Parse("F1 M512,512z M0,0z M502.6,278.6C515.1,266.1,515.1,245.8,502.6,233.3L342.6,73.3C330.1,60.8 309.8,60.8 297.3,73.3 284.8,85.8 284.8,106.1 297.3,118.6L402.7,224 32,224C14.3,224 0,238.3 0,256 0,273.7 14.3,288 32,288L402.7,288 297.3,393.4C284.8,405.9 284.8,426.2 297.3,438.7 309.8,451.2 330.1,451.2 342.6,438.7L502.6,278.7z"),
+                    Data = Geometry.Parse(
+                        "F1 M512,512z M0,0z M502.6,278.6C515.1,266.1,515.1,245.8,502.6,233.3L342.6,73.3C330.1,60.8 309.8,60.8 297.3,73.3 284.8,85.8 284.8,106.1 297.3,118.6L402.7,224 32,224C14.3,224 0,238.3 0,256 0,273.7 14.3,288 32,288L402.7,288 297.3,393.4C284.8,405.9 284.8,426.2 297.3,438.7 309.8,451.2 330.1,451.2 342.6,438.7L502.6,278.7z"),
                     Width = 14,
                     Margin = new Thickness(8, -1, 0, 0)
                 }
@@ -140,7 +143,8 @@ public static class TabContextMenuBuilder
                     Header = window.WindowId,
                     Icon = new PathIcon
                     {
-                        Data = Geometry.Parse("F1 M512,512z M0,0z M502.6,278.6C515.1,266.1,515.1,245.8,502.6,233.3L342.6,73.3C330.1,60.8 309.8,60.8 297.3,73.3 284.8,85.8 284.8,106.1 297.3,118.6L402.7,224 32,224C14.3,224 0,238.3 0,256 0,273.7 14.3,288 32,288L402.7,288 297.3,393.4C284.8,405.9 284.8,426.2 297.3,438.7 309.8,451.2 330.1,451.2 342.6,438.7L502.6,278.7z"),
+                        Data = Geometry.Parse(
+                            "F1 M512,512z M0,0z M502.6,278.6C515.1,266.1,515.1,245.8,502.6,233.3L342.6,73.3C330.1,60.8 309.8,60.8 297.3,73.3 284.8,85.8 284.8,106.1 297.3,118.6L402.7,224 32,224C14.3,224 0,238.3 0,256 0,273.7 14.3,288 32,288L402.7,288 297.3,393.4C284.8,405.9 284.8,426.2 297.3,438.7 309.8,451.2 330.1,451.2 342.6,438.7L502.6,278.7z"),
                         Width = 14,
                         Margin = new Thickness(8, -1, 0, 0)
                     },
@@ -162,7 +166,8 @@ public static class TabContextMenuBuilder
     /// <summary>
     /// 构建完全自定义的菜单
     /// </summary>
-    private static void BuildCustomMenu(MenuFlyout menuFlyout, IMirelTabContextMenuProvider menuProvider, TabEntry tabEntry, IMirelTabWindow? sourceWindow)
+    private static void BuildCustomMenu(MenuFlyout menuFlyout, IMirelTabContextMenuProvider menuProvider,
+        TabEntry tabEntry, IMirelTabWindow? sourceWindow)
     {
         // 优先使用分组方式
         var groups = menuProvider.GetCustomContextMenuGroups();
@@ -183,7 +188,8 @@ public static class TabContextMenuBuilder
     /// <summary>
     /// 追加自定义菜单到默认菜单后面
     /// </summary>
-    private static void AppendCustomMenu(MenuFlyout menuFlyout, IMirelTabContextMenuProvider menuProvider, TabEntry tabEntry, IMirelTabWindow? sourceWindow)
+    private static void AppendCustomMenu(MenuFlyout menuFlyout, IMirelTabContextMenuProvider menuProvider,
+        TabEntry tabEntry, IMirelTabWindow? sourceWindow)
     {
         // 优先使用分组方式
         var groups = menuProvider.GetCustomContextMenuGroups();
@@ -208,7 +214,8 @@ public static class TabContextMenuBuilder
     /// <summary>
     /// 从分组构建菜单
     /// </summary>
-    private static void BuildMenuFromGroups(MenuFlyout menuFlyout, List<TabContextMenuGroup> groups, TabEntry tabEntry, IMirelTabWindow? sourceWindow)
+    private static void BuildMenuFromGroups(MenuFlyout menuFlyout, List<TabContextMenuGroup> groups, TabEntry tabEntry,
+        IMirelTabWindow? sourceWindow)
     {
         // 按优先级排序
         var sortedGroups = groups.OrderBy(g => g.Priority).ToList();
@@ -231,7 +238,8 @@ public static class TabContextMenuBuilder
     /// <summary>
     /// 从菜单项列表构建菜单
     /// </summary>
-    private static void BuildMenuFromItems(MenuFlyout menuFlyout, List<TabContextMenuEntry> items, TabEntry tabEntry, IMirelTabWindow? sourceWindow)
+    private static void BuildMenuFromItems(MenuFlyout menuFlyout, List<TabContextMenuEntry> items, TabEntry tabEntry,
+        IMirelTabWindow? sourceWindow)
     {
         // 按优先级排序
         var sortedItems = items.OrderBy(item => item.Priority).ToList();

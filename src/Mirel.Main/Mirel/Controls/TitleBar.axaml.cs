@@ -15,7 +15,7 @@ namespace Mirel.Controls;
 
 public partial class TitleBar : PageModelBase
 {
-    private readonly List<Action> _disposeActions = new();
+    private readonly List<Action> _disposeActions = [];
     private Win32Properties.CustomWndProcHookCallback? _wndProcHookCallback;
 
     public TitleBar()

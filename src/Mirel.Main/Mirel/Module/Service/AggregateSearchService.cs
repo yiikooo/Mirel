@@ -53,7 +53,7 @@ public class AggregateSearchService
 
     public static List<AggregateSearchEntry> GetAggregateItems(bool order = false)
     {
-        List<AggregateSearchEntry> items = new();
+        List<AggregateSearchEntry> items = [];
         var lifetime = Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
 
         if (lifetime?.Windows == null) return order ? items.OrderBy(e => e.Type).ThenBy(e => e.Title).ToList() : items;

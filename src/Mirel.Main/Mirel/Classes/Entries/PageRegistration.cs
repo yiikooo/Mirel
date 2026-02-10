@@ -7,7 +7,7 @@ namespace Mirel.Classes.Entries;
 
 public class PageRegistration
 {
-    public PageRegistration(PageIdentifier identifier, Type pageType, MirelStaticPageInfo staticPageInfo)
+    public PageRegistration(PageIdentifier identifier, Type pageType, PageInfoEntry staticPageInfo)
     {
         Identifier = identifier;
         PageType = pageType;
@@ -16,7 +16,7 @@ public class PageRegistration
 
     public PageIdentifier Identifier { get; set; }
     public Type PageType { get; set; }
-    public MirelStaticPageInfo StaticPageInfo { get; set; }
+    public PageInfoEntry StaticPageInfo { get; set; }
 
     public IMirelPage CreateInstance(object sender, object? param = null)
     {
