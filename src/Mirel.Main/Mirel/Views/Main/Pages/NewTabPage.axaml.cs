@@ -2,14 +2,12 @@ using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
-using Avalonia.VisualTree;
 using DynamicData;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Module.Service;
 using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
-using Ursa.Controls;
 
 namespace Mirel.Views.Main.Pages;
 
@@ -69,11 +67,11 @@ public partial class NewTabPage : PageModelBase, IMirelTabPage, IMirelNavPage
         };
     }
 
-    public ObservableCollection<AggregateSearchEntry> Items { get; set; } = [];
+    public ObservableCollection<AggregateSearchEntry> Items { get; set; } = new();
 
     public string SearchFilter
     {
-        get;
+        get => field;
         set
         {
             SetField(ref field, value);

@@ -53,7 +53,7 @@ public class AggregateSearchService
 
     public static List<AggregateSearchEntry> GetAggregateItems(bool order = false)
     {
-        List<AggregateSearchEntry> items = [];
+        List<AggregateSearchEntry> items = new();
         var lifetime = Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
 
         if (lifetime?.Windows == null) return order ? items.OrderBy(e => e.Type).ThenBy(e => e.Title).ToList() : items;
@@ -68,7 +68,10 @@ public class AggregateSearchService
 
             items.AddRange(window.Tabs.Select(tab => new AggregateSearchEntry
             {
-                Title = tab.Title, Icon = tab.Icon, Type = AggregateSearchType.Tab, Label = "标签页",
+                Title = tab.Title,
+                Icon = tab.Icon,
+                Type = AggregateSearchType.Tab,
+                Label = "标签页",
                 Data = tab
             }));
         }

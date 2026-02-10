@@ -1,0 +1,89 @@
+<UserControl
+    d:DesignHeight="550"
+    d:DesignWidth="870"
+    mc:Ignorable="d"
+    x:Class="Mirel.Views.Main.Dialogs.AggregateSearchDialog"
+    x:DataType="dialogs:AggregateSearchDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogs="clr-namespace:Mirel.Views.Main.Dialogs"
+    xmlns:entries="clr-namespace:Mirel.Classes.Entries"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Background="{DynamicResource PanelBackgroundColor}" CornerRadius="{DynamicResource CardCornerRadius}">
+        <DockPanel>
+            <!--  搜索框区域  -->
+            <DockPanel
+                Background="Transparent"
+                Dock="Top"
+                Name="TopDockPanel">
+                <Button
+                    Classes="Tertiary"
+                    DockPanel.Dock="Right"
+                    Height="32"
+                    Margin="10,15,15,10"
+                    Name="CloseButton"
+                    Padding="8"
+                    Width="32">
+                    <PathIcon
+                        Data="{DynamicResource Close}"
+                        Foreground="{DynamicResource ForegroundColor}"
+                        Height="12"
+                        Width="12" />
+                </Button>
+                <TextBox
+                    CornerRadius="15"
+                    Margin="15,15,0,10"
+                    Name="AggregateSearchBox"
+                    Text="{Binding SearchFilter}"
+                    Watermark="搜索标签页...">
+                    <TextBox.InnerRightContent>
+                        <PathIcon
+                            Data="{StaticResource SemiIconSearchStroked}"
+                            Foreground="{DynamicResource ForegroundColor}"
+                            Height="14"
+                            Margin="0,0,3,0"
+                            Width="14" />
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </DockPanel>
+
+            <ScrollViewer DockPanel.Dock="Bottom" Margin="15,0,15,15">
+                <ListBox ItemsSource="{Binding FilteredItems}" Name="AggregateSearchListBox">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="entries:AggregateSearchEntry">
+                            <DockPanel Margin="0,5" VerticalAlignment="Center">
+                                <PathIcon
+                                    Data="{Binding Icon}"
+                                    DockPanel.Dock="Left"
+                                    Height="14"
+                                    Margin="0,0,10,0"
+                                    VerticalAlignment="Center"
+                                    Width="14" />
+                                <TextBlock
+                                    DockPanel.Dock="Left"
+                                    Text="{Binding Title}"
+                                    VerticalAlignment="Center" />
+                                <Border
+                                    Background="{DynamicResource PopupBackgroundColor}"
+                                    CornerRadius="{DynamicResource CardCornerRadius}"
+                                    DockPanel.Dock="Right"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,1,0,0"
+                                    Padding="6,4,6,3"
+                                    VerticalAlignment="Center">
+                                    <TextBlock FontSize="11" Text="{Binding Label}" />
+                                </Border>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </DockPanel>
+    </Border>
+</UserControl>

@@ -19,6 +19,7 @@ using Mirel.Module.Event;
 using Mirel.Module.Service;
 using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
+using Mirel.Views.Main.Dialogs;
 using Mirel.Views.Main.Pages;
 using Ursa.Controls;
 using WindowNotificationManager = Ursa.Controls.WindowNotificationManager;
@@ -239,13 +240,15 @@ public partial class TabWindow : UrsaWindow, IMirelTabWindow
                     var options = new DialogOptions
                     {
                         ShowInTaskBar = false,
-                        IsCloseButtonVisible = true,
+                        IsCloseButtonVisible = false,
                         StartupLocation = WindowStartupLocation.Manual,
                         CanDragMove = true,
                         StyleClass = "aggregate-search"
                     };
-                    // Dialog.ShowCustom<AggregateSearchDialog, AggregateSearchDialog>(new AggregateSearchDialog(),
-                    //     this.GetVisualRoot() as Window, options: options); //TODO
+                    Dialog.ShowCustom<AggregateSearchDialog, AggregateSearchDialog>(
+                        new AggregateSearchDialog(),
+                        this,
+                        options: options);
                 }
 
                 _lastShiftPressTime = DateTime.Now;
