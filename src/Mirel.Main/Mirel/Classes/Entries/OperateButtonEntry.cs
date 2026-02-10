@@ -57,9 +57,18 @@ public class OperateButtonEntry : ReactiveObject
             messageCard?.CloseWithoutRemovingFromList();
     }
 
-    private class SimpleCommand(Action<object> execute) : ICommand
+    private class SimpleCommand : ICommand
     {
+        private readonly Action<object> _execute;
+
+        public SimpleCommand(Action<object> execute)
+        {
+            _execute = execute;
+        }
+
+#pragma warning disable CS0067
         public event EventHandler? CanExecuteChanged;
+#pragma warning restore CS0067
 
         public bool CanExecute(object? parameter)
         {
@@ -68,7 +77,7 @@ public class OperateButtonEntry : ReactiveObject
 
         public void Execute(object? parameter)
         {
-            execute(parameter ?? new object());
+            _execute(parameter ?? new object());
         }
     }
 }

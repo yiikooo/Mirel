@@ -57,8 +57,6 @@ public abstract class MirelMessageCard : ContentControl
     public static readonly AttachedProperty<bool> CloseOnClickProperty =
         AvaloniaProperty.RegisterAttached<MirelMessageCard, Button, bool>("CloseOnClick");
 
-    private bool _isClosing;
-
     static MirelMessageCard()
     {
         CloseOnClickProperty.Changed.AddClassHandler<Button>(OnCloseOnClickPropertyChanged);
@@ -71,8 +69,8 @@ public abstract class MirelMessageCard : ContentControl
 
     public bool IsClosing
     {
-        get => _isClosing;
-        private set => SetAndRaise(IsClosingProperty, ref _isClosing, value);
+        get;
+        private set => SetAndRaise(IsClosingProperty, ref field, value);
     }
 
     public bool IsClosed

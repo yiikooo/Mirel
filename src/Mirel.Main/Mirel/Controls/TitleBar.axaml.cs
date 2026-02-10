@@ -16,13 +16,6 @@ namespace Mirel.Controls;
 public partial class TitleBar : PageModelBase
 {
     private readonly List<Action> _disposeActions = new();
-    private bool _isCloseBtnExitApp;
-    private bool _isCloseBtnHideWindow;
-    private bool _isCloseBtnShow = true;
-    private bool _isMaxBtnShow = true;
-    private bool _isMinBtnShow = true;
-    private object _leftContent;
-    private string _title;
     private Win32Properties.CustomWndProcHookCallback? _wndProcHookCallback;
 
     public TitleBar()
@@ -49,45 +42,45 @@ public partial class TitleBar : PageModelBase
 
     public string Title
     {
-        get => _title;
-        set => SetField(ref _title, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public object LeftContent
     {
-        get => _leftContent;
-        set => SetField(ref _leftContent, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsCloseBtnExitApp
     {
-        get => _isCloseBtnExitApp;
-        set => SetField(ref _isCloseBtnExitApp, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsCloseBtnHideWindow
     {
-        get => _isCloseBtnHideWindow;
-        set => SetField(ref _isCloseBtnHideWindow, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsCloseBtnShow
     {
-        get => _isCloseBtnShow;
-        set => SetField(ref _isCloseBtnShow, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = true;
 
     public bool IsMaxBtnShow
     {
-        get => _isMaxBtnShow;
-        set => SetField(ref _isMaxBtnShow, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = true;
 
     public bool IsMinBtnShow
     {
-        get => _isMinBtnShow;
-        set => SetField(ref _isMinBtnShow, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = true;
 
     public DateTime? lastClickTime { get; set; }
 

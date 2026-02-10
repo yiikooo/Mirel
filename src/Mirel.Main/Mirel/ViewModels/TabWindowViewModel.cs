@@ -9,13 +9,6 @@ namespace Mirel.ViewModels;
 
 public class TabWindowViewModel : ViewModelBase
 {
-    private bool _isTabMaskVisible;
-
-    private TabEntry? _selectedTab;
-    private Vector _tabScrollOffset;
-
-    private DateTime _time = DateTime.Now;
-
     public TabWindowViewModel()
     {
         PropertyChanged += (s, e) =>
@@ -33,28 +26,28 @@ public class TabWindowViewModel : ViewModelBase
 
     public DateTime Time
     {
-        get => _time;
-        set => SetField(ref _time, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = DateTime.Now;
 
     public ObservableCollection<TabEntry> Tabs { get; set; } = [];
 
     public Vector TabScrollOffset
     {
-        get => _tabScrollOffset;
-        set => SetField(ref _tabScrollOffset, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsTabMaskVisible
     {
-        get => _isTabMaskVisible;
-        set => SetField(ref _isTabMaskVisible, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public TabEntry? SelectedTab
     {
-        get => _selectedTab;
-        set => SetField(ref _selectedTab, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool HasTabs => Tabs.Count > 0;

@@ -12,28 +12,13 @@ namespace Mirel.Classes.Entries;
 public class TaskEntry : ViewModelBase
 {
     private readonly Timer _timer;
-    private string _bottomLeftInfoText;
-    private Action? _buttonAction;
-    private string _buttonText;
-    private Action? _destroyAction;
-    private bool _expanded = true;
-    private bool _isButtonEnable = true;
-    private bool _isCancelRequest;
-    private bool _isDestroyButtonVisible;
-
-    private string _name;
-    private bool _progressIsIndeterminate = true;
-    private double _progressValue;
-    private TaskState _taskState = TaskState.Waiting;
-    private TimeSpan _time = TimeSpan.Zero;
-    private string _topRightInfoText;
 
     public TaskEntry(string name)
     {
         Name = name;
         DestroyAction = Destroy;
         _timer = new Timer(1000);
-        _timer.Elapsed += (sender, args) => { Time = Time.Add(TimeSpan.FromSeconds(1)); };
+        _timer.Elapsed += (_, _) => { Time = Time.Add(TimeSpan.FromSeconds(1)); };
         PropertyChanged += OnPropertyChanged;
     }
 
@@ -41,96 +26,96 @@ public class TaskEntry : ViewModelBase
     {
         DestroyAction = Destroy;
         _timer = new Timer(1000);
-        _timer.Elapsed += (sender, args) => { Time = Time.Add(TimeSpan.FromSeconds(1)); };
+        _timer.Elapsed += (_, _) => { Time = Time.Add(TimeSpan.FromSeconds(1)); };
         PropertyChanged += OnPropertyChanged;
     }
 
     public ObservableCollection<TaskEntry> SubTasks { get; set; } = [];
     public ObservableCollection<OperateButtonEntry> OperateButtons { get; set; } = [];
 
-    public string Name
+    public string? Name
     {
-        get => _name;
-        set => SetField(ref _name, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public TaskState TaskState
     {
-        get => _taskState;
-        set => SetField(ref _taskState, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = TaskState.Waiting;
 
     public bool ProgressIsIndeterminate
     {
-        get => _progressIsIndeterminate;
-        set => SetField(ref _progressIsIndeterminate, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = true;
 
     public bool IsCancelRequest
     {
-        get => _isCancelRequest;
-        set => SetField(ref _isCancelRequest, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsButtonEnable
     {
-        get => _isButtonEnable;
-        set => SetField(ref _isButtonEnable, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = true;
 
     public bool Expanded
     {
-        get => _expanded;
-        set => SetField(ref _expanded, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = true;
 
     public double ProgressValue
     {
-        get => _progressValue;
-        set => SetField(ref _progressValue, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public Action? ButtonAction
     {
-        get => _buttonAction;
-        set => SetField(ref _buttonAction, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public Action? DestroyAction
     {
-        get => _destroyAction;
-        set => SetField(ref _destroyAction, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    public string ButtonText
+    public string? ButtonText
     {
-        get => _buttonText;
-        set => SetField(ref _buttonText, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    public string TopRightInfoText
+    public string? TopRightInfoText
     {
-        get => _topRightInfoText;
-        set => SetField(ref _topRightInfoText, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    public string BottomLeftInfoText
+    public string? BottomLeftInfoText
     {
-        get => _bottomLeftInfoText;
-        set => SetField(ref _bottomLeftInfoText, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsDestroyButtonVisible
     {
-        get => _isDestroyButtonVisible;
-        set => SetField(ref _isDestroyButtonVisible, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public TimeSpan Time
     {
-        get => _time;
-        set => SetField(ref _time, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = TimeSpan.Zero;
 
 
     public TaskEntry AddIn(TaskEntry entry)

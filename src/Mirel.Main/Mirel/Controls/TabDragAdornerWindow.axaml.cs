@@ -42,8 +42,6 @@ public partial class TabDragAdornerWindow : Window
 /// </summary>
 public class TabDragAdornerViewModel : ReactiveObject
 {
-    private TabDragState _dragState = TabDragState.NoOperation;
-
     public TabDragAdornerViewModel(TabEntry tabEntry)
     {
         TabEntry = tabEntry;
@@ -53,15 +51,15 @@ public class TabDragAdornerViewModel : ReactiveObject
 
     public TabDragState DragState
     {
-        get => _dragState;
+        get;
         set
         {
-            this.RaiseAndSetIfChanged(ref _dragState, value);
+            this.RaiseAndSetIfChanged(ref field, value);
             // 当状态改变时，通知图标和可见性属性也改变
             this.RaisePropertyChanged(nameof(StateIcon));
             this.RaisePropertyChanged(nameof(ShowStateIcon));
         }
-    }
+    } = TabDragState.NoOperation;
 
     /// <summary>
     /// 获取当前拖动状态对应的图标路径

@@ -14,8 +14,6 @@ namespace Mirel.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    private DateTime _time = DateTime.Now;
-
     public MainViewModel()
     {
         InitializationEvents.AfterUiLoaded += () =>
@@ -60,9 +58,9 @@ public class MainViewModel : ViewModelBase
 
     public DateTime Time
     {
-        get => _time;
-        set => SetField(ref _time, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = DateTime.Now;
 
     public void CreateTab(TabEntry tab)
     {

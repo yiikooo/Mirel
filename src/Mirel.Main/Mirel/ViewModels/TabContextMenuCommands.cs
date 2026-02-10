@@ -12,19 +12,16 @@ namespace Mirel.ViewModels;
 
 public class TabContextMenuCommands : ViewModelBase
 {
-    private IMirelTabWindow _sourceWindow;
-    private TabEntry _targetTab;
-
     public TabEntry TargetTab
     {
-        get => _targetTab;
-        set => SetField(ref _targetTab, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public IMirelTabWindow SourceWindow
     {
-        get => _sourceWindow;
-        set => SetField(ref _sourceWindow, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public void CloseTab()
