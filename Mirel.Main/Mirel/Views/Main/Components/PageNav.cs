@@ -5,7 +5,7 @@ using Mirel.Classes.Interfaces;
 using Mirel.Module.Ui.Helper;
 using Mirel.Views.Main.Pages;
 
-namespace Mirel.Views.Main;
+namespace Mirel.Views.Main.Components;
 
 public static class PageNav
 {
@@ -14,6 +14,13 @@ public static class PageNav
         PageManager.RegisterPage<SettingTabPage>(PageIdentifier.Settings, SettingTabPage.StaticPageInfo);
         PageManager.RegisterPage<NewTabPage>(PageIdentifier.NewTab, NewTabPage.StaticPageInfo);
         PageManager.RegisterPage<HomePage>(PageIdentifier.Home, HomePage.StaticPageInfo);
+#if DEBUG
+        RegisterDebugPage();
+#endif
+    }
+
+    public static void RegisterDebugPage()
+    {
         PageManager.RegisterPage<DebugPage>(PageIdentifier.Debug, DebugPage.StaticPageInfo);
     }
 

@@ -25,6 +25,7 @@ using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
 using Mirel.Views.Main.Pages;
 using Ursa.Controls;
+using MoreButtonMenu = Mirel.Views.Main.Components.MoreButtonMenu;
 using WindowNotificationManager = Ursa.Controls.WindowNotificationManager;
 
 namespace Mirel.Views.Main;

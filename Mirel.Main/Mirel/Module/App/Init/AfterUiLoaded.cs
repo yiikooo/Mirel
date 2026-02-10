@@ -4,7 +4,7 @@ using Mirel.Const;
 using Mirel.Module.App.Services;
 using Mirel.Module.Events;
 using Mirel.Module.Ui;
-using Mirel.Views.Main;
+using Mirel.Views.Main.Components;
 
 namespace Mirel.Module.App.Init;
 

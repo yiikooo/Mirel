@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using Mirel.Module.Events;
 using Mirel.ViewModels;
 
-namespace Mirel.Views.Main.Pages;
+namespace Mirel.Views.Main.Components;
 
 public partial class MoreButtonMenu : UserControl
 {

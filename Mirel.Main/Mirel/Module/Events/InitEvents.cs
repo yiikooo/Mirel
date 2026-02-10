@@ -1,5 +1,5 @@
 using System;
-using MoreButtonMenu = Mirel.Views.Main.Pages.MoreButtonMenu;
+using MoreButtonMenu = Mirel.Views.Main.Components.MoreButtonMenu;
 
 namespace Mirel.Module.Events;
 
