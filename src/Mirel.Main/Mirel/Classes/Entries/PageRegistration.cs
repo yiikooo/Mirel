@@ -21,6 +21,6 @@ public class PageRegistration
     public IMirelPage CreateInstance(object sender, object? param = null)
     {
         var method = PageType.GetMethod("Create", BindingFlags.Public | BindingFlags.Static);
-        return (IMirelPage)method.Invoke(null, new[] { sender, param });
+        return (IMirelPage)method.Invoke(null, [sender, param]);
     }
 }
