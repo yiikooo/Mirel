@@ -45,5 +45,14 @@
         <WrapPanel>
             <Button Click="Crush" Content="Crush" />
         </WrapPanel>
+        <Separator />
+        <WrapPanel>
+            <Button Click="CreateSimpleTask" Content="创建简单任务" />
+            <Button Click="CreateTaskWithSubTasks" Content="创建带子任务的任务" />
+            <Button Click="CreateProgressTask" Content="创建进度任务" />
+            <Button Click="TestTaskStates" Content="测试任务状态" />
+            <Button Click="CreateMultipleTasks" Content="创建多个任务" />
+            <Button Click="ClearAllTasks" Content="清空所有任务" />
+        </WrapPanel>
     </StackPanel>
 </UserControl>

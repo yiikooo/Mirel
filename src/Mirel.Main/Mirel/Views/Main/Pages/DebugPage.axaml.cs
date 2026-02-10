@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
@@ -8,7 +9,9 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Input;
 using Mirel.Classes.Entries;
+using Mirel.Classes.Enums;
 using Mirel.Classes.Interfaces;
+using Mirel.Const;
 using Mirel.Module;
 using Mirel.Module.Ui;
 using Mirel.Module.Ui.Helper;
@@ -249,5 +252,121 @@ public partial class DebugPage : PageModelBase, IMirelNavPage, IMirelTabContextM
         var a = 0;
         // ReSharper disable once IntDivisionByZero
         var b = 1 / a;
+    }
+
+    // 任务调试方法
+    private void CreateSimpleTask(object? sender, RoutedEventArgs e)
+    {
+        var task = Tasking.CreateTask("简单测试任务");
+        task.TaskState = TaskState.Running;
+        task.ButtonText = "取消";
+        task.ButtonAction = () => { task.Cancel(); };
+
+        Overlay.Notice("已创建简单任务", NotificationType.Success);
+    }
+
+    private void CreateTaskWithSubTasks(object? sender, RoutedEventArgs e)
+    {
+        var mainTask = Tasking.CreateTask("主任务 - 多步骤处理");
+
+        new TaskEntry("步骤 1: 初始化").AddIn(mainTask);
+        new TaskEntry("步骤 2: 处理数据").AddIn(mainTask);
+        new TaskEntry("步骤 3: 保存结果").AddIn(mainTask);
+        new TaskEntry("步骤 4: 清理资源").AddIn(mainTask);
+
+        mainTask.TaskState = TaskState.Running;
+        mainTask.ButtonText = "取消";
+        mainTask.ButtonAction = () => { mainTask.CancelWaitFinish(); };
+
+        // 自动推进子任务
+        mainTask.NextSubTask();
+
+        Overlay.Notice("已创建带子任务的任务", NotificationType.Success);
+    }
+
+    private async void CreateProgressTask(object? sender, RoutedEventArgs e)
+    {
+        var task = Tasking.CreateTask("进度测试任务");
+        task.TaskState = TaskState.Running;
+        task.ProgressIsIndeterminate = false;
+        task.ProgressValue = 0;
+        task.ButtonText = "取消";
+
+        var cancelled = false;
+        task.ButtonAction = () =>
+        {
+            cancelled = true;
+            task.Cancel();
+        };
+
+        // 模拟进度更新
+        for (int i = 0; i <= 100 && !cancelled; i += 10)
+        {
+            task.ProgressValue = i;
+            task.SetBottomLeftText($"进度: {i}%");
+            task.SetTopRightText($"{i}/100");
+            await Task.Delay(500);
+        }
+
+        if (!cancelled)
+        {
+            task.FinishWithSuccess();
+            Overlay.Notice("进度任务已完成", NotificationType.Success);
+        }
+    }
+
+    private async void TestTaskStates(object? sender, RoutedEventArgs e)
+    {
+        var task = Tasking.CreateTask("状态测试任务");
+
+        // 等待状态
+        task.TaskState = TaskState.Waiting;
+        await Task.Delay(1000);
+
+        // 运行状态
+        task.TaskState = TaskState.Running;
+        task.ProgressIsIndeterminate = false;
+        task.ProgressValue = 30;
+        await Task.Delay(1000);
+
+        // 暂停状态
+        task.TaskState = TaskState.Paused;
+        await Task.Delay(1000);
+
+        // 继续运行
+        task.TaskState = TaskState.Running;
+        task.ProgressValue = 60;
+        await Task.Delay(1000);
+
+        // 完成
+        task.FinishWithSuccess();
+
+        Overlay.Notice("状态测试完成", NotificationType.Success);
+    }
+
+    private void CreateMultipleTasks(object? sender, RoutedEventArgs e)
+    {
+        for (int i = 1; i <= 5; i++)
+        {
+            var task = Tasking.CreateTask($"批量任务 #{i}");
+            task.TaskState = i % 3 == 0 ? TaskState.Running : TaskState.Waiting;
+            task.ProgressIsIndeterminate = false;
+            task.ProgressValue = i * 20;
+
+            if (i % 2 == 0)
+            {
+                new TaskEntry($"子任务 {i}-1").AddIn(task);
+                new TaskEntry($"子任务 {i}-2").AddIn(task);
+            }
+        }
+
+        Overlay.Notice("已创建 5 个测试任务", NotificationType.Success);
+    }
+
+    private void ClearAllTasks(object? sender, RoutedEventArgs e)
+    {
+        var count = Tasking.Tasks.Count;
+        Tasking.Tasks.Clear();
+        Overlay.Notice($"已清空 {count} 个任务", NotificationType.Warning);
     }
 }
