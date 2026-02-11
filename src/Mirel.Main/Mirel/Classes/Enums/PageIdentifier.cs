@@ -5,5 +5,6 @@ public enum PageIdentifier
     Settings,
     NewTab,
     Home,
-    Debug
+    Debug,
+    GitManager
 }

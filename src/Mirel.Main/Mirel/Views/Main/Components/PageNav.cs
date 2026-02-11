@@ -14,6 +14,7 @@ public static class PageNav
         PageManager.RegisterPage<SettingTabPage>(PageIdentifier.Settings, SettingTabPage.StaticPageInfo);
         PageManager.RegisterPage<NewTabPage>(PageIdentifier.NewTab, NewTabPage.StaticPageInfo);
         PageManager.RegisterPage<HomePage>(PageIdentifier.Home, HomePage.StaticPageInfo);
+        PageManager.RegisterPage<GitManager>(PageIdentifier.GitManager, GitManager.StaticPageInfo);
 #if DEBUG
         RegisterDebugPage();
 #endif
