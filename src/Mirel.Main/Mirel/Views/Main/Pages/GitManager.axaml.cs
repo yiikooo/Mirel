@@ -1,8 +1,14 @@
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
+using Mirel.Const;
+using Mirel.Module;
 using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
 
@@ -10,11 +16,34 @@ namespace Mirel.Views.Main.Pages;
 
 public partial class GitManager : PageModelBase, IMirelNavPage
 {
+    private bool _isProxyEnabled;
+    private string _proxyAddress = "";
+
     public GitManager()
     {
         InitializeComponent();
+        DataContext = this;
         RootElement = Root;
-        InAnimator = new PageLoadingAnimator(Root, new Thickness(0, 0, 0, 0), (0.5, 1));
+        InAnimator = new PageLoadingAnimator(Root, new Thickness(0, 60, 0, 0), (0, 1));
+        Loaded += async (s, e) => await LoadProxySettings();
+    }
+
+    public bool IsProxyEnabled
+    {
+        get => _isProxyEnabled;
+        set
+        {
+            if (SetField(ref _isProxyEnabled, value))
+            {
+                _ = ApplyProxySettings();
+            }
+        }
+    }
+
+    public string ProxyAddress
+    {
+        get => _proxyAddress;
+        set => SetField(ref _proxyAddress, value);
     }
 
     public Control RootElement { get; init; }
@@ -36,5 +65,109 @@ public partial class GitManager : PageModelBase, IMirelNavPage
     public static IMirelPage Create(object sender, object? param = null)
     {
         return new GitManager();
+    }
+
+    private async Task LoadProxySettings()
+    {
+        try
+        {
+            var httpProxy = await ExecuteGitCommand("config --global --get http.proxy");
+            var httpsProxy = await ExecuteGitCommand("config --global --get https.proxy");
+
+            var currentProxy = !string.IsNullOrWhiteSpace(httpProxy) ? httpProxy : httpsProxy;
+
+            if (!string.IsNullOrWhiteSpace(currentProxy))
+            {
+                SetField(ref _isProxyEnabled, true, nameof(IsProxyEnabled));
+                SetField(ref _proxyAddress, currentProxy.Trim(), nameof(ProxyAddress));
+            }
+            else
+            {
+                SetField(ref _isProxyEnabled, false, nameof(IsProxyEnabled));
+                SetField(ref _proxyAddress, Data.SettingEntry.GitProxyAddress, nameof(ProxyAddress));
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"加载 Git 代理设置失败: {ex.Message}");
+        }
+    }
+
+    private async Task ApplyProxySettings()
+    {
+        try
+        {
+            if (_isProxyEnabled)
+            {
+                if (string.IsNullOrWhiteSpace(_proxyAddress))
+                {
+                    Logger.Warning("代理地址为空，无法启用代理");
+                    return;
+                }
+
+                await ExecuteGitCommand($"config --global http.proxy {_proxyAddress}");
+                await ExecuteGitCommand($"config --global https.proxy {_proxyAddress}");
+
+                Data.SettingEntry.GitProxyAddress = _proxyAddress;
+                Logger.Info($"Git 代理已启用: {_proxyAddress}");
+            }
+            else
+            {
+                Data.SettingEntry.GitProxyAddress = _proxyAddress;
+
+                await ExecuteGitCommand("config --global --unset http.proxy");
+                await ExecuteGitCommand("config --global --unset https.proxy");
+
+                Logger.Info("Git 代理已关闭");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"应用 Git 代理设置失败: {ex.Message}");
+        }
+    }
+
+    private async void RefreshProxy_Click(object sender, RoutedEventArgs e)
+    {
+        await LoadProxySettings();
+    }
+
+    private async Task<string> ExecuteGitCommand(string arguments)
+    {
+        try
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "git",
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+
+            process.Start();
+            var output = await process.StandardOutput.ReadToEndAsync();
+            var error = await process.StandardError.ReadToEndAsync();
+            await process.WaitForExitAsync();
+
+            if (process.ExitCode != 0 && !string.IsNullOrWhiteSpace(error))
+            {
+                if (!error.Contains("no such section or name"))
+                {
+                    Logger.Warning($"Git 命令执行警告: {error}");
+                }
+            }
+
+            return output;
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"执行 Git 命令失败: {ex.Message}");
+            return string.Empty;
+        }
     }
 }

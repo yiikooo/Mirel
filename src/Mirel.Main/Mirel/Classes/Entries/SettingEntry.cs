@@ -32,6 +32,7 @@ public class SettingEntry : ReactiveObject
     [Reactive] [JsonProperty] public bool EnableGithubProxy { get; set; } = true;
     [Reactive] [JsonProperty] public bool EnableAside { get; set; }
     [Reactive] [JsonProperty] public string GithubProxy { get; set; } = "https://ghproxy.net/%url%";
+    [Reactive] [JsonProperty] public string GitProxyAddress { get; set; } = "";
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
