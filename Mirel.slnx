@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Configuration Name="Debug|Any CPU" />
+    <Configuration Name="Release|Any CPU" />
+  </Configurations>
+  <Folder Name="Solution Items">
+    <File Path="src\Mirel.Main\Directory.Build.props" />
+  </Folder>
+  <Project Path="src\Mirel.Main\Mirel\Mirel.csproj" Type="C#" />
+  <Project Path="src\Mirel.Main\Mirel.Desktop\Mirel.Desktop.csproj" Type="C#" />
+</Solution>
