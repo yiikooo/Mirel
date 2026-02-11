@@ -68,7 +68,7 @@
         <Setter Property="Margin" Value="0,5,0,0" />
     </Style>
 
-    <Style Selector="Border#NotificationCardBorderBorder.succes">
+    <Style Selector="Border#NotificationCardBorder.succes">
         <Setter Property="Background" Value="{DynamicResource SemiColorSuccessLight}" />
         <Setter Property="BorderBrush" Value="{DynamicResource NotificationCardLightSuccessBorderBrush}" />
         <Style Selector="^ TextBlock#NotificationTitle">
