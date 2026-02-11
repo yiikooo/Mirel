@@ -11,7 +11,44 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Border Name="Root">
         <ScrollViewer>
-            <StackPanel Margin="10,0,10,10">
+            <StackPanel Margin="10,0,10,10" Spacing="10">
+                <!--  全局用户配置  -->
+                <Border
+                    Background="{DynamicResource PanelBackgroundColor}"
+                    BorderBrush="{DynamicResource PanelBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Margin="15,10,0,10"
+                            Text="全局用户配置"
+                            VerticalAlignment="Center" />
+
+                        <Separator />
+
+                        <DockPanel Margin="10,10,10,7">
+                            <TextBlock
+                                Margin="10,0,20,0"
+                                Text="用户名"
+                                VerticalAlignment="Center"
+                                Width="60" />
+                            <TextBox Text="{Binding UserName}" Watermark="请输入 Git 用户名" />
+                        </DockPanel>
+
+                        <DockPanel Margin="10,7,10,10">
+                            <TextBlock
+                                Margin="10,0,20,0"
+                                Text="邮箱"
+                                VerticalAlignment="Center"
+                                Width="60" />
+                            <TextBox Text="{Binding UserEmail}" Watermark="请输入 Git 邮箱" />
+                        </DockPanel>
+                    </StackPanel>
+                </Border>
+
+                <!--  Http 代理  -->
                 <Border
                     Background="{DynamicResource PanelBackgroundColor}"
                     BorderBrush="{DynamicResource PanelBorderBrush}"
@@ -44,13 +81,6 @@
                             <TextBlock
                                 Margin="10,0,20,0"
                                 Text="代理地址"
-                                VerticalAlignment="Center" />
-                            <Button
-                                Click="RefreshProxy_Click"
-                                Content="刷新"
-                                Cursor="Hand"
-                                DockPanel.Dock="Right"
-                                Margin="10,0,0,0"
                                 VerticalAlignment="Center" />
                             <TextBox Text="{Binding ProxyAddress}" Watermark="http://127.0.0.1:7890" />
                         </DockPanel>

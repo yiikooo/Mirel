@@ -3,12 +3,12 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
+using Avalonia.Controls.Notifications;
 using Avalonia.Media;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
-using Mirel.Module;
+using Mirel.Module.Ui;
 using Mirel.Module.Ui.Helper;
 using Mirel.ViewModels;
 
@@ -18,6 +18,8 @@ public partial class GitManager : PageModelBase, IMirelNavPage
 {
     private bool _isProxyEnabled;
     private string _proxyAddress = "";
+    private string _userEmail = "";
+    private string _userName = "";
 
     public GitManager()
     {
@@ -25,7 +27,16 @@ public partial class GitManager : PageModelBase, IMirelNavPage
         DataContext = this;
         RootElement = Root;
         InAnimator = new PageLoadingAnimator(Root, new Thickness(0, 60, 0, 0), (0, 1));
-        Loaded += async (s, e) => await LoadProxySettings();
+        Loaded += async (s, e) => await LoadGitSettings();
+
+        // 监听窗口获取焦点事件
+        Root.AttachedToVisualTree += async (s, e) =>
+        {
+            if (Root.GetVisualRoot() is Window window)
+            {
+                window.Activated += async (_, _) => await LoadGitSettings();
+            }
+        };
     }
 
     public bool IsProxyEnabled
@@ -44,6 +55,30 @@ public partial class GitManager : PageModelBase, IMirelNavPage
     {
         get => _proxyAddress;
         set => SetField(ref _proxyAddress, value);
+    }
+
+    public string UserName
+    {
+        get => _userName;
+        set
+        {
+            if (SetField(ref _userName, value))
+            {
+                _ = ApplyUserSettings();
+            }
+        }
+    }
+
+    public string UserEmail
+    {
+        get => _userEmail;
+        set
+        {
+            if (SetField(ref _userEmail, value))
+            {
+                _ = ApplyUserSettings();
+            }
+        }
     }
 
     public Control RootElement { get; init; }
@@ -65,6 +100,28 @@ public partial class GitManager : PageModelBase, IMirelNavPage
     public static IMirelPage Create(object sender, object? param = null)
     {
         return new GitManager();
+    }
+
+    private async Task LoadGitSettings()
+    {
+        await LoadProxySettings();
+        await LoadUserSettings();
+    }
+
+    private async Task LoadUserSettings()
+    {
+        try
+        {
+            var userName = await ExecuteGitCommand("config --global --get user.name");
+            var userEmail = await ExecuteGitCommand("config --global --get user.email");
+
+            SetField(ref _userName, userName.Trim(), nameof(UserName));
+            SetField(ref _userEmail, userEmail.Trim(), nameof(UserEmail));
+        }
+        catch (Exception ex)
+        {
+            Overlay.Notice($"加载 Git 用户设置失败: {ex.Message}", NotificationType.Error);
+        }
     }
 
     private async Task LoadProxySettings()
@@ -89,7 +146,29 @@ public partial class GitManager : PageModelBase, IMirelNavPage
         }
         catch (Exception ex)
         {
-            Logger.Error($"加载 Git 代理设置失败: {ex.Message}");
+            Overlay.Notice($"加载 Git 代理设置失败: {ex.Message}", NotificationType.Error);
+        }
+    }
+
+    private async Task ApplyUserSettings()
+    {
+        try
+        {
+            if (!string.IsNullOrWhiteSpace(_userName))
+            {
+                await ExecuteGitCommand($"config --global user.name \"{_userName}\"");
+                Overlay.Notice($"Git 用户名已设置: {_userName}", NotificationType.Success);
+            }
+
+            if (!string.IsNullOrWhiteSpace(_userEmail))
+            {
+                await ExecuteGitCommand($"config --global user.email \"{_userEmail}\"");
+                Overlay.Notice($"Git 邮箱已设置: {_userEmail}", NotificationType.Success);
+            }
+        }
+        catch (Exception ex)
+        {
+            Overlay.Notice($"应用 Git 用户设置失败: {ex.Message}", NotificationType.Error);
         }
     }
 
@@ -101,7 +180,7 @@ public partial class GitManager : PageModelBase, IMirelNavPage
             {
                 if (string.IsNullOrWhiteSpace(_proxyAddress))
                 {
-                    Logger.Warning("代理地址为空，无法启用代理");
+                    Overlay.Notice("代理地址为空，无法启用代理", NotificationType.Warning);
                     return;
                 }
 
@@ -109,7 +188,7 @@ public partial class GitManager : PageModelBase, IMirelNavPage
                 await ExecuteGitCommand($"config --global https.proxy {_proxyAddress}");
 
                 Data.SettingEntry.GitProxyAddress = _proxyAddress;
-                Logger.Info($"Git 代理已启用: {_proxyAddress}");
+                Overlay.Notice($"Git 代理已启用: {_proxyAddress}", NotificationType.Success);
             }
             else
             {
@@ -118,18 +197,13 @@ public partial class GitManager : PageModelBase, IMirelNavPage
                 await ExecuteGitCommand("config --global --unset http.proxy");
                 await ExecuteGitCommand("config --global --unset https.proxy");
 
-                Logger.Info("Git 代理已关闭");
+                Overlay.Notice("Git 代理已关闭", NotificationType.Success);
             }
         }
         catch (Exception ex)
         {
-            Logger.Error($"应用 Git 代理设置失败: {ex.Message}");
+            Overlay.Notice($"应用 Git 代理设置失败: {ex.Message}", NotificationType.Error);
         }
-    }
-
-    private async void RefreshProxy_Click(object sender, RoutedEventArgs e)
-    {
-        await LoadProxySettings();
     }
 
     private async Task<string> ExecuteGitCommand(string arguments)
@@ -154,19 +228,17 @@ public partial class GitManager : PageModelBase, IMirelNavPage
             var error = await process.StandardError.ReadToEndAsync();
             await process.WaitForExitAsync();
 
-            if (process.ExitCode != 0 && !string.IsNullOrWhiteSpace(error))
+            if (process.ExitCode == 0 || string.IsNullOrWhiteSpace(error)) return output;
+            if (!error.Contains("no such section or name"))
             {
-                if (!error.Contains("no such section or name"))
-                {
-                    Logger.Warning($"Git 命令执行警告: {error}");
-                }
+                Overlay.Notice($"Git 命令执行警告: {error}", NotificationType.Warning);
             }
 
             return output;
         }
         catch (Exception ex)
         {
-            Logger.Error($"执行 Git 命令失败: {ex.Message}");
+            Overlay.Notice($"执行 Git 命令失败: {ex.Message}", NotificationType.Error);
             return string.Empty;
         }
     }
