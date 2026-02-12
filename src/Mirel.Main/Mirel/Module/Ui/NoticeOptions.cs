@@ -45,4 +45,6 @@ public class NoticeOptions(IMirelWindow? host = null, Action? onClose = null)
     ///     按钮是否内联显示
     /// </summary>
     public bool IsButtonsInline { get; init; }
+
+    public bool IsToastTip { get; init; }
 }

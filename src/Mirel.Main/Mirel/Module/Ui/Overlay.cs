@@ -71,7 +71,7 @@ public abstract class Overlay
         var notification = new Notification("Mirel", msg, type);
         var entry = new NotificationEntry(notification, notification.Type, t, options.OperateButtons);
 
-        UiProperty.Notifications.Insert(0, entry);
+        if (options.IsToastTip) UiProperty.Notifications.Insert(0, entry);
         UiProperty.HistoryNotifications.Insert(0, entry);
 
         ShowToast(msg, entry, options);

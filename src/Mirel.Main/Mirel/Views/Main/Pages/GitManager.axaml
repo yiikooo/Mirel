@@ -5,10 +5,14 @@
     x:Class="Mirel.Views.Main.Pages.GitManager"
     x:DataType="pages:GitManager"
     xmlns="https://github.com/avaloniaui"
+    xmlns:converter="clr-namespace:Mirel.Module.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:Mirel.Views.Main.Pages"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <converter:BoolReversalConverter x:Key="BoolReversalConverter" />
+    </UserControl.Resources>
     <Border Name="Root">
         <ScrollViewer>
             <StackPanel Margin="10,0,10,10" Spacing="10">
@@ -82,7 +86,10 @@
                                 Margin="10,0,20,0"
                                 Text="代理地址"
                                 VerticalAlignment="Center" />
-                            <TextBox Text="{Binding ProxyAddress}" Watermark="http://127.0.0.1:7890" />
+                            <TextBox
+                                IsEnabled="{Binding IsProxyEnabled, Converter={StaticResource BoolReversalConverter}}"
+                                Text="{Binding ProxyAddress}"
+                                Watermark="http://127.0.0.1:7890" />
                         </DockPanel>
                     </StackPanel>
                 </Border>

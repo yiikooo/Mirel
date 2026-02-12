@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 using Mirel.Classes.Entries;
 using Mirel.Classes.Interfaces;
 using Mirel.Const;
@@ -29,7 +30,6 @@ public partial class GitManager : PageModelBase, IMirelNavPage
         InAnimator = new PageLoadingAnimator(Root, new Thickness(0, 60, 0, 0), (0, 1));
         Loaded += async (s, e) => await LoadGitSettings();
 
-        // 监听窗口获取焦点事件
         Root.AttachedToVisualTree += async (s, e) =>
         {
             if (Root.GetVisualRoot() is Window window)
