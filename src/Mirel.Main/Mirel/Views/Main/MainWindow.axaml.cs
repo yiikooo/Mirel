@@ -49,10 +49,8 @@ public partial class MainWindow : UrsaWindow, IMirelTabWindow
         DataContext = ViewModel;
         Window = this;
         TabDragDropService.RegisterWindow(this);
-#if RELEASE
         BindEvents();
         InitTitleBar();
-#endif
     }
 
     public MainViewModel ViewModel { get; } = new();
